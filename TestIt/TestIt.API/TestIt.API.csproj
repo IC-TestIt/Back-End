@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
     <ProjectReference Include="..\TestIt.Security\TestIt.Security.csproj" />
   </ItemGroup>
 
