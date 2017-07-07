@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace TestIt.Security
+namespace TestIt.Utils.Security
 {
     /// <summary>
     /// Token generator middleware component which is added to an HTTP pipeline.

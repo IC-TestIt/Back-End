@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Options;
 
 
-namespace TestIt.Security
+namespace TestIt.Utils.Security
 {
     /// <summary>
     /// Adds a token generation endpoint to an application pipeline.

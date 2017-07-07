@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
-using TestIt.Security;
+using TestIt.Utils.Security;
 
 namespace TestIt.API
 {

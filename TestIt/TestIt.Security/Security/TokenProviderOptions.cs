@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace TestIt.Security
+namespace TestIt.Utils.Security
 {
     /// <summary>
     /// Provides options for <see cref="TokenProviderMiddleware"/>.
