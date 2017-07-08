@@ -10,7 +10,6 @@ namespace TestIt.Model.Entities
         public Teacher()
         {
             Classes = new List<Class>();
-            //Testes = new List<Test>;
         }
 
         public int Id { get; set; }
@@ -22,6 +21,5 @@ namespace TestIt.Model.Entities
     
         public ICollection<Class> Classes { get; set; }
         
-        //public ICollection<Test> Testes { get; set; }
     }
 }

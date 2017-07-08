@@ -16,11 +16,11 @@ namespace TestIt.Model.Entities
         public String Email { get; set; }
         public String Password { get; set; }
         public String Phone { get; set; }
-        public DateTime Birth { get; set; }
+        public DateTime Birthday { get; set; }
         public bool Active { get; set; }
 
-        public Enum IdentifyerType { get; set; }
-        public SocialIdentifyer SocialIdentifyer { get; set; }
+        public int IdentifyerType { get; set; }
+        public SocialId SocialId { get; set; }
         public Organization Organization { get; set; } 
     }
 }

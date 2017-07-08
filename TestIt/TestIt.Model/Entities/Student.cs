@@ -10,7 +10,6 @@ namespace TestIt.Model.Entities
         public Student()
         {
             Classes = new List<Class>();
-            //Exams = new List<Exam>;
         }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
@@ -20,6 +19,6 @@ namespace TestIt.Model.Entities
         public int IdUser { get; set; }
 
         public ICollection<Class> Classes { get; set; }
-        //public ICollection<Exam> Exams { get; set; }
+
     }
 }

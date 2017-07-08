@@ -5,7 +5,7 @@ using TestIt.Model;
 
 namespace TestIt.Model.Entities
 {
-    public class SocialIdentifyer : IEntityBase
+    public class SocialId : IEntityBase
     {
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }

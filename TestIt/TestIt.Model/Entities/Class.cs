@@ -10,16 +10,14 @@ namespace TestIt.Model.Entities
         public Class()
         {
             Students = new List<Student>();
-            //MaterialsConsultation = new List<MaterialConsultation>();
         }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
-        public  String Descricao { get; set; }
+        public  String Description { get; set; }
 
         public Teacher Teacher { get; set; }
         public ICollection<Student > Students { get; set; }
-        //public ICollection<MaterialConsultation> MaterialsConsultation { get; set; }
     }
 }
