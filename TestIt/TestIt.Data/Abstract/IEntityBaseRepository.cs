@@ -1,9 +1,9 @@
-﻿//using TestIt.Model;
+﻿using TestIt.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace TestIt.Infra.Data.Abstract
+namespace TestIt.Data.Abstract
 {
     public interface IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
