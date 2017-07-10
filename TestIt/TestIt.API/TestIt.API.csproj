@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
-    <ProjectReference Include="..\TestIt.Security\TestIt.Security.csproj" />
+    <ProjectReference Include="..\TestIt.Security\TestIt.Utils.csproj" />
   </ItemGroup>
 
 </Project>
