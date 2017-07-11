@@ -2,10 +2,13 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TestIt.Data;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json.Serialization;
 using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using TestIt.API.ViewModels.Mappings;
 
 namespace TestIt.API
 {
@@ -36,12 +39,27 @@ namespace TestIt.API
             }
             catch { }
 
-            //Add context here
+            services.AddDbContext<TestItContext>(options => {
+                switch (useInMemoryProvider)
+                {
+                    case true:
+                        options.UseInMemoryDatabase();
+                        break;
+                    default:
+                        options.UseSqlServer(sqlConnectionString,
+                    b => b.MigrationsAssembly("TestIt.API"));
+                        break;
+                }
+            });
 
-            //Add Repositories here
+            services.AddScoped<Data.Abstract.IClassRepository, Data.Repositories.ClassRepository>();
+            services.AddScoped<Data.Abstract.IOrganizationRepository, Data.Repositories.OrganizationRepository>();
+            services.AddScoped<Data.Abstract.ISocialIdRepository, Data.Repositories.SocialIdRepository>();
+            services.AddScoped<Data.Abstract.IStudentRepository, Data.Repositories.StudentRepository>();
+            services.AddScoped<Data.Abstract.ITeacherRepository, Data.Repositories.TeacherRepository>();
+            services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
             
-            // Automapper Configuration
-            //AutoMapperConfiguration.Configure();
+            AutoMapperConfiguration.Configure();
 
             services.AddCors();
 
@@ -56,7 +74,7 @@ namespace TestIt.API
 
         public void Configure(IApplicationBuilder app)
         {
-            //ConfigureAuth(app);
+            ConfigureAuth(app);
 
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
