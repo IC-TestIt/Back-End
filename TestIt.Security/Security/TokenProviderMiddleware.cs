@@ -62,14 +62,14 @@ namespace TestIt.Utils.Security
 
         private async Task GenerateToken(HttpContext context)
         {
-            var username = context.Request.Form["username"];
+            var email = context.Request.Form["email"];
             var password = context.Request.Form["password"];
 
-            var identity = await _options.IdentityResolver(username, password);
+            var identity = await _options.IdentityResolver(email, password);
             if (identity == null)
             {
                 context.Response.StatusCode = 400;
-                await context.Response.WriteAsync("Invalid username or password.");
+                await context.Response.WriteAsync("Invalid email or password.");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace TestIt.Utils.Security
             // You can add other claims here, if you want:
             var claims = new Claim[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, username),
+                new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, await _options.NonceGenerator()),
                 new Claim(JwtRegisteredClaimNames.Iat, ToUnixEpochDate(now).ToString(), ClaimValueTypes.Integer64)
             };

@@ -58,16 +58,20 @@ namespace TestIt.API
             
         }
 
-        private Task<ClaimsIdentity> GetIdentity(string username, string password)
+        private Task<ClaimsIdentity> GetIdentity(string email, string password)
         {
-            // Don't do this in production, obviously!
-            if (username == "TEST" && password == "TEST123")
+            if (ValidLogin(email,password))
             {
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
+                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(email, "Token"), new Claim[] { }));
             }
 
             // Credentials are invalid, or account doesn't exist
             return Task.FromResult<ClaimsIdentity>(null);
+        }
+
+        private bool ValidLogin (string email, string password)
+        {
+            return true;
         }
     }
 }
