@@ -2,9 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
-    <PackageTargetFallback>portable-net45+win8</PackageTargetFallback>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <AssemblyName>TestIt.API</AssemblyName>
+    <OutputType>Exe</OutputType>
+    <PackageId>TestIt.API</PackageId>
+    <UserSecretsId>TestIt</UserSecretsId>
+    <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;dnxcore50;portable-net45+win8</PackageTargetFallback>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Data" Version="1.0.0-beta1" />
+    <PackageReference Include="FluentValidation" Version="7.1.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
@@ -37,6 +45,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
+    <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
+    <ProjectReference Include="..\TestIt.Model\TestIt.Model.csproj" />
     <ProjectReference Include="..\TestIt.Security\TestIt.Utils.csproj" />
   </ItemGroup>
 
