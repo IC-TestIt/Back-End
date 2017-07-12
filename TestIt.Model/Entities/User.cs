@@ -18,7 +18,8 @@ namespace TestIt.Model.Entities
         public String Phone { get; set; }
         public DateTime Birthday { get; set; }
         public bool Active { get; set; }
-
+            
+        public String Identifyer { get; set; }
         public int IdentifyerType { get; set; }
         public SocialId SocialId { get; set; }
         public Organization Organization { get; set; } 
