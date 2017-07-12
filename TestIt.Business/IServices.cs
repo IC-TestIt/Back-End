@@ -4,5 +4,8 @@ using System.Text;
 
 namespace TestIt.Business
 {
-    public interface IUserService {}
+    public interface IUserService
+    {
+        bool ValidLogin(string email, string pswd);
+    }
 }
