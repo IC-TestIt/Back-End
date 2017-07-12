@@ -14,9 +14,10 @@ namespace TestIt.Data
         public DbSet<User> Users {get; set;}
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
-        public DbSet<SocialId> SocialIds {get; set;}
+        public DbSet<SocialIdentifier> SocialIds {get; set;}
         public DbSet<Organization> Organizations {get; set;}
         public DbSet<Class> Classes {get; set;}
+        public DbSet<ClassStudents> ClassStudents { get; set; }
         
         public TestItContext(DbContextOptions options) : base(options) { }
 
@@ -27,9 +28,10 @@ namespace TestIt.Data
                 relationship.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
+            #region User
             modelBuilder.Entity<User>()
                 .ToTable("Users");
-
+            
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
@@ -39,7 +41,8 @@ namespace TestIt.Data
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<User>()
-                .Property(u => u.DateUpdated);
+                .Property(u => u.DateUpdated)
+                .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Name)
@@ -55,7 +58,7 @@ namespace TestIt.Data
                 .IsRequired();   
 
             modelBuilder.Entity<User>()
-                .Property(u => u.SocialId)
+                .Property(u => u.SocialIdentifierId)
                 .IsRequired(); 
             
             modelBuilder.Entity<User>()
@@ -81,39 +84,44 @@ namespace TestIt.Data
                 .HasMaxLength(20);
 
             modelBuilder.Entity<User>()
-                .Property(u => u.IdentifyerType)
+                .Property(u => u.SocialIdentifierId)
                 .IsRequired();
+            #endregion
 
+            #region Teacher
             modelBuilder.Entity<Teacher>()
                 .ToTable("Teachers");
 
             modelBuilder.Entity<Teacher>()
                 .Property(t => t.Id)
-                .ValueGeneratedOnAdd(); 
+                .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Teacher>()
                 .Property(t => t.DateCreated)
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Teacher>()
-                .Property(t => t.DateUpdated);
+                .Property(t => t.DateUpdated)
+                .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Teacher>()
-                .Property(t => t.User)
-                .IsRequired();
-
-            modelBuilder.Entity<Teacher>()
-                .Property(t => t.IdUser)
+                .Property(t => t.UserId)
                 .IsRequired();
 
             modelBuilder.Entity<Teacher>()
                 .HasMany(t => t.Classes)
                 .WithOne(t => t.Teacher);
+            #endregion
 
+            #region Student
             modelBuilder.Entity<Student>()
                 .ToTable("Students");
 
             modelBuilder.Entity<Student>()
+                .Property(s => s.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Student>()
                 .Property(s => s.DateCreated)
                 .HasDefaultValue(DateTime.Now);
 
@@ -121,34 +129,38 @@ namespace TestIt.Data
                 .Property(s => s.DateUpdated);
 
             modelBuilder.Entity<Student>()
-                .Property(s => s.Id)
-                .ValueGeneratedOnAdd();  
-
+                .Property(s => s.UserId); 
+            
             modelBuilder.Entity<Student>()
-                .Property(s => s.User)
-                .IsRequired();     
-
-            modelBuilder.Entity<Student>()
-                .Property(s => s.IdUser)
+                .Property(s => s.UserId)
                 .IsRequired();
 
             modelBuilder.Entity<Student>()
-                .HasMany(s => s.Classes);
+                .HasMany(s => s.ClassStudents);
+            #endregion
 
-            modelBuilder.Entity<SocialId>()
-                .ToTable("SocialIds");  
+            #region SocialIdentifier
+            modelBuilder.Entity<SocialIdentifier>()
+                .ToTable("SocialIds");
 
-            modelBuilder.Entity<SocialId>()
+            modelBuilder.Entity<SocialIdentifier>()
+                .Property(s => s.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<SocialIdentifier>()
                 .Property(s => s.DateCreated)
                 .HasDefaultValue(DateTime.Now);
 
-            modelBuilder.Entity<SocialId>()
-                .Property(s => s.DateUpdated);
+            modelBuilder.Entity<SocialIdentifier>()
+                .Property(s => s.DateUpdated)
+                .HasDefaultValue(DateTime.Now);
 
-            modelBuilder.Entity<SocialId>()
+            modelBuilder.Entity<SocialIdentifier>()
                 .Property(s => s.Description)
                 .IsRequired();
-            
+            #endregion
+
+            #region Organization
             modelBuilder.Entity<Organization>()
                 .ToTable("Organizations");
 
@@ -157,7 +169,8 @@ namespace TestIt.Data
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Organization>()
-                .Property(o => o.DateUpdated);
+                .Property(o => o.DateUpdated)
+                .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Organization>()
                 .Property(o => o.Id)
@@ -176,7 +189,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Organization>()
                 .HasMany(o => o.Users)
                 .WithOne(o => o.Organization);
+            #endregion
 
+            #region Class
             modelBuilder.Entity<Class>()
                 .ToTable("Classes");
             
@@ -192,7 +207,7 @@ namespace TestIt.Data
                 .Property(c => c.DateUpdated);
 
             modelBuilder.Entity<Class>()
-                .Property(c => c.Teacher)
+                .Property(c => c.TeacherId)
                 .IsRequired();   
 
             modelBuilder.Entity<Class>()
@@ -201,11 +216,27 @@ namespace TestIt.Data
                 .IsRequired();  
 
             modelBuilder.Entity<Class>()
-                .HasMany(c => c.Students);
+                .HasMany(c => c.ClassStudents);
 
             modelBuilder.Entity<Class>()
                 .HasOne(c => c.Teacher)
                 .WithMany(c => c.Classes);
+            #endregion
+
+            #region ClassStudents
+            modelBuilder.Entity<ClassStudents>()
+                .ToTable("ClassStudents");
+
+            modelBuilder.Entity<ClassStudents>()
+                .HasOne(x => x.Class)
+                .WithMany(x => x.ClassStudents)
+                .HasForeignKey(x => x.ClassId);
+
+            modelBuilder.Entity<ClassStudents>()
+                .HasOne(x => x.Student)
+                .WithMany(x => x.ClassStudents)
+                .HasForeignKey(x => x.StudentId);
+            #endregion
         }
     }
 }
