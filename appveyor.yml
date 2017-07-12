@@ -1,16 +1,9 @@
--
-  branches:
-    only:
-      - master
-  image: Visual Studio 2017
-  # Test against the latest version of this Node.js version
-  environment:
-    DOTNET_CLI_TELEMETRY_OPTOUT: true
-    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
- 
-  version: 1.0.{build}
-  configuration: Release
-  platform: Any CPU
-  skip_branch_with_pr: false
-  before_build:
-    - cmd: dotnet restore TestIt.sln
+version: 1.0.{build}
+pull_requests:
+  do_not_increment_build_number: true
+image: Visual Studio 2017
+configuration: Release
+platform: Any CPU
+build:
+  project: TestIt.sln
+  verbosity: minimal
