@@ -24,12 +24,12 @@ namespace TestIt.Data
         {
             if (!context.SocialIds.Any())
             {
-                SocialId socialid_01 = new SocialId
+                SocialIdentifier socialid_01 = new SocialIdentifier
                 {
                     Description = "CPF"
                 };
 
-                SocialId socialid_02 = new SocialId
+                SocialIdentifier socialid_02 = new SocialIdentifier
                 {
                     Description = "RG"
                 };
@@ -37,132 +37,126 @@ namespace TestIt.Data
                 context.SocialIds.Add(socialid_01);
                 context.SocialIds.Add(socialid_02);
 
+                context.SaveChanges();
             }
+
+            List<User> users = new List<User>();
 
             if (!context.Users.Any())
             {
-                User user_01 = new User
+                users.Add(new User
                 {
                     Name = "Dimas",
                     Email = "dimas@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    IdentifyerType = 1,
+                    SocialIdentifierId = 5,
                     Password = "abc123",
-                    Organization =  new Organization {Id = 1},
                     Phone = "33445566",
-                    Identifyer = "444.555.666-9",
-                    SocialId = new SocialId() { Id = 1 },
+                    Identifyer = "444.555.666-9"
+                });
 
-                };
-                User user_02 = new User
+                users.Add(new User
                 {
                     Name = "Luiz",
                     Email = "luiz@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    IdentifyerType = 2,
+                    SocialIdentifierId = 6,
                     Password = "123abc",
-                    Organization = new Organization { Id = 1},
                     Phone = "45678909",
-                    Identifyer = "56.789.678-x",
-                    SocialId = new SocialId() { Id = 2 },
+                    Identifyer = "56.789.678-x"
+                });
 
-                };
-
-                User user_03 = new User
+                users.Add(new User
                 {
                     Name = "Vitor",
                     Email = "vitor@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    IdentifyerType = 1,
+                    SocialIdentifierId = 5,
                     Password = "123abc",
-                    Organization = new Organization { Id = 1 },
                     Phone = "12356798",
-                    Identifyer = "455.666.777-0",
-                    SocialId = new SocialId() { Id = 1 },
-
-                };
-                context.Users.Add(user_01);
-                context.Users.Add(user_02);
-                context.Users.Add(user_03);
-
+                    Identifyer = "455.666.777-0"
+                });
             }
 
             if (!context.Organizations.Any())
             {
-                Organization organization_1 = new Organization
+                var organization_1 = new Organization
                 {
+                    Users = users,
                     Name = "Fatec",
-                    Description = "Faculdade de tecnologia",
-                    Users = new List<User>
-                    {
-                        new User(){Id = 1},
-                        new User(){Id = 2},
-                        new User(){Id = 3}
-                    }
+                    Description = "Faculdade de tecnologia"
                 };
+
                 context.Organizations.Add(organization_1);
+                context.SaveChanges();
             }
 
+            List<Student> students = new List<Student>();
+            List<ClassStudents> classStudents = new List<ClassStudents>();
+            
             if (!context.Students.Any())
             {
-                Student student_1 = new Student
+                students.Add(new Student
                 {
-                    IdUser = 2,
-                    User = new User() { Id = 2 },
-                    Classes = new List<Class>
-                    {
-                        new Class(){Id = 1}
-                    }
+                    UserId = 15
+                });
 
-                };
-                Student student_2 = new Student
+                students.Add(new Student
                 {
-                    IdUser = 3,
-                    User = new User() { Id = 3 },
-                    Classes = new List<Class>
-                    {
-                        new Class(){Id = 1}
-                    }
+                    UserId = 16
+                });
 
-                };
-                context.Students.Add(student_1);
-                context.Students.Add(student_2);
+                context.AddRange(students);
+                context.SaveChanges();
+            }
+
+            List<Class> classes = new List<Class>();
+
+            if (!context.Classes.Any())
+            {
+                classes.Add( new Class
+                {
+                    Description = "Alog",
+                    ClassStudents = classStudents,
+                    TeacherId = 5
+                });
+
+                context.Classes.AddRange(classes);
             }
 
             if (!context.Teachers.Any())
             {
                 Teacher teacher_1 = new Teacher
                 {
-                    IdUser = 1,
-                    User = new User() { Id = 1 },
-                    Classes = new List<Class>
-                    {
-                        new Class(){Id = 1}
-                    }
-
+                    UserId = 14,
+                    Classes = classes
                 };
+
                 context.Teachers.Add(teacher_1);
+
+                context.SaveChanges();
             }
 
-            if (!context.Classes.Any())
+            if (!context.ClassStudents.Any())
             {
-                Class class_1 = new Class
+                classStudents.Add(new ClassStudents()
                 {
-                    Description = "ADS",
-                    Teacher = new Teacher() { Id = 1 },
-                    Students = new List<Student>
-                    {
-                        new Student(){Id = 2},
-                        new Student(){Id = 3}
-                    }
+                    ClassId = 4,
+                    StudentId = 5
+                });
 
-                };
-                context.Classes.Add(class_1);
+                classStudents.Add(new ClassStudents()
+                {
+                    ClassId = 4,
+                    StudentId = 6
+                });
+
+                context.ClassStudents.AddRange(classStudents);
+                context.SaveChanges();
             }
-            context.SaveChanges();
         }
     }
 }

@@ -10,6 +10,8 @@ namespace TestIt.Model.Entities
         public Organization()
         {
             Users = new List<User>();
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
         }
 
         public int Id { get; set; }

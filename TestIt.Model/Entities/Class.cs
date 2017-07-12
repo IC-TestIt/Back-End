@@ -9,15 +9,16 @@ namespace TestIt.Model.Entities
     {
         public Class()
         {
-            Students = new List<Student>();
+            ClassStudents = new List<ClassStudents>();
         }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
-        public  string Description { get; set; }
-
+        public string Description { get; set; }
+        public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
-        public ICollection<Student > Students { get; set; }
+
+        public virtual ICollection<ClassStudents> ClassStudents { get; set; }
     }
 }

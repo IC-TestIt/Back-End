@@ -20,9 +20,10 @@ namespace TestIt.Model.Entities
         public bool Active { get; set; }
             
         public string Identifyer { get; set; }
-        public int IdentifyerType { get; set; }
-        public SocialId SocialId { get; set; }
-        public Organization Organization { get; set; } 
+        public int SocialIdentifierId { get; set; }
+        public SocialIdentifier SocialIdentifier { get; set; }
+        public Organization Organization { get; set; }
+        public int OrganizationId { get; set; }
     }
 }
 

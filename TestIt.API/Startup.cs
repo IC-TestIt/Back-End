@@ -107,7 +107,7 @@ namespace TestIt.API
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Initialize DB here
+            TestItDbInitializer.Initialize(app.ApplicationServices);
         }
     }
 }

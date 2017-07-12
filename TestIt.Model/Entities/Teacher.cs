@@ -16,9 +16,9 @@ namespace TestIt.Model.Entities
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
+        public int UserId { get; set; }
         public User User { get; set; }
-        public int IdUser { get; set; }
-    
+        
         public ICollection<Class> Classes { get; set; }
         
     }

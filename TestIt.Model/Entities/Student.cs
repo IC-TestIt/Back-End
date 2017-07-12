@@ -9,16 +9,16 @@ namespace TestIt.Model.Entities
     {
         public Student()
         {
-            Classes = new List<Class>();
+            ClassStudents = new List<ClassStudents>();
         }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
 
+        public int UserId { get; set; }
         public User User { get; set; }
-        public int IdUser { get; set; }
-
-        public ICollection<Class> Classes { get; set; }
+        
+        public IEnumerable<ClassStudents> ClassStudents { get; set; }
 
     }
 }
