@@ -4,6 +4,10 @@ pull_requests:
 image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
+install:
+- ps: (New-Object Net.WebClient).DownloadFile('https://github.com/docker/compose/releases/download/1.11.2/docker-compose-Windows-x86_64.exe', "C:\Program Files\docker\docker-compose.exe")
 build:
   project: TestIt.sln
   verbosity: minimal
+before_build:
+    - cmd: dotnet restore TestIt.sln
