@@ -189,7 +189,7 @@ namespace TestIt.Data
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Class>()
-                .Property(c => c.DateUpdated)
+                .Property(c => c.DateUpdated);
 
             modelBuilder.Entity<Class>()
                 .Property(c => c.Teacher)
