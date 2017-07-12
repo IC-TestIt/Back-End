@@ -1,46 +1,33 @@
 ﻿using System;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.IdentityModel.Tokens;
-using TestIt.Utils.Security;
+using TestIt.Security;
+using Microsoft.Extensions.Options;
 
 namespace TestIt.API
 {
     public partial class Startup
     {
-        // The secret key every token will be signed with.
-        // Keep this safe on the server!
-        private static readonly string secretKey = "mysupersecret_secretkey!123";
-
         private void ConfigureAuth(IApplicationBuilder app)
         {
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            // Create the signing key for authentication validation.
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration["Authentication:SecretKey"]));
 
-            app.UseSimpleTokenProvider(new TokenProviderOptions
-            {
-                Path = "/api/token",
-                Audience = "ExampleAudience",
-                Issuer = "ExampleIssuer",
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
-                IdentityResolver = GetIdentity
-            });
-
+            // Create the token validation params for JWT validation.
             var tokenValidationParameters = new TokenValidationParameters
             {
-                // The signing key must match!
+                // Enabling these values causes ASP.NET to validate that the signing key from the client matches the one on the server.
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
 
-                // Validate the JWT Issuer (iss) claim
+                // Validate the JWT Issuer (iss) claim.
                 ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
+                ValidIssuer = Configuration["Authentication:Issuer"],
 
-                // Validate the JWT Audience (aud) claim
+                // Validate the JWT Audience (aud) claim.
                 ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
+                ValidAudience = Configuration["Authentication:Audience"],
 
                 // Validate the token expiry
                 ValidateLifetime = true,
@@ -55,23 +42,16 @@ namespace TestIt.API
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
-            
-        }
 
-        private Task<ClaimsIdentity> GetIdentity(string email, string password)
-        {
-            if (ValidLogin(email,password))
+            // Add JWT generation endpoint:
+            var options = new TokenProviderOptions
             {
-                return Task.FromResult(new ClaimsIdentity(new GenericIdentity(email, "Token"), new Claim[] { }));
-            }
+                Audience = Configuration["Authentication:Audience"],
+                Issuer = Configuration["Authentication:Issuer"],
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+            };
 
-            // Credentials are invalid, or account doesn't exist
-            return Task.FromResult<ClaimsIdentity>(null);
-        }
-
-        private bool ValidLogin (string email, string password)
-        {
-            return true;
+            app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));
         }
     }
 }

@@ -9,6 +9,7 @@
     <UserSecretsId>TestIt</UserSecretsId>
     <RuntimeFrameworkVersion>1.1.2</RuntimeFrameworkVersion>
     <PackageTargetFallback>$(PackageTargetFallback);dotnet5.6;dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper.Data" Version="1.0.0-beta1" />
@@ -47,7 +48,7 @@
     <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
     <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
     <ProjectReference Include="..\TestIt.Model\TestIt.Model.csproj" />
-    <ProjectReference Include="..\TestIt.Security\TestIt.Utils.csproj" />
+    <ProjectReference Include="..\TestIt.Security\TestIt.Security.csproj" />
   </ItemGroup>
 
 </Project>

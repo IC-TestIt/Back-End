@@ -58,7 +58,9 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IStudentRepository, Data.Repositories.StudentRepository>();
             services.AddScoped<Data.Abstract.ITeacherRepository, Data.Repositories.TeacherRepository>();
             services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
-            
+
+            services.AddScoped<Business.IUserService, Business.Services.UserService>();
+
             AutoMapperConfiguration.Configure();
 
             services.AddCors();
