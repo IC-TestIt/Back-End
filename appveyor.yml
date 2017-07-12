@@ -7,3 +7,5 @@ platform: Any CPU
 build:
   project: TestIt.sln
   verbosity: minimal
+before_build:
+    - cmd: dotnet restore TestIt.sln
