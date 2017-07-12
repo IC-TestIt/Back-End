@@ -11,9 +11,9 @@ namespace TestIt.API.ViewModels.User
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public String Email { get; set; }
-        public String Password { get; set; }
-        public String Phone { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string Phone { get; set; }
         public DateTime Birthday { get; set; }
         public int IdentifyerType { get; set; }
         public Organization Organization { get; set; }
