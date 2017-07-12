@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  testit.api:
+    image: testit.api
+    build:
+      context: ./TestIt.API
+      dockerfile: Dockerfile

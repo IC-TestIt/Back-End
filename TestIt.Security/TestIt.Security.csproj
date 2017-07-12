@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>Security Layer</Description>
-    <TargetFramework>netstandard1.4</TargetFramework>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,8 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Email\" />
-    <Folder Include="File\" />
+    <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
   </ItemGroup>
-
 </Project>
