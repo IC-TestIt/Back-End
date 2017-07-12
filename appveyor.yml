@@ -13,4 +13,4 @@
   platform: Any CPU
   skip_branch_with_pr: false
   before_build:
-    - cmd: dotnet restore
+    - cmd: dotnet restore TestIt.sln
