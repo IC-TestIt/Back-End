@@ -39,6 +39,9 @@ namespace TestIt.Data
                 .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<User>()
+                .Property(u => u.DateUpdated);
+
+            modelBuilder.Entity<User>()
                 .Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(120);
@@ -63,9 +66,22 @@ namespace TestIt.Data
             modelBuilder.Entity<User>()
                 .HasOne(u => u.Organization)
                 .WithMany(u => u.Users);
-            
+
             modelBuilder.Entity<User>()
-                .Property(u => u.Birthday)
+                .Property(u => u.Birthday);
+
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Active)
+                .IsRequired();
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.Identifyer)
+                .IsRequired()
+                .HasMaxLength(20);
+
+            modelBuilder.Entity<User>()
+                .Property(u => u.IdentifyerType)
                 .IsRequired();
 
             modelBuilder.Entity<Teacher>()
@@ -78,7 +94,10 @@ namespace TestIt.Data
             modelBuilder.Entity<Teacher>()
                 .Property(t => t.DateCreated)
                 .HasDefaultValue(DateTime.Now);
-            
+
+            modelBuilder.Entity<Teacher>()
+                .Property(t => t.DateUpdated);
+
             modelBuilder.Entity<Teacher>()
                 .Property(t => t.User)
                 .IsRequired();
@@ -97,6 +116,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Student>()
                 .Property(s => s.DateCreated)
                 .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<Student>()
+                .Property(s => s.DateUpdated);
 
             modelBuilder.Entity<Student>()
                 .Property(s => s.Id)
@@ -119,7 +141,10 @@ namespace TestIt.Data
             modelBuilder.Entity<SocialId>()
                 .Property(s => s.DateCreated)
                 .HasDefaultValue(DateTime.Now);
-            
+
+            modelBuilder.Entity<SocialId>()
+                .Property(s => s.DateUpdated);
+
             modelBuilder.Entity<SocialId>()
                 .Property(s => s.Description)
                 .IsRequired();
@@ -130,6 +155,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Organization>()
                 .Property(o => o.DateCreated)
                 .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<Organization>()
+                .Property(o => o.DateUpdated);
 
             modelBuilder.Entity<Organization>()
                 .Property(o => o.Id)
@@ -159,6 +187,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Class>()
                 .Property(c => c.DateCreated)
                 .HasDefaultValue(DateTime.Now);
+
+            modelBuilder.Entity<Class>()
+                .Property(c => c.DateUpdated)
 
             modelBuilder.Entity<Class>()
                 .Property(c => c.Teacher)
