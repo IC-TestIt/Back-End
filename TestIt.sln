@@ -1,19 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.API", "TestIt.API\TestIt.API.csproj", "{9FC25BAF-8306-4954-A3E9-43D481E9704E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.Business", "TestIt.Business\TestIt.Business.csproj", "{70D7F369-B6CD-4A12-A6EA-75982FA12CD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestIt.Data", "TestIt.Data\TestIt.Data.csproj", "{9A2B1055-50CB-4568-B19C-A0635C1E043F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.Data", "TestIt.Data\TestIt.Data.csproj", "{9A2B1055-50CB-4568-B19C-A0635C1E043F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestIt.Model", "TestIt.Model\TestIt.Model.csproj", "{1AFF1B94-DD7E-4C50-B57F-E164D8B0A1B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.Model", "TestIt.Model\TestIt.Model.csproj", "{1AFF1B94-DD7E-4C50-B57F-E164D8B0A1B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestIt.Security", "TestIt.Security\TestIt.Security.csproj", "{106EBEC8-EF15-4C43-9D01-BB1DAD2006E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.Security", "TestIt.Security\TestIt.Security.csproj", "{106EBEC8-EF15-4C43-9D01-BB1DAD2006E4}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{8C10F7C6-74A4-4FD6-9132-C5E5A64DBA1E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestIt.Tests", "TestIt.Tests\TestIt.Tests.csproj", "{732BD8A0-ACB4-4B29-9794-574741C3B5D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{8C10F7C6-74A4-4FD6-9132-C5E5A64DBA1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8C10F7C6-74A4-4FD6-9132-C5E5A64DBA1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8C10F7C6-74A4-4FD6-9132-C5E5A64DBA1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{732BD8A0-ACB4-4B29-9794-574741C3B5D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{732BD8A0-ACB4-4B29-9794-574741C3B5D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{732BD8A0-ACB4-4B29-9794-574741C3B5D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{732BD8A0-ACB4-4B29-9794-574741C3B5D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
