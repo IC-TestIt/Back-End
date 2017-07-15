@@ -25,7 +25,7 @@ namespace TestIt.Business.Services
 
         public Teacher GetByUser(int id) 
         {
-            return teacherRepository.GetSingle(t => t.User.Id == id);
+            return teacherRepository.GetSingle(t => t.UserId == id);
         }
 
         public void Save(Teacher t) 
