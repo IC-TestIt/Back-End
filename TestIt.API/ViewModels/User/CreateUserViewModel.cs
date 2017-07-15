@@ -15,6 +15,7 @@ namespace TestIt.API.ViewModels.User
         public string Password { get; set; }
         public string Phone { get; set; }
         public DateTime Birthday { get; set; }
+        public int Type {get; set;}
         public int IdentifyerType { get; set; }
         public Organization Organization { get; set; }
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
