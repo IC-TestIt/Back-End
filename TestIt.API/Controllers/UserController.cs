@@ -35,6 +35,7 @@ namespace TestIt.API.Controllers
         public void Post([FromBody]CreateUserViewModel viewModel)
         {
             User user = Mapper.Map<User>(viewModel);
+            userService.Save(user);            
             if(viewModel.Type == 1) 
             {
                 Teacher t = new Teacher();
@@ -46,25 +47,13 @@ namespace TestIt.API.Controllers
             {
 
             }
-            userService.Save(user);
         }
 
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]CreateUserViewModel viewModel)
         {
             User user = Mapper.Map<User>(viewModel);
-            if(viewModel.Type == 1) 
-            {
-                Teacher t = teacherService.GetByUser(id);
-                t.User = user;
-
-                teacherService.Update(id, t);
-            }
-            else 
-            {
-
-            }
-            userService.Update(id, user);
+            userService.Update(id, user);            
         }
 
         [HttpDelete("{id?type}")]
@@ -76,6 +65,7 @@ namespace TestIt.API.Controllers
                 Teacher t = teacherService.GetByUser(id);
                 teacherService.Delete(t.Id);
             }
+            userService.Delete(id);
             
         }
     }
