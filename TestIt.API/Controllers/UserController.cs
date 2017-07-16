@@ -8,6 +8,7 @@ using TestIt.Model.Entities;
 
 namespace TestIt.API.Controllers
 {
+    [Route("api/[controller]")]
     public class UserController : Controller
     {
         private Business.IUserService userService;
@@ -56,17 +57,15 @@ namespace TestIt.API.Controllers
             userService.Update(id, user);            
         }
 
-        [HttpDelete("{id?type}")]
-        public void Delete(int id, int type)
+        [HttpDelete("{id}")]
+        public void Delete(int id)
         {
             User user = userService.GetSingle(id);
-            if(type == 1) 
-            {
-                Teacher t = teacherService.GetByUser(id);
-                teacherService.Delete(t.Id);
+            Teacher t = teacherService.GetByUser(id);
+            if (t != null) {
+                teacherService.Delete(t.Id);                
             }
             userService.Delete(id);
-            
         }
     }
 }
