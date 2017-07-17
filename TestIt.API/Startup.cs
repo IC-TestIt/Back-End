@@ -77,13 +77,13 @@ namespace TestIt.API
 
         public void Configure(IApplicationBuilder app)
         {
-            ConfigureAuth(app);
-
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
+            ConfigureAuth(app);
+            
             app.UseExceptionHandler(
               builder =>
               {
