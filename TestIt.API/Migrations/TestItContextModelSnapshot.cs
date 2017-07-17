@@ -23,7 +23,7 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 919, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 557, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -65,11 +65,11 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 918, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 918, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -84,27 +84,6 @@ namespace TestIt.API.Migrations
                     b.ToTable("Organizations");
                 });
 
-            modelBuilder.Entity("TestIt.Model.Entities.SocialIdentifier", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DateCreated")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 917, DateTimeKind.Local));
-
-                    b.Property<DateTime>("DateUpdated")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 918, DateTimeKind.Local));
-
-                    b.Property<string>("Description")
-                        .IsRequired();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SocialIds");
-                });
-
             modelBuilder.Entity("TestIt.Model.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -112,7 +91,7 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 917, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -132,11 +111,11 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 912, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 551, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 912, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 551, DateTimeKind.Local));
 
                     b.Property<int>("UserId");
 
@@ -158,16 +137,17 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 890, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 533, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 12, 16, 16, 1, 901, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 542, DateTimeKind.Local));
 
                     b.Property<string>("Email")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(25);
 
-                    b.Property<string>("Identifyer")
+                    b.Property<string>("Identifier")
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -178,19 +158,14 @@ namespace TestIt.API.Migrations
                     b.Property<int>("OrganizationId");
 
                     b.Property<string>("Password")
-                        .IsRequired();
+                        .HasMaxLength(25);
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(12);
-
-                    b.Property<int>("SocialIdentifierId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
-
-                    b.HasIndex("SocialIdentifierId");
 
                     b.ToTable("Users");
                 });
@@ -232,10 +207,6 @@ namespace TestIt.API.Migrations
                     b.HasOne("TestIt.Model.Entities.Organization", "Organization")
                         .WithMany("Users")
                         .HasForeignKey("OrganizationId");
-
-                    b.HasOne("TestIt.Model.Entities.SocialIdentifier", "SocialIdentifier")
-                        .WithMany()
-                        .HasForeignKey("SocialIdentifierId");
                 });
         }
     }

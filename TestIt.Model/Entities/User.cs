@@ -24,9 +24,7 @@ namespace TestIt.Model.Entities
         public DateTime Birthday { get; set; }
         public bool Active { get; set; }
             
-        public string Identifyer { get; set; }
-        public int SocialIdentifierId { get; set; }
-        public SocialIdentifier SocialIdentifier { get; set; }
+        public string Identifier { get; set; }
         public Organization Organization { get; set; }
         public int OrganizationId { get; set; }
     }
