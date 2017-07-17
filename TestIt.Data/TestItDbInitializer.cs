@@ -22,24 +22,6 @@ namespace TestIt.Data
 
         private static void InitializeTestIt()
         {
-            if (!context.SocialIds.Any())
-            {
-                SocialIdentifier socialid_01 = new SocialIdentifier
-                {
-                    Description = "CPF"
-                };
-
-                SocialIdentifier socialid_02 = new SocialIdentifier
-                {
-                    Description = "RG"
-                };
-
-                context.SocialIds.Add(socialid_01);
-                context.SocialIds.Add(socialid_02);
-
-                context.SaveChanges();
-            }
-
             List<User> users = new List<User>();
 
             if (!context.Users.Any())
@@ -50,10 +32,9 @@ namespace TestIt.Data
                     Email = "dimas@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    SocialIdentifierId = 5,
                     Password = "abc123",
                     Phone = "33445566",
-                    Identifyer = "444.555.666-9"
+                    Identifier = "444.555.666-9"
                 });
 
                 users.Add(new User
@@ -62,10 +43,9 @@ namespace TestIt.Data
                     Email = "luiz@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    SocialIdentifierId = 6,
                     Password = "123abc",
                     Phone = "45678909",
-                    Identifyer = "56.789.678-x"
+                    Identifier = "56.789.678-x"
                 });
 
                 users.Add(new User
@@ -74,10 +54,9 @@ namespace TestIt.Data
                     Email = "vitor@gmail.com",
                     Birthday = DateTime.Today,
                     Active = true,
-                    SocialIdentifierId = 5,
                     Password = "123abc",
                     Phone = "12356798",
-                    Identifyer = "455.666.777-0"
+                    Identifier = "455.666.777-0"
                 });
             }
 

@@ -51,7 +51,7 @@ namespace TestIt.API.Migrations
                     DateCreated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2017, 7, 12, 12, 58, 16, 836, DateTimeKind.Local)),
                     DateUpdated = table.Column<DateTime>(nullable: false, defaultValue: new DateTime(2017, 7, 12, 12, 58, 16, 844, DateTimeKind.Local)),
                     Email = table.Column<string>(nullable: false),
-                    Identifyer = table.Column<string>(maxLength: 20, nullable: false),
+                    Identifier = table.Column<string>(maxLength: 20, nullable: false),
                     Name = table.Column<string>(maxLength: 120, nullable: false),
                     OrganizationId = table.Column<int>(nullable: true),
                     Password = table.Column<string>(nullable: false),

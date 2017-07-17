@@ -14,7 +14,6 @@ namespace TestIt.Data
         public DbSet<User> Users {get; set;}
         public DbSet<Teacher> Teachers {get; set;}
         public DbSet<Student> Students {get; set;}
-        public DbSet<SocialIdentifier> SocialIds {get; set;}
         public DbSet<Organization> Organizations {get; set;}
         public DbSet<Class> Classes {get; set;}
         public DbSet<ClassStudents> ClassStudents { get; set; }
@@ -51,19 +50,15 @@ namespace TestIt.Data
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
-                .IsRequired();
+                .IsRequired()
+                .HasMaxLength(25);
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Password)
-                .IsRequired();   
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.SocialIdentifierId)
-                .IsRequired(); 
+                .HasMaxLength(25);   
             
             modelBuilder.Entity<User>()
                 .Property(u => u.Phone)
-                .IsRequired()
                 .HasMaxLength(12);
 
             modelBuilder.Entity<User>()
@@ -72,20 +67,16 @@ namespace TestIt.Data
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Birthday);
-
-
+            
             modelBuilder.Entity<User>()
                 .Property(u => u.Active)
                 .IsRequired();
 
             modelBuilder.Entity<User>()
-                .Property(u => u.Identifyer)
+                .Property(u => u.Identifier)
                 .IsRequired()
                 .HasMaxLength(20);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.SocialIdentifierId)
-                .IsRequired();
+            
             #endregion
 
             #region Teacher
@@ -138,28 +129,7 @@ namespace TestIt.Data
             modelBuilder.Entity<Student>()
                 .HasMany(s => s.ClassStudents);
             #endregion
-
-            #region SocialIdentifier
-            modelBuilder.Entity<SocialIdentifier>()
-                .ToTable("SocialIds");
-
-            modelBuilder.Entity<SocialIdentifier>()
-                .Property(s => s.Id)
-                .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<SocialIdentifier>()
-                .Property(s => s.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<SocialIdentifier>()
-                .Property(s => s.DateUpdated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<SocialIdentifier>()
-                .Property(s => s.Description)
-                .IsRequired();
-            #endregion
-
+            
             #region Organization
             modelBuilder.Entity<Organization>()
                 .ToTable("Organizations");

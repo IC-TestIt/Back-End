@@ -156,7 +156,7 @@ namespace TestIt.API.Migrations
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Identifyer")
+                    b.Property<string>("Identifier")
                         .IsRequired()
                         .HasMaxLength(20);
 
