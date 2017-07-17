@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
 
@@ -47,11 +48,19 @@ namespace TestIt.Business.Services
         public void Update(int id, User user)
         {
             User t = userRepository.GetSingle(id);
-            if (t != null && user.Id == t.Id)
+
+            if (t != null)
             {
-                userRepository.Update(user);
+                t.DateUpdated = DateTime.Now;
+                t.Birthday = user.Birthday;
+                t.Password = user.Password;
+                t.OrganizationId = user.OrganizationId;
+                
                 userRepository.Commit();
             }
+            
+
+            
         }
     }
 }

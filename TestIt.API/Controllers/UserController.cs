@@ -36,17 +36,22 @@ namespace TestIt.API.Controllers
         public void Post([FromBody]CreateUserViewModel viewModel)
         {
             User user = Mapper.Map<User>(viewModel);
-            userService.Save(user);            
+            
             if(viewModel.Type == 1) 
             {
-                Teacher t = new Teacher();
-                t.User = user;
+                user.Active = true;
+                userService.Save(user);
+
+                var t = new Teacher()
+                {
+                    User = user
+                };
 
                 teacherService.Save(t);
             }
             else 
             {
-
+                userService.Save(user);
             }
         }
 

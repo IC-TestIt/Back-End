@@ -9,15 +9,16 @@ namespace TestIt.API.ViewModels.User
 {
     public class CreateUserViewModel : IValidatableObject
     {
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
         public DateTime Birthday { get; set; }
         public int Type {get; set;}
-        public int IdentifyerType { get; set; }
-        public Organization Organization { get; set; }
+        public int SocialIdentifierId { get; set; }
+        public int OrganizationId { get; set; }
+        public string Identifyer { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validator = new CreateUserViewModelValidator();

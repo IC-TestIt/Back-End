@@ -7,6 +7,11 @@ namespace TestIt.Model.Entities
 {
     public class User : IEntityBase
     {
+        public User()
+        {
+            DateCreated = DateTime.Now;
+            DateUpdated = DateTime.Now;
+        }
 
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
