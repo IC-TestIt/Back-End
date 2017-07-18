@@ -12,10 +12,12 @@ namespace TestIt.API.Controllers
     public class ClassController : Controller
     {
         private Business.IClassService classService;
+        private Business.IClassStudentsService classStudentService;
 
-        public ClassController(IClassService classService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService)
         {
             this.classService = classService;
+            this.classStudentService = classStudentService;
         }
 
         [HttpPost]
@@ -26,6 +28,14 @@ namespace TestIt.API.Controllers
             classService.Save(newClass);
         }
 
-
+        [HttpPost("{id}/student/{studentId}")]
+        public void Post(int id, int studentId)
+        {
+            classStudentService.Save(new ClassStudents()
+            {
+                ClassId = id,
+                StudentId = studentId
+            });
+        }
     }
 }

@@ -13,11 +13,13 @@ namespace TestIt.API.Controllers
     {
         private Business.IUserService userService;
         private Business.ITeacherService teacherService;
+        private Business.IStudentService studentService;
 
-        public UserController(IUserService userService, ITeacherService teacherService)
+        public UserController(IUserService userService, ITeacherService teacherService, IStudentService studentService)
         {
             this.userService = userService;
             this.teacherService = teacherService;
+            this.studentService = studentService;
         }
 
         [HttpGet]
@@ -36,8 +38,8 @@ namespace TestIt.API.Controllers
         public void Post([FromBody]CreateUserViewModel viewModel)
         {
             User user = Mapper.Map<User>(viewModel);
-            
-            if(viewModel.Type == 1) 
+
+            if (viewModel.Type == 1)
             {
                 user.Active = true;
                 userService.Save(user);
@@ -49,9 +51,17 @@ namespace TestIt.API.Controllers
 
                 teacherService.Save(t);
             }
-            else 
+            else
             {
+                user.Active = true;
                 userService.Save(user);
+
+                var s = new Student()
+                {
+                    User = user
+                };
+
+                studentService.Save(s);
             }
         }
 
@@ -59,7 +69,7 @@ namespace TestIt.API.Controllers
         public void Put(int id, [FromBody]CreateUserViewModel viewModel)
         {
             User user = Mapper.Map<User>(viewModel);
-            userService.Update(id, user);            
+            userService.Update(id, user);
         }
 
         [HttpDelete("{id}")]
@@ -67,10 +77,26 @@ namespace TestIt.API.Controllers
         {
             User user = userService.GetSingle(id);
             Teacher t = teacherService.GetByUser(id);
-            if (t != null) {
-                teacherService.Delete(t.Id);                
+            Student s = studentService.GetByUser(id);
+
+            if (t != null)
+            {
+                teacherService.Delete(t.Id);
             }
+
+            if (s != null)
+            {
+                studentService.Delete(s.Id);
+            }
+
             userService.Delete(id);
         }
+
+        [HttpGet("exists/{email}")]
+        public int UserExists(string email)
+        {
+            return userService.Exists(email);
+        }
+
     }
 }
