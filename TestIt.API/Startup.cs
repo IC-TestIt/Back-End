@@ -57,10 +57,13 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IStudentRepository, Data.Repositories.StudentRepository>();
             services.AddScoped<Data.Abstract.ITeacherRepository, Data.Repositories.TeacherRepository>();
             services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
+            services.AddScoped<Data.Abstract.IClassStudentsRepository, Data.Repositories.ClassStudentsRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
             services.AddScoped<Business.IClassService, Business.Services.ClassService>();
+            services.AddScoped<Business.IStudentService, Business.Services.StudentService>();
+            services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
 
             AutoMapperConfiguration.Configure();
 

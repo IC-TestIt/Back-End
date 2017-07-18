@@ -17,6 +17,8 @@ namespace TestIt.Business
         void Delete(int id);
 
         void Update(int id, User u);
+
+        int Exists(string email);
     }
 
     public interface ITeacherService 
@@ -37,5 +39,24 @@ namespace TestIt.Business
     public interface IClassService
     {
         void Save(Class c);
+    }
+
+    public interface IStudentService
+    {
+        IEnumerable<Student> Get();
+
+        Student GetSingle(int id);
+
+        void Save(Student s);
+
+        void Delete(int id);
+
+        void Update(int id, Student student);
+        Student GetByUser(int id);
+    }
+
+    public interface IClassStudentsService
+    {
+        void Save(ClassStudents cs);
     }
 }

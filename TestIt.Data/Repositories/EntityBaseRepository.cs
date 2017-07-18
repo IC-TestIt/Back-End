@@ -98,14 +98,7 @@ namespace TestIt.Data.Repositories
 
         public virtual void Commit()
         {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-
-            }
+            _context.SaveChanges();
         }
     }
 }
