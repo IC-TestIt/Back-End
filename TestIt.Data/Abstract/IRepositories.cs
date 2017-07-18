@@ -7,5 +7,6 @@ namespace TestIt.Data.Abstract
     public interface IStudentRepository : IEntityBaseRepository<Student> {}
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
     public interface IClassRepository : IEntityBaseRepository<Class> {}
+    public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
     
 }
