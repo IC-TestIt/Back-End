@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using TestIt.API.ViewModels.Validations.User;
-using TestIt.Model.Entities;
-
 namespace TestIt.API.ViewModels.User
 {
     public class CreateUserViewModel : IValidatableObject
