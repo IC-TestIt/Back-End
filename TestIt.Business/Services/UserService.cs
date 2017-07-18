@@ -54,6 +54,7 @@ namespace TestIt.Business.Services
                 t.DateUpdated = DateTime.Now;
                 t.Birthday = user.Birthday;
                 t.Password = user.Password;
+                t.Phone = user.Phone;
                 t.OrganizationId = user.OrganizationId;
                 
                 userRepository.Commit();
