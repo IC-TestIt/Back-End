@@ -59,8 +59,14 @@ namespace TestIt.Business.Services
                 userRepository.Commit();
             }
             
-
-            
         }
+
+        public int Exists(string email)
+        {
+            var u =  userRepository.GetSingle(x => x.Email == email);
+            return u == null ? 0 : u.Id;
+        }
+
+
     }
 }
