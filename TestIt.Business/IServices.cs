@@ -33,4 +33,9 @@ namespace TestIt.Business
 
         Teacher GetByUser(int id);
     }
+
+    public interface IClassService
+    {
+        void Save(Class c);
+    }
 }
