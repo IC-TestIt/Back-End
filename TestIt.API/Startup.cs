@@ -60,6 +60,7 @@ namespace TestIt.API
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
+            services.AddScoped<Business.IClassService, Business.Services.ClassService>();
 
             AutoMapperConfiguration.Configure();
 

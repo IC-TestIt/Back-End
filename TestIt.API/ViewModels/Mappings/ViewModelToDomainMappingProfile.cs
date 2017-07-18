@@ -13,6 +13,7 @@ namespace TestIt.API.ViewModels.Mappings
 
             //Mapper.CreateMap<UserViewModel, User>();
             Mapper.CreateMap<User.CreateUserViewModel, Model.Entities.User>();
+            Mapper.CreateMap<Class.CreateClassViewModel, Model.Entities.Class>();
         }
     }
 }
