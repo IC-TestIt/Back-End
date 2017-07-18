@@ -13,9 +13,8 @@ namespace TestIt.API.ViewModels.User
         public string Phone { get; set; }
         public DateTime Birthday { get; set; }
         public int Type {get; set;}
-        public int SocialIdentifierId { get; set; }
         public int OrganizationId { get; set; }
-        public string Identifier { get; set; }
+        public string Identifyer { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

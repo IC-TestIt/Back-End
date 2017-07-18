@@ -34,7 +34,7 @@ namespace TestIt.Data
                     Active = true,
                     Password = "abc123",
                     Phone = "33445566",
-                    Identifier = "444.555.666-9"
+                    Identifyer = "444.555.666-9"
                 });
 
                 users.Add(new User
@@ -45,7 +45,7 @@ namespace TestIt.Data
                     Active = true,
                     Password = "123abc",
                     Phone = "45678909",
-                    Identifier = "56.789.678-x"
+                    Identifyer = "56.789.678-x"
                 });
 
                 users.Add(new User
@@ -56,7 +56,7 @@ namespace TestIt.Data
                     Active = true,
                     Password = "123abc",
                     Phone = "12356798",
-                    Identifier = "455.666.777-0"
+                    Identifyer = "455.666.777-0"
                 });
             }
 
