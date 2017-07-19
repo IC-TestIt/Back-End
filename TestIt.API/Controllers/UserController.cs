@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TestIt.API.ViewModels.Mappings;
 using TestIt.API.ViewModels.User;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -11,9 +10,9 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private Business.IUserService userService;
-        private Business.ITeacherService teacherService;
-        private Business.IStudentService studentService;
+        private IUserService userService;
+        private ITeacherService teacherService;
+        private IStudentService studentService;
 
         public UserController(IUserService userService, ITeacherService teacherService, IStudentService studentService)
         {
@@ -25,71 +24,90 @@ namespace TestIt.API.Controllers
         [HttpGet]
         public IEnumerable<User> Get()
         {
-            return userService.Get();
+            return userService.Get(); //TODO: UserViewModel
         }
 
         [HttpGet("{id}")]
-        public User Get(int id)
+        public IActionResult Get(int id)
         {
-            return userService.GetSingle(id);
+            var user = userService.GetSingle(id);
+
+            if (user != null)
+                return new OkObjectResult(user); //TODO: UserViewModel
+            else
+                return NotFound();
         }
 
         [HttpPost]
-        public void Post([FromBody]CreateUserViewModel viewModel)
+        public IActionResult Post([FromBody]CreateUserViewModel viewModel)
         {
+            OkObjectResult result;
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             User user = Mapper.Map<User>(viewModel);
+
+            user.Active = true;
+            userService.Save(user);
 
             if (viewModel.Type == 1)
             {
-                user.Active = true;
-                userService.Save(user);
+                var teacherId = CreateStudent(user);
 
-                var t = new Teacher()
-                {
-                    User = user
-                };
-
-                teacherService.Save(t);
+                result = Ok(new { teacherId = teacherId, userId = user.Id });
             }
             else
             {
-                user.Active = true;
-                userService.Save(user);
+                var studentId = CreateStudent(user);
 
-                var s = new Student()
-                {
-                    User = user
-                };
-
-                studentService.Save(s);
+                result = Ok(new { studentId = studentId, userId = user.Id });
             }
+
+            return result;
         }
 
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]CreateUserViewModel viewModel)
+        public IActionResult Put(int id, [FromBody]CreateUserViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             User user = Mapper.Map<User>(viewModel);
-            userService.Update(id, user);
+
+            var sucess = userService.Update(id, user);
+
+            if (sucess)
+                return new NoContentResult();
+            else
+                return NotFound();
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
             User user = userService.GetSingle(id);
-            Teacher t = teacherService.GetByUser(id);
-            Student s = studentService.GetByUser(id);
 
-            if (t != null)
+            if (user == null)
+                return new NotFoundResult();
+            else
             {
-                teacherService.Delete(t.Id);
-            }
+                var tId = GetTeacherId(user.Id);
+                var sId = GetStudentId(user.Id);
+                
+                if (tId != 0)
+                    teacherService.Delete(tId);
+                if (sId != 0)
+                    studentService.Delete(sId);
+                
+                userService.Delete(id);
 
-            if (s != null)
-            {
-                studentService.Delete(s.Id);
+                return new NoContentResult();
             }
-
-            userService.Delete(id);
         }
 
         [HttpGet("exists/{email}")]
@@ -98,5 +116,53 @@ namespace TestIt.API.Controllers
             return userService.Exists(email);
         }
 
+
+        private int CreateStudent(User user)
+        {
+            var student = new Student()
+            {
+                User = user
+            };
+
+            studentService.Save(student);
+
+            return student.Id;
+        }
+
+        private int CreateTeacher(User user)
+        {
+            var teacher = new Teacher()
+            {
+                User = user
+            };
+
+            teacherService.Save(teacher);
+
+            return teacher.Id;
+        }
+
+        private void DeleteTeacher(int id)
+        {
+            teacherService.Delete(id);
+        }
+
+        private void DeleteStudent(int id)
+        {
+            studentService.Delete(id);
+        }
+
+        private int GetTeacherId (int id)
+        {
+            Teacher t = teacherService.GetByUser(id);
+
+            return t != null ? t.Id : 0;
+        }
+
+        private int GetStudentId(int id)
+        {
+            Student t = studentService.GetByUser(id);
+
+            return t != null ? t.Id : 0;
+        }
     }
 }

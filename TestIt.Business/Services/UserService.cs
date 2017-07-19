@@ -45,7 +45,7 @@ namespace TestIt.Business.Services
             }
         }
 
-        public void Update(int id, User user)
+        public bool Update(int id, User user)
         {
             User t = userRepository.GetSingle(id);
 
@@ -56,10 +56,13 @@ namespace TestIt.Business.Services
                 t.Password = user.Password;
                 t.Phone = user.Phone;
                 t.OrganizationId = user.OrganizationId;
-                
+
                 userRepository.Commit();
+
+                return true;
             }
-            
+            else
+                return false;
         }
 
         public int Exists(string email)
