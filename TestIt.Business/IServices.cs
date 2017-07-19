@@ -16,7 +16,7 @@ namespace TestIt.Business
 
         void Delete(int id);
 
-        void Update(int id, User u);
+        bool Update(int id, User u);
 
         int Exists(string email);
     }
