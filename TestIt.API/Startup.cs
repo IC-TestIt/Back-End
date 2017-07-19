@@ -64,6 +64,7 @@ namespace TestIt.API
             services.AddScoped<Business.IClassService, Business.Services.ClassService>();
             services.AddScoped<Business.IStudentService, Business.Services.StudentService>();
             services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
+            services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
 
             AutoMapperConfiguration.Configure();
 
@@ -75,6 +76,8 @@ namespace TestIt.API
                     // Force Camel Case to JSON
                     opts.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
+
+            services.AddSingleton<IConfiguration>(Configuration);
 
         }
 
