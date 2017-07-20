@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using TestIt.Model.Entities;
 
 namespace TestIt.Data.Abstract
 {
-    public interface IUserRepository : IEntityBaseRepository<User> {}
+    public interface IUserRepository : IEntityBaseRepository<User>
+    {
+        List<User> ClassUsers(int classId);
+    }
     public interface ITeacherRepository : IEntityBaseRepository<Teacher> {}
     public interface IStudentRepository : IEntityBaseRepository<Student> {}
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
