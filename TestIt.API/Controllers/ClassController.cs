@@ -46,5 +46,13 @@ namespace TestIt.API.Controllers
                 StudentId = studentId
             });
         }
+
+        [HttpGet("{id}/users")]
+        public IActionResult Get (int id)
+        {
+            OkObjectResult result = Ok(classService.ClassUsers(id));
+
+            return result;
+        }
     }
 }

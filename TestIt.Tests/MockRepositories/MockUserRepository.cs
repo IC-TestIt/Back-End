@@ -41,7 +41,12 @@ namespace TestIt.Tests.MockRepositories
         {
             return users.Any(predicate);
         }
-        
+
+        public List<User> ClassUsers(int classId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Commit()
         {
             throw new NotImplementedException();

@@ -39,6 +39,8 @@ namespace TestIt.Business
     public interface IClassService
     {
         void Save(Class c);
+
+        IEnumerable<User> ClassUsers(int id);
     }
 
     public interface IStudentService
