@@ -21,11 +21,20 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody]CreateClassViewModel viewModel)
+        public IActionResult Post([FromBody]CreateClassViewModel viewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             Class newClass = Mapper.Map<Class>(viewModel);
 
             classService.Save(newClass);
+
+            OkObjectResult result = Ok(new { classId = newClass.Id});
+
+            return result;
         }
 
         [HttpPost("{id}/student/{studentId}")]
