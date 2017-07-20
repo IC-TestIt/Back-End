@@ -7,11 +7,12 @@ namespace TestIt.Business.Services
     public class ClassService : IClassService
     {
         private IClassRepository classRepository;
+        private IUserRepository userRepository;
 
-        public ClassService (IClassRepository classRepository)
+        public ClassService (IClassRepository classRepository, IUserRepository userRepository)
         {
             this.classRepository = classRepository;
-            
+            this.userRepository = userRepository;
         }
         public void Save(Class c)
         {
@@ -19,7 +20,9 @@ namespace TestIt.Business.Services
             classRepository.Commit();
         }
 
-        
-
+        public IEnumerable<User> ClassUsers (int id)
+        {
+            return userRepository.ClassUsers(id);
+        }
     }
 }
