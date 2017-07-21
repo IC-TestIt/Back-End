@@ -22,9 +22,18 @@ namespace TestIt.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<User> Get()
+        public IActionResult Get()
         {
-            return userService.Get(); //TODO: UserViewModel
+            IEnumerable<User> users = userService.Get();
+          
+            if(users != null)
+            {
+                IEnumerable<ReturnUserViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
+                return new OkObjectResult(usersVm);
+            }
+
+            return NotFound();
+
         }
 
         [HttpGet("{id}")]
@@ -33,7 +42,10 @@ namespace TestIt.API.Controllers
             var user = userService.GetSingle(id);
 
             if (user != null)
-                return new OkObjectResult(user); //TODO: UserViewModel
+            {
+                var userVm = Mapper.Map<User, ReturnUserViewModel>(user);
+                return new OkObjectResult(userVm); //TODO: UserViewModel
+            }
             else
                 return NotFound();
         }

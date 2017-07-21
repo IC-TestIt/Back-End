@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using TestIt.Model;
+using TestIt.Model.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TestIt.API.ViewModels.User;
 
 namespace TestIt.API.ViewModels.Mappings
 {
@@ -10,11 +11,7 @@ namespace TestIt.API.ViewModels.Mappings
     {
         protected override void Configure()
         {
-            //Mapper.CreateMap<Schedule, ScheduleViewModel>()
-            //   .ForMember(vm => vm.Creator,
-            //        map => map.MapFrom(s => s.Creator.Name))
-            //   .ForMember(vm => vm.Attendees, map =>
-            //        map.MapFrom(s => s.Attendees.Select(a => a.UserId)));
+            Mapper.CreateMap<Model.Entities.User, ReturnUserViewModel>();
         }
     }
 }
