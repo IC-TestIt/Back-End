@@ -5,6 +5,7 @@ using TestIt.API.ViewModels.Mappings;
 using TestIt.API.ViewModels.Class;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.User;
 
 namespace TestIt.API.Controllers
 {
@@ -50,9 +51,16 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}/users")]
         public IActionResult Get (int id)
         {
-            OkObjectResult result = Ok(classService.ClassUsers(id));
+            IEnumerable<User> usersClass = classService.ClassUsers(id);
 
-            return result;
+            if (usersClass != null)
+            {
+                IEnumerable<ReturnUserViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(usersClass);
+                return new OkObjectResult(usersVm);
+            }
+
+            return NotFound();
+
         }
     }
 }
