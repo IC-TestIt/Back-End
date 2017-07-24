@@ -5,6 +5,7 @@ using TestIt.API.ViewModels.Mappings;
 using TestIt.API.ViewModels.Class;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.Utils.Email;
 
 namespace TestIt.API.Controllers
 {
@@ -13,11 +14,17 @@ namespace TestIt.API.Controllers
     {
         private Business.IClassService classService;
         private Business.IClassStudentsService classStudentService;
+        private IEmailService emailService;
+        private IStudentService studentService;
+        private IUserService userService;
 
-        public ClassController(IClassService classService, IClassStudentsService classStudentService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService, IEmailService emailService, IStudentService studentService, IUserService userService)
         {
             this.classService = classService;
             this.classStudentService = classStudentService;
+            this.emailService = emailService;
+            this.studentService = studentService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -38,13 +45,23 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPost("{id}/student/{studentId}")]
-        public void Post(int id, int studentId)
+        public IActionResult Post(int id, int studentId)
         {
             classStudentService.Save(new ClassStudents()
             {
                 ClassId = id,
                 StudentId = studentId
             });
+
+            OkObjectResult result = Ok(new { classId = id, studentId = studentId });
+
+            var student = studentService.GetSingle(studentId);
+            var user = userService.GetSingle(student.UserId);
+            var room = classService.GetSingle(id);
+
+            emailService.SendInvite(user, room);
+
+            return result;
         }
 
         [HttpGet("{id}/users")]
