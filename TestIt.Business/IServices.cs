@@ -41,6 +41,8 @@ namespace TestIt.Business
         void Save(Class c);
 
         IEnumerable<User> ClassUsers(int id);
+        Class GetSingle(int id);
+        IEnumerable<Class> Get();
     }
 
     public interface IStudentService

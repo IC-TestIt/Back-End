@@ -29,7 +29,7 @@ namespace TestIt.Tests.MockRepositories
     }
         public void Add(User entity)
         {
-            throw new NotImplementedException();
+            users.ToList().Add(entity);
         }
 
         public IEnumerable<User> AllIncluding(params Expression<Func<User, object>>[] includeProperties)
@@ -49,22 +49,22 @@ namespace TestIt.Tests.MockRepositories
 
         public void Commit()
         {
-            throw new NotImplementedException();
+
         }
 
         public int Count()
         {
-            throw new NotImplementedException();
+            return users.Count();
         }
 
         public void Delete(User entity)
         {
-            throw new NotImplementedException();
+            users.ToList().Remove(entity);
         }
 
         public void DeleteWhere(Expression<Func<User, bool>> predicate)
         {
-            throw new NotImplementedException();
+            //users.ToList().RemoveAll(predicate);
         }
 
         public IEnumerable<User> FindBy(Expression<Func<User, bool>> predicate)
@@ -74,17 +74,17 @@ namespace TestIt.Tests.MockRepositories
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return users;
         }
 
         public User GetSingle(int id)
         {
-            throw new NotImplementedException();
+            return users.FirstOrDefault(u => u.Id == id);
         }
 
         public User GetSingle(Expression<Func<User, bool>> predicate)
         {
-            throw new NotImplementedException();
+           return users.FirstOrDefault(predicate);
         }
 
         public User GetSingle(Expression<Func<User, bool>> predicate, params Expression<Func<User, object>>[] includeProperties)

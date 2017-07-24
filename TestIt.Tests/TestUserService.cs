@@ -42,5 +42,22 @@ namespace TestIt.Tests
 
             Assert.False(result);
         }
+
+        [Fact]
+        public void TestAddUser()
+        {
+            var user = new User
+            {
+                Id = 2,
+                Name = "Medson",
+                Active = true,
+                Email = "testit@email.com",
+                Password = "testit"
+            };
+
+            service.Save(user);
+            var result = service.GetSingle(2);
+            Assert.True(result == user);
+        }
     }
 }

@@ -24,5 +24,15 @@ namespace TestIt.Business.Services
         {
             return userRepository.ClassUsers(id);
         }
+
+        public Class GetSingle(int id)
+        {
+            return classRepository.GetSingle(id);
+        }
+
+        public IEnumerable<Class> Get()
+        {
+            return classRepository.GetAll();
+        }
     }
 }
