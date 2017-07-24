@@ -71,5 +71,13 @@ namespace TestIt.API.Controllers
 
             return result;
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUsers(int id)
+        {
+            OkObjectResult result = Ok(classService.ClassUsers(id));
+
+            return result;
+        }
     }
 }
