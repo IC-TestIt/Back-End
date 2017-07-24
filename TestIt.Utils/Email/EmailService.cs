@@ -3,6 +3,7 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
+using TestIt.Model.Entities;
 
 namespace TestIt.Utils.Email
 {
@@ -53,6 +54,33 @@ namespace TestIt.Utils.Email
             {
                 return false;
             }
+        }
+
+        public void SendInvite(User user, Class room)
+        {
+            var email = new Email
+            {
+                ToAdress = user.Email,
+                ToAdressTitle = user.Name,
+                Subject = "TestIt - Adicionado a Turma",
+                BodyContent = "Você foi adicionado a turma " + room.Description
+            };
+
+            Send(email);
+
+        }
+
+        public void SendSignUp(User user)
+        {
+            var email = new Email
+            {
+                ToAdress = user.Email,
+                ToAdressTitle = user.Name,
+                Subject = "TestIt - Finalize o seu cadastro",
+                BodyContent = "http://localhost:8080/#/signup/" + user.Id
+            };
+
+            Send(email);
         }
     }
 }
