@@ -57,6 +57,8 @@ namespace TestIt.Business
 
         void Update(int id, Student student);
         Student GetByUser(int id);
+        void SendSignUp(User user, int studentId);
+        void SendInvite(User user, Class clas);
     }
 
     public interface IClassStudentsService
