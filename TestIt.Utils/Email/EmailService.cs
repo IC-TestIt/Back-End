@@ -3,7 +3,6 @@ using MailKit.Security;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
-using TestIt.Model.Entities;
 
 namespace TestIt.Utils.Email
 {
@@ -56,28 +55,28 @@ namespace TestIt.Utils.Email
             }
         }
 
-        public void SendInvite(User user, Class room)
+        public void SendInvite(String emailAdress, String emailTitle, String description)
         {
             var email = new Email
             {
-                ToAdress = user.Email,
-                ToAdressTitle = user.Name,
+                ToAdress = emailAdress,
+                ToAdressTitle = emailTitle,
                 Subject = "TestIt - Adicionado a Turma",
-                BodyContent = "Você foi adicionado a turma " + room.Description
+                BodyContent = "Você foi adicionado a turma " + description
             };
 
             Send(email);
 
         }
 
-        public void SendSignUp(User user)
+        public void SendSignUp(String emailAdress, String emailTitle, int idStudent)
         {
             var email = new Email
             {
-                ToAdress = user.Email,
-                ToAdressTitle = user.Name,
+                ToAdress = emailAdress,
+                ToAdressTitle = emailTitle,
                 Subject = "TestIt - Finalize o seu cadastro",
-                BodyContent = "http://testitapp.herokuapp.com/#/signup/" + user.Id
+                BodyContent = "http://testitapp.herokuapp.com/#/signup/" + idStudent
             };
 
             Send(email);
