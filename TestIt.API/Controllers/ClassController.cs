@@ -59,7 +59,7 @@ namespace TestIt.API.Controllers
             var User = userService.GetSingle(Student.UserId);
             var Class = classService.GetSingle(id);
 
-            emailService.SendInvite(User.Email, User.Name, Class.Description);
+            studentService.SendInvite(User, Class);
 
             return result;
         }
