@@ -129,7 +129,7 @@ namespace TestIt.API.Controllers
 
             studentService.Save(student);
 
-            emailService.SendSignUp(user);
+            emailService.SendSignUp(user.Email, user.Name, user.Id);
 
             return student.Id;
         }

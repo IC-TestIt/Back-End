@@ -55,11 +55,11 @@ namespace TestIt.API.Controllers
 
             OkObjectResult result = Ok(new { classId = id, studentId = studentId });
 
-            var student = studentService.GetSingle(studentId);
-            var user = userService.GetSingle(student.UserId);
-            var room = classService.GetSingle(id);
+            var Student = studentService.GetSingle(studentId);
+            var User = userService.GetSingle(Student.UserId);
+            var Class = classService.GetSingle(id);
 
-            emailService.SendInvite(user, room);
+            emailService.SendInvite(User.Email, User.Name, Class.Description);
 
             return result;
         }
