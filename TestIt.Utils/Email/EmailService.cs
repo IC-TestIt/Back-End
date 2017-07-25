@@ -54,32 +54,5 @@ namespace TestIt.Utils.Email
                 return false;
             }
         }
-
-        public void SendInvite(String emailAdress, String emailTitle, String description)
-        {
-            var email = new Email
-            {
-                ToAdress = emailAdress,
-                ToAdressTitle = emailTitle,
-                Subject = "TestIt - Adicionado a Turma",
-                BodyContent = "Você foi adicionado a turma " + description
-            };
-
-            Send(email);
-
-        }
-
-        public void SendSignUp(String emailAdress, String emailTitle, int idStudent)
-        {
-            var email = new Email
-            {
-                ToAdress = emailAdress,
-                ToAdressTitle = emailTitle,
-                Subject = "TestIt - Finalize o seu cadastro",
-                BodyContent = "http://testitapp.herokuapp.com/#/signup/" + idStudent
-            };
-
-            Send(email);
-        }
     }
 }
