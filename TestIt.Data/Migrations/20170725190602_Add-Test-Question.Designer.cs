@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TestIt.Data;
 
-namespace TestIt.API.Migrations
+namespace TestIt.Data.Migrations
 {
     [DbContext(typeof(TestItContext))]
-    [Migration("20170717181329_Delete-SocialIds")]
-    partial class DeleteSocialIds
+    [Migration("20170725190602_Add-Test-Question")]
+    partial class AddTestQuestion
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 557, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 398, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -48,6 +48,10 @@ namespace TestIt.API.Migrations
 
                     b.Property<int>("ClassId");
 
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateUpdated");
+
                     b.Property<int>("StudentId");
 
                     b.HasKey("Id");
@@ -66,11 +70,11 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 398, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 398, DateTimeKind.Local));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -85,6 +89,30 @@ namespace TestIt.API.Migrations
                     b.ToTable("Organizations");
                 });
 
+            modelBuilder.Entity("TestIt.Model.Entities.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Answer");
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("TestId");
+
+                    b.Property<double>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TestId");
+
+                    b.ToTable("Questions");
+                });
+
             modelBuilder.Entity("TestIt.Model.Entities.Student", b =>
                 {
                     b.Property<int>("Id")
@@ -92,7 +120,7 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 556, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 398, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated");
 
@@ -112,11 +140,11 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 551, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 392, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 551, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 392, DateTimeKind.Local));
 
                     b.Property<int>("UserId");
 
@@ -125,6 +153,28 @@ namespace TestIt.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Teachers");
+                });
+
+            modelBuilder.Entity("TestIt.Model.Entities.Test", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("DateCreated");
+
+                    b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("TeacherId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("Tests");
                 });
 
             modelBuilder.Entity("TestIt.Model.Entities.User", b =>
@@ -138,17 +188,17 @@ namespace TestIt.API.Migrations
 
                     b.Property<DateTime>("DateCreated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 533, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 373, DateTimeKind.Local));
 
                     b.Property<DateTime>("DateUpdated")
                         .ValueGeneratedOnAdd()
-                        .HasDefaultValue(new DateTime(2017, 7, 17, 15, 13, 29, 542, DateTimeKind.Local));
+                        .HasDefaultValue(new DateTime(2017, 7, 25, 16, 6, 2, 373, DateTimeKind.Local));
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(25);
 
-                    b.Property<string>("Identifier")
+                    b.Property<string>("Identifyer")
                         .IsRequired()
                         .HasMaxLength(20);
 
@@ -189,6 +239,13 @@ namespace TestIt.API.Migrations
                         .HasForeignKey("StudentId");
                 });
 
+            modelBuilder.Entity("TestIt.Model.Entities.Question", b =>
+                {
+                    b.HasOne("TestIt.Model.Entities.Test", "Test")
+                        .WithMany("Questions")
+                        .HasForeignKey("TestId");
+                });
+
             modelBuilder.Entity("TestIt.Model.Entities.Student", b =>
                 {
                     b.HasOne("TestIt.Model.Entities.User", "User")
@@ -201,6 +258,13 @@ namespace TestIt.API.Migrations
                     b.HasOne("TestIt.Model.Entities.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("TestIt.Model.Entities.Test", b =>
+                {
+                    b.HasOne("TestIt.Model.Entities.Teacher", "Teacher")
+                        .WithMany("Tests")
+                        .HasForeignKey("TeacherId");
                 });
 
             modelBuilder.Entity("TestIt.Model.Entities.User", b =>

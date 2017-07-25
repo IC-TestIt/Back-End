@@ -47,7 +47,7 @@ namespace TestIt.API
                         break;
                     default:
                         options.UseSqlServer(sqlConnectionString,
-                    b => b.MigrationsAssembly("TestIt.API"));
+                    b => b.MigrationsAssembly("TestIt.Data"));
                         break;
                 }
             });
