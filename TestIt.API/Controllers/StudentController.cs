@@ -20,7 +20,7 @@ namespace TestIt.API.Controllers
         }
 
         [HttpGet("exists/{email}")]
-        public int UserExists(string email)
+        public int StudentExists(string email)
         {
             var userId = userService.Exists(email);
 
