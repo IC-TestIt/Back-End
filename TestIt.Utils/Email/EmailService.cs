@@ -77,7 +77,7 @@ namespace TestIt.Utils.Email
                 ToAdress = user.Email,
                 ToAdressTitle = user.Name,
                 Subject = "TestIt - Finalize o seu cadastro",
-                BodyContent = "http://localhost:8080/#/signup/" + user.Id
+                BodyContent = "http://testitapp.herokuapp.com/#/signup/" + user.Id
             };
 
             Send(email);
