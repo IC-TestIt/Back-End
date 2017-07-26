@@ -12,17 +12,15 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ClassController : Controller
     {
-        private Business.IClassService classService;
-        private Business.IClassStudentsService classStudentService;
-        private IEmailService emailService;
+        private IClassService classService;
+        private IClassStudentsService classStudentService;
         private IStudentService studentService;
         private IUserService userService;
 
-        public ClassController(IClassService classService, IClassStudentsService classStudentService, IEmailService emailService, IStudentService studentService, IUserService userService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService, IStudentService studentService, IUserService userService)
         {
             this.classService = classService;
             this.classStudentService = classStudentService;
-            this.emailService = emailService;
             this.studentService = studentService;
             this.userService = userService;
         }
@@ -55,11 +53,11 @@ namespace TestIt.API.Controllers
 
             OkObjectResult result = Ok(new { classId = id, studentId = studentId });
 
-            var Student = studentService.GetSingle(studentId);
-            var User = userService.GetSingle(Student.UserId);
-            var Class = classService.GetSingle(id);
+            var student = studentService.GetSingle(studentId);
+            var user = userService.GetSingle(student.UserId);
+            var classStudent = classService.GetSingle(id);
 
-            studentService.SendInvite(User, Class);
+            studentService.SendInvite(user, classStudent);
 
             return result;
         }

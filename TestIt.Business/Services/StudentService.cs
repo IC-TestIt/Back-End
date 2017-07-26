@@ -7,7 +7,7 @@ using TestIt.Utils.Email;
 
 namespace TestIt.Business.Services
 {
-    public class StudentService :IStudentService
+    public class StudentService : IStudentService
     {
         private IStudentRepository studentRepository;
         private IEmailService emailService;
@@ -60,30 +60,33 @@ namespace TestIt.Business.Services
             }
         }
 
-        public void SendInvite(User user, Class clas  )
+        public void SendInvite(User user, Class studentClass)
         {
-            var email = new Email
-            {
-                ToAdress = user.Email,
-                ToAdressTitle = user.Name,
-                Subject = "TestIt - Adicionado a Turma",
-                BodyContent = "Você foi adicionado a turma " + clas.Description
-            };
-
+            var subject = "TestIt - Adicionado a Turma";
+            var bodyContent = "Você foi adicionado a turma " + studentClass.Description;
+            var email = BuildEmail(user, subject, bodyContent);
             emailService.Send(email);
         }
 
         public void SendSignUp(User user, int studentId)
         {
+            var subject = "TestIt - Finalize o seu cadastro";
+            var bodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId;
+            var email = BuildEmail(user, subject, bodyContent);
+            emailService.Send(email);
+        }
+
+        private Email BuildEmail(User user, string subject, string bodyContent)
+        {
             var email = new Email
             {
                 ToAdress = user.Email,
                 ToAdressTitle = user.Name,
-                Subject = "TestIt - Finalize o seu cadastro",
-                BodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId
+                Subject = subject,
+                BodyContent = bodyContent
             };
 
-            emailService.Send(email);
+            return email;
         }
     }
 }
