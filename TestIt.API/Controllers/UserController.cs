@@ -67,7 +67,7 @@ namespace TestIt.API.Controllers
 
             if (viewModel.Type == 1)
             {
-                var teacherId = CreateStudent(user);
+                var teacherId = CreateTeacher(user);
 
                 result = Ok(new { teacherId = teacherId, userId = user.Id });
             }
