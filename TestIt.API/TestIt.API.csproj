@@ -49,7 +49,6 @@
     <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
     <ProjectReference Include="..\TestIt.Model\TestIt.Model.csproj" />
     <ProjectReference Include="..\TestIt.Security\TestIt.Security.csproj" />
-    <ProjectReference Include="..\TestIt.Utils\TestIt.Utils.csproj" />
   </ItemGroup>
 
 </Project>

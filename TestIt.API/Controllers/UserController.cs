@@ -138,6 +138,8 @@ namespace TestIt.API.Controllers
 
             studentService.Save(student);
 
+            studentService.SendSignUp(user, student.Id );
+
             return student.Id;
         }
 

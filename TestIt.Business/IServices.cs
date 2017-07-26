@@ -41,6 +41,9 @@ namespace TestIt.Business
         void Save(Class c);
 
         IEnumerable<User> ClassUsers(int id);
+
+        Class GetSingle(int id);
+        IEnumerable<Class> Get();
     }
 
     public interface IStudentService
@@ -55,6 +58,8 @@ namespace TestIt.Business
 
         void Update(int id, Student student);
         Student GetByUser(int id);
+        void SendSignUp(User user, int studentId);
+        void SendInvite(User user, Class studentClass);
     }
 
     public interface IClassStudentsService
