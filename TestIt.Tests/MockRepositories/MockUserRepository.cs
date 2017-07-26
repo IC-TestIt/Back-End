@@ -49,6 +49,11 @@ namespace TestIt.Tests.MockRepositories
 
         public void Commit()
         {
+            throw new NotImplementedException();
+        }
+
+        public void Commit()
+        {
 
         }
 
