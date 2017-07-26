@@ -17,7 +17,10 @@ namespace TestIt.Data
         public DbSet<Organization> Organizations {get; set;}
         public DbSet<Class> Classes {get; set;}
         public DbSet<ClassStudents> ClassStudents { get; set; }
-        
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<Question> Questions { get; set; }
+
+
         public TestItContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -101,6 +104,10 @@ namespace TestIt.Data
 
             modelBuilder.Entity<Teacher>()
                 .HasMany(t => t.Classes)
+                .WithOne(t => t.Teacher);
+
+            modelBuilder.Entity<Teacher>()
+                .HasMany(t => t.Tests)
                 .WithOne(t => t.Teacher);
             #endregion
 
@@ -206,6 +213,38 @@ namespace TestIt.Data
                 .HasOne(x => x.Student)
                 .WithMany(x => x.ClassStudents)
                 .HasForeignKey(x => x.StudentId);
+            #endregion
+
+            #region Test
+            modelBuilder.Entity<Test>()
+                .ToTable("Tests");
+
+            modelBuilder.Entity<Test>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Test>()
+                .HasOne(x => x.Teacher)
+                .WithMany(x => x.Tests)
+                .HasForeignKey(x => x.TeacherId);
+
+            modelBuilder.Entity<Test>()
+                .HasMany(x => x.Questions)
+                .WithOne(x => x.Test);
+            #endregion
+
+            #region Question
+            modelBuilder.Entity<Question>()
+                .ToTable("Questions");
+
+            modelBuilder.Entity<Question>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Question>()
+                .HasOne(q => q.Test)
+                .WithMany(q => q.Questions)
+                .HasForeignKey(q => q.TestId);
             #endregion
         }
     }

@@ -47,7 +47,7 @@ namespace TestIt.API
                         break;
                     default:
                         options.UseSqlServer(sqlConnectionString,
-                    b => b.MigrationsAssembly("TestIt.API"));
+                    b => b.MigrationsAssembly("TestIt.Data"));
                         break;
                 }
             });
@@ -58,6 +58,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.ITeacherRepository, Data.Repositories.TeacherRepository>();
             services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
             services.AddScoped<Data.Abstract.IClassStudentsRepository, Data.Repositories.ClassStudentsRepository>();
+            services.AddScoped<Data.Abstract.ITestRepository, Data.Repositories.TestRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
@@ -65,6 +66,8 @@ namespace TestIt.API
             services.AddScoped<Business.IStudentService, Business.Services.StudentService>();
             services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
             services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
+            services.AddScoped<Business.ITestService, Business.Services.TestService>();
+
 
             AutoMapperConfiguration.Configure();
 

@@ -66,4 +66,9 @@ namespace TestIt.Business
     {
         void Save(ClassStudents cs);
     }
+
+    public interface ITestService
+    {
+        void Save(Test t);
+    }
 }

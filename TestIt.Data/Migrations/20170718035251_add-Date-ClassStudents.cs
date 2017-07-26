@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TestIt.API.Migrations
+namespace TestIt.Data.Migrations
 {
     public partial class addDateClassStudents : Migration
     {

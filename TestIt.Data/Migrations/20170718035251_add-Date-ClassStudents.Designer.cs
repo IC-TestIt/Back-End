@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TestIt.Data;
 
-namespace TestIt.API.Migrations
+namespace TestIt.Data.Migrations
 {
     [DbContext(typeof(TestItContext))]
     [Migration("20170718035251_add-Date-ClassStudents")]
