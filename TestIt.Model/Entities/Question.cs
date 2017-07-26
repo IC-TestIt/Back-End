@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TestIt.Model.Entities
 {
-    public class Question
+    public class Question : IEntityBase
     {
         public Question()
         {
