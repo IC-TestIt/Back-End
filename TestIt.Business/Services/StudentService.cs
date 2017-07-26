@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
+using TestIt.Utils.Email;
 
 namespace TestIt.Business.Services
 {
-    public class StudentService :IStudentService
+    public class StudentService : IStudentService
     {
         private IStudentRepository studentRepository;
+        private IEmailService emailService;
 
-        public StudentService(IStudentRepository studentRepository)
+        public StudentService(IStudentRepository studentRepository, IEmailService emailService)
         {
             this.studentRepository = studentRepository;
+            this.emailService = emailService;
         }
 
         public IEnumerable<Student> Get()
@@ -55,6 +58,35 @@ namespace TestIt.Business.Services
                 studentRepository.Update(student);
                 studentRepository.Commit();
             }
+        }
+
+        public void SendInvite(User user, Class studentClass)
+        {
+            var subject = "TestIt - Adicionado a Turma";
+            var bodyContent = "Você foi adicionado a turma " + studentClass.Description;
+            var email = BuildEmail(user, subject, bodyContent);
+            emailService.Send(email);
+        }
+
+        public void SendSignUp(User user, int studentId)
+        {
+            var subject = "TestIt - Finalize o seu cadastro";
+            var bodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId;
+            var email = BuildEmail(user, subject, bodyContent);
+            emailService.Send(email);
+        }
+
+        private Email BuildEmail(User user, string subject, string bodyContent)
+        {
+            var email = new Email
+            {
+                ToAdress = user.Email,
+                ToAdressTitle = user.Name,
+                Subject = subject,
+                BodyContent = bodyContent
+            };
+
+            return email;
         }
     }
 }

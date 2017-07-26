@@ -54,11 +54,11 @@ namespace TestIt.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.Email)
                 .IsRequired()
-                .HasMaxLength(25);
+                .HasMaxLength(100);
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Password)
-                .HasMaxLength(25);   
+                .HasMaxLength(100);   
             
             modelBuilder.Entity<User>()
                 .Property(u => u.Phone)

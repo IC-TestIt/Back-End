@@ -12,13 +12,17 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ClassController : Controller
     {
-        private Business.IClassService classService;
-        private Business.IClassStudentsService classStudentService;
+        private IClassService classService;
+        private IClassStudentsService classStudentService;
+        private IStudentService studentService;
+        private IUserService userService;
 
-        public ClassController(IClassService classService, IClassStudentsService classStudentService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService, IStudentService studentService, IUserService userService)
         {
             this.classService = classService;
             this.classStudentService = classStudentService;
+            this.studentService = studentService;
+            this.userService = userService;
         }
 
         [HttpPost]
@@ -39,13 +43,39 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPost("{id}/student/{studentId}")]
-        public void Post(int id, int studentId)
+        public IActionResult Post(int id, int studentId)
         {
             classStudentService.Save(new ClassStudents()
             {
                 ClassId = id,
                 StudentId = studentId
             });
+
+            OkObjectResult result = Ok(new { classId = id, studentId = studentId });
+
+            var student = studentService.GetSingle(studentId);
+            var user = userService.GetSingle(student.UserId);
+            var classStudent = classService.GetSingle(id);
+
+            studentService.SendInvite(user, classStudent);
+
+            return result;
+        }
+
+        [HttpGet("{id}/users")]
+        public IActionResult Get (int id)
+        {
+            OkObjectResult result = Ok(classService.ClassUsers(id));
+
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult GetUsers(int id)
+        {
+            OkObjectResult result = Ok(classService.ClassUsers(id));
+
+            return result;
         }
 
         [HttpGet("{id}/users")]
