@@ -7,12 +7,11 @@ namespace TestIt.Business.Services
     public class TestService : ITestService
     {
         private ITestRepository testRepository;
-        private IQuestionRepository questionRepository;
 
-        public TestService(ITestRepository testRepository, IQuestionRepository questionRepository)
+        public TestService(ITestRepository testRepository)
         {
             this.testRepository = testRepository;
-            this.questionRepository = questionRepository;
+
         }
         public void Save(Test t)
         {
@@ -20,9 +19,5 @@ namespace TestIt.Business.Services
             testRepository.Commit();
         }
 
-        public IEnumerable<Question> TestQuestions(int id)
-        {
-            return questionRepository.TestQuestions(id);
-        }
     }
 }
