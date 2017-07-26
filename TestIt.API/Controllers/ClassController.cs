@@ -5,7 +5,6 @@ using TestIt.API.ViewModels.Mappings;
 using TestIt.API.ViewModels.Class;
 using TestIt.Business;
 using TestIt.Model.Entities;
-using TestIt.Utils.Email;
 
 namespace TestIt.API.Controllers
 {
