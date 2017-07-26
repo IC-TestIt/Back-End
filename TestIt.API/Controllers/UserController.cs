@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.User;
 using TestIt.Business;
 using TestIt.Model.Entities;
-using TestIt.Utils.Email;
 
 namespace TestIt.API.Controllers
 {
@@ -14,14 +13,12 @@ namespace TestIt.API.Controllers
         private IUserService userService;
         private ITeacherService teacherService;
         private IStudentService studentService;
-        private IEmailService emailService;
 
-        public UserController(IUserService userService, ITeacherService teacherService, IStudentService studentService, IEmailService emailService)
+        public UserController(IUserService userService, ITeacherService teacherService, IStudentService studentService)
         {
             this.userService = userService;
             this.teacherService = teacherService;
             this.studentService = studentService;
-            this.emailService = emailService;
         }
 
         [HttpGet]
