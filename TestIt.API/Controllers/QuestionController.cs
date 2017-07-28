@@ -34,7 +34,6 @@ namespace TestIt.API.Controllers
             Question question = Mapper.Map<Question>(viewModel);
 
             questionService.Save(question);
-            testService.AddQuestion(question);
 
             OkObjectResult result = Ok(new { questionId = question.Id });
 
