@@ -70,5 +70,11 @@ namespace TestIt.Business
     public interface ITestService
     {
         void Save(Test t);
+        void AddQuestion(Question q);
+        IEnumerable<Test> Get();
+    }
+    public interface IQuestionService
+    {
+        void Save(Question q);
     }
 }

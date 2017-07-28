@@ -59,6 +59,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
             services.AddScoped<Data.Abstract.IClassStudentsRepository, Data.Repositories.ClassStudentsRepository>();
             services.AddScoped<Data.Abstract.ITestRepository, Data.Repositories.TestRepository>();
+            services.AddScoped<Data.Abstract.IQuestionRepository, Data.Repositories.QuestionRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
@@ -67,6 +68,7 @@ namespace TestIt.API
             services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
             services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
             services.AddScoped<Business.ITestService, Business.Services.TestService>();
+            services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
 
 
             AutoMapperConfiguration.Configure();

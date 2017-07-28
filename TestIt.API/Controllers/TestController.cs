@@ -36,5 +36,20 @@ namespace TestIt.API.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        public IEnumerable<Test> Get()
+        {
+            return testService.Get();
+
+            //if (tests != null)
+            //{
+            //    IEnumerable<ReturnTestViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
+            //    return new OkObjectResult(usersVm);
+            //}
+
+            //return NotFound();
+
+        }
     }
 }
