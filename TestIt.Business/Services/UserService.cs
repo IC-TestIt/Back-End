@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
+using TestIt.Utils.AuxEntities;
 
 namespace TestIt.Business.Services
 {
     public class UserService : IUserService
     {
         private IUserRepository userRepository;
-        public UserService (IUserRepository userRepository)
+        private IStudentRepository studentRepository;
+        private ITeacherRepository teacherRepository;
+        
+        public UserService (IUserRepository userRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository)
         {
             this.userRepository = userRepository;
+            this.studentRepository = studentRepository;
+            this.teacherRepository = teacherRepository;
         }
-
+        
         public bool ValidLogin(string email, string pswd)
         {
             return userRepository.Any(x => x.Email == email && x.Password == pswd);
@@ -71,6 +77,26 @@ namespace TestIt.Business.Services
             return u == null ? 0 : u.Id;
         }
 
+        public LoggedUser GetByEmail(string email)
+        {
+            LoggedUser loggedUser = new LoggedUser();
 
+            var user = userRepository.GetSingle(x => x.Email == email);
+
+            if (user != null)
+                loggedUser.UserId = user.Id;
+
+            var student = studentRepository.GetSingle(x => x.UserId == user.Id);
+
+            if (student != null)
+                loggedUser.StudentId = student.Id;
+
+            var teacher = teacherRepository.GetSingle(x => x.UserId == user.Id);
+
+            if (teacher != null)
+                loggedUser.TeacherId = teacher.Id;
+
+            return loggedUser;
+        }
     }
 }

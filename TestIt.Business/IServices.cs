@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestIt.Model.Entities;
+using TestIt.Utils.AuxEntities;
 
 namespace TestIt.Business
 {
     public interface IUserService
     {
         bool ValidLogin(string email, string pswd);
+
         IEnumerable<User> Get();
 
         User GetSingle(int id);
@@ -19,6 +19,8 @@ namespace TestIt.Business
         bool Update(int id, User u);
 
         int Exists(string email);
+
+        LoggedUser GetByEmail(string email);
     }
 
     public interface ITeacherService 

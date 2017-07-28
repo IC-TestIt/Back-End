@@ -77,10 +77,15 @@ namespace TestIt.Security
                 signingCredentials: _options.SigningCredentials);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
+            var loggedUser = userService.GetByEmail(email);
+           
             var response = new
             {
                 access_token = encodedJwt,
-                expires_in = (int)_options.Expiration.TotalSeconds
+                expires_in = (int)_options.Expiration.TotalSeconds,
+                userId = loggedUser.UserId,
+                teacherId = loggedUser.TeacherId,
+                studentId = loggedUser.StudentId
             };
 
             // Serialize and return the response
