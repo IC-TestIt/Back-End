@@ -19,5 +19,19 @@ namespace TestIt.Business.Services
             testRepository.Commit();
         }
 
+        public void AddQuestion(Question q)
+        {
+            var test = testRepository.GetSingle(q.TestId);
+            test.Questions.Add(q);
+            testRepository.Update(test);
+            testRepository.Commit();
+        }
+
+        public IEnumerable<Test> Get()
+        {
+            return testRepository.AllIncluding(x => x.Questions);
+        }
+
+
     }
 }
