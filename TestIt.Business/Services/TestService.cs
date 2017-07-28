@@ -29,7 +29,7 @@ namespace TestIt.Business.Services
 
         public IEnumerable<Test> Get()
         {
-            return testRepository.GetAll();
+            return testRepository.AllIncluding(x => x.Questions);
         }
 
 

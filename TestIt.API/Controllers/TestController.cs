@@ -38,17 +38,17 @@ namespace TestIt.API.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Test> Get()
+        public IActionResult Get()
         {
-            return testService.Get();
+            var tests = testService.Get();
 
-            //if (tests != null)
-            //{
-            //    IEnumerable<ReturnTestViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
-            //    return new OkObjectResult(usersVm);
-            //}
+            if (tests != null)
+            {
+                IEnumerable<ReturnTestViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<ReturnTestViewModel>>(tests);
+                return new OkObjectResult(testsVm);
+            }
 
-            //return NotFound();
+            return NotFound();
 
         }
     }
