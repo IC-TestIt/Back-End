@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using TestIt.Data;
 
-namespace TestIt.Data.Migrations
+namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
     partial class TestItContextModelSnapshot : ModelSnapshot
