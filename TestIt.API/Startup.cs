@@ -47,7 +47,7 @@ namespace TestIt.API
                         break;
                     default:
                         options.UseSqlServer(sqlConnectionString,
-                    b => b.MigrationsAssembly("TestIt.Data"));
+                    b => b.MigrationsAssembly("TestIt.API"));
                         break;
                 }
             });
@@ -60,6 +60,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IClassStudentsRepository, Data.Repositories.ClassStudentsRepository>();
             services.AddScoped<Data.Abstract.ITestRepository, Data.Repositories.TestRepository>();
             services.AddScoped<Data.Abstract.IQuestionRepository, Data.Repositories.QuestionRepository>();
+            services.AddScoped<Data.Abstract.IEssayQuestionRepository, Data.Repositories.EssayQuestionRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();

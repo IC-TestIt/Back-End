@@ -19,8 +19,8 @@ namespace TestIt.Data
         public DbSet<ClassStudents> ClassStudents { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
-
-
+        public DbSet<EssayQuestion> EssayQuestions { get; set; }
+        
         public TestItContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,14 +37,6 @@ namespace TestIt.Data
             modelBuilder.Entity<User>()
                 .Property(u => u.Id)
                 .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<User>()
-                .Property(u => u.DateUpdated)
-                .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<User>()
                 .Property(u => u.Name)
@@ -91,14 +83,6 @@ namespace TestIt.Data
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Teacher>()
-                .Property(t => t.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<Teacher>()
-                .Property(t => t.DateUpdated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<Teacher>()
                 .Property(t => t.UserId)
                 .IsRequired();
 
@@ -120,13 +104,6 @@ namespace TestIt.Data
                 .ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Student>()
-                .Property(s => s.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<Student>()
-                .Property(s => s.DateUpdated);
-
-            modelBuilder.Entity<Student>()
                 .Property(s => s.UserId); 
             
             modelBuilder.Entity<Student>()
@@ -140,14 +117,6 @@ namespace TestIt.Data
             #region Organization
             modelBuilder.Entity<Organization>()
                 .ToTable("Organizations");
-
-            modelBuilder.Entity<Organization>()
-                .Property(o => o.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<Organization>()
-                .Property(o => o.DateUpdated)
-                .HasDefaultValue(DateTime.Now);
 
             modelBuilder.Entity<Organization>()
                 .Property(o => o.Id)
@@ -245,6 +214,19 @@ namespace TestIt.Data
                 .HasOne(q => q.Test)
                 .WithMany(q => q.Questions)
                 .HasForeignKey(q => q.TestId);
+            #endregion
+
+            #region EssayQuestions
+            modelBuilder.Entity<EssayQuestion>()
+                .ToTable("EssayQuestions");
+
+            modelBuilder.Entity<EssayQuestion>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<EssayQuestion>()
+                .Property(t => t.QuestionId)
+                .IsRequired();
             #endregion
         }
     }
