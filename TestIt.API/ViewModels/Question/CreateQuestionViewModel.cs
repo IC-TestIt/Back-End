@@ -8,12 +8,11 @@ namespace TestIt.API.ViewModels.Question
 {
     public class CreateQuestionViewModel : IValidatableObject
     {
-        public string Answer { get; set; }
         public string Description { get; set; }
         public double Value { get; set; }
         public int TestId { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validator = new CreateQuestionViewModelValidator();
             var result = validator.Validate(this);
