@@ -23,8 +23,25 @@ namespace TestIt.API.Controllers
             this.testService = testService;
         }
 
+        //[HttpPost]
+        //public IActionResult Post([FromBody]CreateQuestionViewModel viewModel)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
+
+        //    Question question = Mapper.Map<Question>(viewModel);
+
+        //    questionService.Save(question);
+
+        //    OkObjectResult result = Ok(new { questionId = question.Id });
+
+        //    return result;
+        //}
+
         [HttpPost]
-        public IActionResult Post([FromBody]CreateQuestionViewModel viewModel)
+        public IActionResult Post([FromBody]CreateEssayQuestionViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -32,13 +49,18 @@ namespace TestIt.API.Controllers
             }
 
             Question question = Mapper.Map<Question>(viewModel);
-
+            EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(viewModel);
+            
             questionService.Save(question);
 
-            OkObjectResult result = Ok(new { questionId = question.Id });
+            essayQuestion.QuestionId = question.Id;
+            questionService.Save(essayQuestion);
+
+            OkObjectResult result = Ok(new { questionId = question.Id, essayQuestionId = essayQuestion.Id });
 
             return result;
         }
+
 
     }
 }

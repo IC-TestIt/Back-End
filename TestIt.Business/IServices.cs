@@ -78,5 +78,6 @@ namespace TestIt.Business
     public interface IQuestionService
     {
         void Save(Question q);
+        void Save(EssayQuestion q);
     }
 }
