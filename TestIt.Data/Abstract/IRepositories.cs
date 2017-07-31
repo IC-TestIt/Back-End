@@ -15,4 +15,6 @@ namespace TestIt.Data.Abstract
     public interface ITestRepository : IEntityBaseRepository<Test> {}
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}
     public interface IEssayQuestionRepository : IEntityBaseRepository<EssayQuestion> {}
+    public interface IAlternativeQuestionRepository : IEntityBaseRepository<AlternativeQuestion> {}
+    public interface IAlternativeRepository : IEntityBaseRepository<Alternative> {}
 }

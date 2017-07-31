@@ -20,7 +20,9 @@ namespace TestIt.Data
         public DbSet<Test> Tests { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<EssayQuestion> EssayQuestions { get; set; }
-        
+        public DbSet<AlternativeQuestion> AlternativeQuestions { get; set; }
+
+
         public TestItContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -144,14 +146,7 @@ namespace TestIt.Data
             modelBuilder.Entity<Class>()
                 .Property(c => c.Id)
                 .ValueGeneratedOnAdd();
-
-            modelBuilder.Entity<Class>()
-                .Property(c => c.DateCreated)
-                .HasDefaultValue(DateTime.Now);
-
-            modelBuilder.Entity<Class>()
-                .Property(c => c.DateUpdated);
-
+            
             modelBuilder.Entity<Class>()
                 .Property(c => c.TeacherId)
                 .IsRequired();   
@@ -228,6 +223,51 @@ namespace TestIt.Data
                 .Property(t => t.QuestionId)
                 .IsRequired();
             #endregion
+
+            #region AlternativeQuestions
+            modelBuilder.Entity<AlternativeQuestion>()
+                .ToTable("AlternativeQuestions");
+
+            modelBuilder.Entity<AlternativeQuestion>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<AlternativeQuestion>()
+                .Property(t => t.QuestionId)
+                .IsRequired();
+
+            modelBuilder.Entity<AlternativeQuestion>()
+                .HasMany(t => t.Alternatives)
+                .WithOne(t => t.AlternativeQuestion);
+
+            modelBuilder.Entity<AlternativeQuestion>()
+                .Property(x => x.CorrectAlternativeId)
+                .HasColumnName("AlternativeId");
+
+            modelBuilder.Entity<AlternativeQuestion>()
+               .HasOne(q => q.CorrectAlternative)
+               .WithOne(v => v.SecondAlternativeQuestion)
+               .HasForeignKey<AlternativeQuestion>(q => q.CorrectAlternativeId).OnDelete(DeleteBehavior.Restrict);
+
+            #endregion
+
+            #region Alternatives
+            modelBuilder.Entity<Alternative>()
+                .ToTable("Alternatives");
+
+            modelBuilder.Entity<Alternative>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Alternative>()
+                .Property(t => t.AlternativeQuestionId)
+                .IsRequired();
+
+            modelBuilder.Entity<Alternative>()
+                .HasOne(t => t.AlternativeQuestion)
+                .WithMany(t => t.Alternatives);
+            #endregion
+
         }
     }
 }
