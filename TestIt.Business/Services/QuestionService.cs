@@ -19,13 +19,13 @@ namespace TestIt.Business.Services
         public void Save(Question q)
         {
             questionRepository.Add(q);
-            //questionRepository.Commit();
+            questionRepository.Commit();
         }
 
         public void Save(EssayQuestion q)
         {
             essayRepository.Add(q);
-            //essayRepository.Commit();
+            essayRepository.Commit();
         }
     }
 }
