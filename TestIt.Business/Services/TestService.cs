@@ -31,6 +31,11 @@ namespace TestIt.Business.Services
         {
             return testRepository.AllIncluding(x => x.Questions);
         }
+  
+        public Test GetSingle(int id)
+        {
+            return testRepository.GetSingle(x => x.Id == id, x => x.Questions);
+        }
 
 
     }

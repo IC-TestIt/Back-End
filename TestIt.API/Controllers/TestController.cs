@@ -51,5 +51,18 @@ namespace TestIt.API.Controllers
             return NotFound();
 
         }
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var test = testService.GetSingle(id);
+
+            if (test != null)
+            {
+                var testVm = Mapper.Map<Test, ReturnTestViewModel>(test);
+                return new OkObjectResult(testVm);
+            }
+            else
+                return NotFound();
+        }
     }
 }
