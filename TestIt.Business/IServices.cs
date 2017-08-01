@@ -79,5 +79,6 @@ namespace TestIt.Business
     {
         void Save(Question q);
         void Save(EssayQuestion q);
+        void Save(AlternativeQuestion q);
     }
 }

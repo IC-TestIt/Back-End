@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using System.Linq;
+using TestIt.Model.Entities;
 
 namespace TestIt.API.ViewModels.Mappings
 {
@@ -16,7 +18,12 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Class.CreateClassViewModel, Model.Entities.Class>();
             Mapper.CreateMap<Test.CreateTestViewModel, Model.Entities.Test>();
             Mapper.CreateMap<Question.BaseQuestionViewModel, Model.Entities.Question>();
-            Mapper.CreateMap<Question.CreateEssayQuestionViewModel, Model.Entities.EssayQuestion>();
+            Mapper.CreateMap<Question.CreateEssayQuestionViewModel, EssayQuestion>();
+            Mapper.CreateMap<Question.CreateAlternativeQuestionViewModel, AlternativeQuestion>()
+                .ForMember(x => x.Alternatives, m => m.MapFrom(x => x.Alternatives.Select(y => new Alternative()
+                {
+                    Description = y.Description
+                }).ToList()));
         }
     }
 }
