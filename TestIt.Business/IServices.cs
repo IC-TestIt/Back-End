@@ -74,6 +74,7 @@ namespace TestIt.Business
         void Save(Test t);
         void AddQuestion(Question q);
         IEnumerable<Test> Get();
+        Test GetSingle(int id);
     }
     public interface IQuestionService
     {
