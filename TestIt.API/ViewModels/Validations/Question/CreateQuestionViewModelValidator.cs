@@ -4,7 +4,7 @@ using TestIt.API.ViewModels.Question;
 
 namespace TestIt.API.ViewModels.Validations.Question
 {
-    public class CreateQuestionViewModelValidator : AbstractValidator<CreateQuestionViewModel>
+    public class CreateQuestionViewModelValidator : AbstractValidator<BaseQuestionViewModel>
     {
         public CreateQuestionViewModelValidator()
         {

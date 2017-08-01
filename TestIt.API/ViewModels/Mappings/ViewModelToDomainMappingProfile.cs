@@ -15,8 +15,8 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<User.CreateUserViewModel, Model.Entities.User>();
             Mapper.CreateMap<Class.CreateClassViewModel, Model.Entities.Class>();
             Mapper.CreateMap<Test.CreateTestViewModel, Model.Entities.Test>();
-            Mapper.CreateMap<Question.CreateQuestionViewModel, Model.Entities.Question>();
-
+            Mapper.CreateMap<Question.BaseQuestionViewModel, Model.Entities.Question>();
+            Mapper.CreateMap<Question.CreateEssayQuestionViewModel, Model.Entities.EssayQuestion>();
         }
     }
 }
