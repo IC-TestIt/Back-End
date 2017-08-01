@@ -8,6 +8,7 @@ namespace TestIt.Data.Abstract
     public interface IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
         IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
+        T SingleIncluding(int id, params Expression<Func<T, object>>[] includeProperties);
         IEnumerable<T> GetAll();
         int Count();
         T GetSingle(int id);

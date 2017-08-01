@@ -34,7 +34,7 @@ namespace TestIt.Business.Services
   
         public Test GetSingle(int id)
         {
-            return testRepository.GetSingle(x => x.Id == id, x => x.Questions);
+            return testRepository.SingleIncluding(id, x => x.Questions);
         }
 
 
