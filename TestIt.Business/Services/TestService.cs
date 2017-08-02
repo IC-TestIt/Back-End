@@ -37,6 +37,14 @@ namespace TestIt.Business.Services
             return testRepository.SingleIncluding(id, x => x.Questions);
         }
 
+        public IEnumerable<Test> GetTeacherTests(int id)
+        {
+            var tests = testRepository.FindBy(x => x.TeacherId == id);
+            return tests; 
+        }
+
+
+
 
     }
 }
