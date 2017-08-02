@@ -31,7 +31,7 @@ namespace TestIt.Data
                     Name = "Dimas",
                     Email = "dimas@gmail.com",
                     Birthday = DateTime.Today,
-                    Active = true,
+                    IsActive = true,
                     Password = "abc123",
                     Phone = "33445566",
                     Identifyer = "444.555.666-9"
@@ -42,7 +42,7 @@ namespace TestIt.Data
                     Name = "Luiz",
                     Email = "luiz@gmail.com",
                     Birthday = DateTime.Today,
-                    Active = true,
+                    IsActive = true,
                     Password = "123abc",
                     Phone = "45678909",
                     Identifyer = "56.789.678-x"
@@ -53,7 +53,7 @@ namespace TestIt.Data
                     Name = "Vitor",
                     Email = "vitor@gmail.com",
                     Birthday = DateTime.Today,
-                    Active = true,
+                    IsActive = true,
                     Password = "123abc",
                     Phone = "12356798",
                     Identifyer = "455.666.777-0"

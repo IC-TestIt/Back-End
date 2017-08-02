@@ -53,23 +53,15 @@ namespace TestIt.API.Controllers
             Question question = Mapper.Map<Question>(viewModel);
             AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(viewModel);
 
-            //questionService.Save(question);
-            
-            //alternativeQuestion.QuestionId = question.Id;
-            //alternativeQuestion.CorrectAlternativeId = GetRightAnswerId(alternativeQuestion, viewModel);
-            
-            //questionService.Save(alternativeQuestion);
+            questionService.Save(question);
+
+            alternativeQuestion.QuestionId = question.Id;
+
+            questionService.Save(alternativeQuestion);
 
             OkObjectResult result = Ok(new { questionId = question.Id, alternativeQuestionId = alternativeQuestion.Id });
 
             return result;
-        }
-
-        private int GetRightAnswerId (AlternativeQuestion aq, CreateAlternativeQuestionViewModel vm)
-        {
-            var rightAnswer = vm.Alternatives.FirstOrDefault(x => x.RightAnswer).Description;
-
-            return aq.Alternatives.FirstOrDefault(x => x.Description == rightAnswer).Id;
         }
     }
 }

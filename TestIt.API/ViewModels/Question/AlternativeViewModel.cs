@@ -8,6 +8,6 @@ namespace TestIt.API.ViewModels.Question
     public class AlternativeViewModel
     {
         public string Description { get; set; }
-        public bool RightAnswer { get; set; }
+        public bool IsCorrect { get; set; }
     }
 }

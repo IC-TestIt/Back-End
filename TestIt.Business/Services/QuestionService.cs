@@ -2,6 +2,7 @@
 using TestIt.Model.Entities;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace TestIt.Business.Services
 {
@@ -36,15 +37,19 @@ namespace TestIt.Business.Services
         public void Save(AlternativeQuestion q)
         {
             alternativeQuestionRepository.Add(q);
+            alternativeQuestionRepository.Commit();
+            SaveAlternatives(q.Alternatives.ToList(), q.Id);
+        }
 
-            foreach (Alternative a in q.Alternatives)
+        private void SaveAlternatives(List<Alternative> alt, int id)
+        {
+            foreach (Alternative a in alt)
             {
-                a.AlternativeQuestionId = q.Id;
+                a.AlternativeQuestionId = id;
                 alternativeRepository.Add(a);
             }
 
             alternativeRepository.Commit();
-            alternativeQuestionRepository.Commit();
         }
     }
 }

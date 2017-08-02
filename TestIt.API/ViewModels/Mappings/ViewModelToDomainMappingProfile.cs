@@ -21,9 +21,10 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Question.CreateEssayQuestionViewModel, EssayQuestion>();
             Mapper.CreateMap<Question.CreateAlternativeQuestionViewModel, AlternativeQuestion>()
                 .ForMember(x => x.Alternatives, m => m.MapFrom(x => x.Alternatives.Select(y => new Alternative()
-                {
-                    Description = y.Description
-                }).ToList()));
+                 {
+                     Description = y.Description,
+                     IsCorrect = y.IsCorrect
+                 }).ToList()));
         }
     }
 }
