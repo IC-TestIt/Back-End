@@ -62,7 +62,7 @@ namespace TestIt.API.Controllers
 
             User user = Mapper.Map<User>(viewModel);
 
-            user.Active = true;
+            user.IsActive = true;
             userService.Save(user);
 
             if (viewModel.Type == 1)

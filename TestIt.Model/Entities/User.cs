@@ -22,7 +22,7 @@ namespace TestIt.Model.Entities
         public string Password { get; set; }
         public string Phone { get; set; }
         public DateTime Birthday { get; set; }
-        public bool Active { get; set; }
+        public bool IsActive { get; set; }
             
         public string Identifyer { get; set; }
         public Organization Organization { get; set; }
