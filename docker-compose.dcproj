@@ -3,7 +3,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>8c10f7c6-74a4-4fd6-9132-c5e5a64dba1e</ProjectGuid>
     <DockerLaunchBrowser>True</DockerLaunchBrowser>
-    <DockerServiceUrl>http://localhost:{ServicePort}/api/values</DockerServiceUrl>
+    <DockerServiceUrl>http://localhost:{ServicePort}/api/</DockerServiceUrl>
     <DockerServiceName>testit.api</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
