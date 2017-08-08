@@ -15,9 +15,9 @@ namespace TestIt.Model.Entities
         public DateTime DateUpdated { get; set; }
 
         public string Description { get; set; }
+        public bool IsCorrect { get; set; }
 
         public int AlternativeQuestionId { get; set; }
         public AlternativeQuestion AlternativeQuestion { get; set; }
-        public AlternativeQuestion SecondAlternativeQuestion { get; set; }
     }
 }

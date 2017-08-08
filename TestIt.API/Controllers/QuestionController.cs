@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.Business;
 using TestIt.Model.Entities;
 using TestIt.API.ViewModels.Question;
+using System.Linq;
 
 namespace TestIt.API.Controllers
 {
@@ -19,6 +20,7 @@ namespace TestIt.API.Controllers
         }
         
         [HttpPost]
+        [Route("essay")]
         public IActionResult Post([FromBody]CreateEssayQuestionViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -35,6 +37,29 @@ namespace TestIt.API.Controllers
             questionService.Save(essayQuestion);
 
             OkObjectResult result = Ok(new { questionId = question.Id, essayQuestionId = essayQuestion.Id });
+
+            return result;
+        }
+
+        [HttpPost]
+        [Route("alternative")]
+        public IActionResult Post([FromBody]CreateAlternativeQuestionViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Question question = Mapper.Map<Question>(viewModel);
+            AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(viewModel);
+
+            questionService.Save(question);
+
+            alternativeQuestion.QuestionId = question.Id;
+
+            questionService.Save(alternativeQuestion);
+
+            OkObjectResult result = Ok(new { questionId = question.Id, alternativeQuestionId = alternativeQuestion.Id });
 
             return result;
         }

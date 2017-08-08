@@ -1,19 +1,25 @@
-﻿using System.Collections.Generic;
-using TestIt.Data.Abstract;
+﻿using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
-
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace TestIt.Business.Services
 {
     public class QuestionService : IQuestionService
     {
         private IQuestionRepository questionRepository;
-        public IEssayQuestionRepository essayRepository;
+        private IEssayQuestionRepository essayRepository;
+        private IAlternativeQuestionRepository alternativeQuestionRepository;
+        private IAlternativeRepository alternativeRepository;
 
-        public QuestionService(IQuestionRepository questionRepository, IEssayQuestionRepository essayRepository)
+        public QuestionService(IQuestionRepository questionRepository, IEssayQuestionRepository essayRepository,
+                               IAlternativeQuestionRepository alternativeQuestionRepository, IAlternativeRepository alternativeRepository)
         {
             this.questionRepository = questionRepository;
             this.essayRepository = essayRepository;
+            this.alternativeQuestionRepository = alternativeQuestionRepository;
+            this.alternativeRepository = alternativeRepository;
         }
 
         public void Save(Question q)
@@ -26,6 +32,24 @@ namespace TestIt.Business.Services
         {
             essayRepository.Add(q);
             essayRepository.Commit();
+        }
+
+        public void Save(AlternativeQuestion q)
+        {
+            alternativeQuestionRepository.Add(q);
+            alternativeQuestionRepository.Commit();
+            SaveAlternatives(q.Alternatives.ToList(), q.Id);
+        }
+
+        private void SaveAlternatives(List<Alternative> alt, int id)
+        {
+            foreach (Alternative a in alt)
+            {
+                a.AlternativeQuestionId = id;
+                alternativeRepository.Add(a);
+            }
+
+            alternativeRepository.Commit();
         }
     }
 }

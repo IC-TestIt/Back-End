@@ -15,9 +15,7 @@ namespace TestIt.Model.Entities
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
-        public int CorrectAlternativeId { get; set; }
-        public Alternative CorrectAlternative { get; set; }
+        
         public ICollection<Alternative> Alternatives { get; set; }
 
         public int QuestionId { get; set; }

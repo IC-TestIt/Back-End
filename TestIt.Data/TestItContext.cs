@@ -66,7 +66,7 @@ namespace TestIt.Data
                 .Property(u => u.Birthday);
             
             modelBuilder.Entity<User>()
-                .Property(u => u.Active)
+                .Property(u => u.IsActive)
                 .IsRequired();
 
             modelBuilder.Entity<User>()
@@ -239,16 +239,7 @@ namespace TestIt.Data
             modelBuilder.Entity<AlternativeQuestion>()
                 .HasMany(t => t.Alternatives)
                 .WithOne(t => t.AlternativeQuestion);
-
-            modelBuilder.Entity<AlternativeQuestion>()
-                .Property(x => x.CorrectAlternativeId)
-                .HasColumnName("AlternativeId");
-
-            modelBuilder.Entity<AlternativeQuestion>()
-               .HasOne(q => q.CorrectAlternative)
-               .WithOne(v => v.SecondAlternativeQuestion)
-               .HasForeignKey<AlternativeQuestion>(q => q.CorrectAlternativeId).OnDelete(DeleteBehavior.Restrict);
-
+            
             #endregion
 
             #region Alternatives
