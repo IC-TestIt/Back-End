@@ -70,7 +70,7 @@ namespace TestIt.Data
                 .IsRequired();
 
             modelBuilder.Entity<User>()
-                .Property(u => u.Identifyer)
+                .Property(u => u.Identifier)
                 .IsRequired()
                 .HasMaxLength(20);
             
