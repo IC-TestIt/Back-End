@@ -14,7 +14,7 @@ namespace TestIt.API.ViewModels.User
         public DateTime Birthday { get; set; }
         public int Type {get; set;}
         public int OrganizationId { get; set; }
-        public string Identifyer { get; set; }
+        public string Identifier { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

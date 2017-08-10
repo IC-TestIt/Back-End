@@ -152,7 +152,7 @@ namespace TestIt.API.Migrations
                         .IsRequired()
                         .HasMaxLength(100);
 
-                    b.Property<string>("Identifyer")
+                    b.Property<string>("Identifier")
                         .IsRequired()
                         .HasMaxLength(20);
 
