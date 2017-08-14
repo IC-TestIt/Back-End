@@ -63,20 +63,24 @@ namespace TestIt.API.Controllers
             User user = Mapper.Map<User>(viewModel);
 
             user.IsActive = true;
-            userService.Save(user);
-
-            if (viewModel.Type == 1)
+            if (userService.Save(user))
             {
-                var teacherId = CreateTeacher(user);
+                if (viewModel.Type == 1)
+                {
+                    var teacherId = CreateTeacher(user);
 
-                result = Ok(new { teacherId = teacherId, userId = user.Id });
+                    result = Ok(new { teacherId = teacherId, userId = user.Id });
+                }
+                else
+                {
+                    var studentId = CreateStudent(user);
+
+                    result = Ok(new { studentId = studentId, userId = user.Id });
+                }
+
             }
             else
-            {
-                var studentId = CreateStudent(user);
-
-                result = Ok(new { studentId = studentId, userId = user.Id });
-            }
+                return Forbid();
 
             return result;
         }

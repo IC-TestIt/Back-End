@@ -34,10 +34,17 @@ namespace TestIt.Business.Services
             return userRepository.GetSingle(id);
         }
 
-        public void Save(User t) 
+        public bool Save(User t) 
         {
-            userRepository.Add(t);
-            userRepository.Commit();
+            if (Exists(t.Email)== 0)
+            {
+                userRepository.Add(t);
+                userRepository.Commit();
+                return true; 
+            }
+            else
+                return false;
+            
         }
 
         public void Delete(int id)
