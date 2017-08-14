@@ -23,5 +23,6 @@ namespace TestIt.Model.Entities
         public Teacher Teacher { get; set; }
 
         public virtual ICollection<ClassStudents> ClassStudents { get; set; }
+        public virtual ICollection<ClassTests> ClassTests { get; set; }
     }
 }

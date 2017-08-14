@@ -10,6 +10,7 @@ namespace TestIt.Model.Entities
         public Test()
         {
             Questions = new List<Question>();
+            ClassTests = new List<ClassTests>();
 
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
@@ -25,5 +26,6 @@ namespace TestIt.Model.Entities
         public Teacher Teacher { get; set; }
 
         public ICollection<Question> Questions { get; set; }
+        public ICollection<ClassTests> ClassTests { get; set; }
     }
 }
