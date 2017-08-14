@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
-using TestIt.Utils.AuxEntities;
+using TestIt.Model.DTO;
 
 namespace TestIt.Business.Services
 {
