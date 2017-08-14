@@ -8,9 +8,10 @@ using TestIt.Data;
 namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
-    partial class TestItContextModelSnapshot : ModelSnapshot
+    [Migration("20170814221703_Add-ClassTests")]
+    partial class AddClassTests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

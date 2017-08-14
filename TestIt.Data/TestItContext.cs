@@ -21,7 +21,7 @@ namespace TestIt.Data
         public DbSet<Question> Questions { get; set; }
         public DbSet<EssayQuestion> EssayQuestions { get; set; }
         public DbSet<AlternativeQuestion> AlternativeQuestions { get; set; }
-
+        public DbSet<ClassTests> ClassTests { get; set; }
 
         public TestItContext(DbContextOptions options) : base(options) { }
 
@@ -162,6 +162,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Class>()
                 .HasOne(c => c.Teacher)
                 .WithMany(c => c.Classes);
+
+            modelBuilder.Entity<Class>()
+                .HasMany(c => c.ClassTests);
             #endregion
 
             #region ClassStudents
@@ -177,6 +180,25 @@ namespace TestIt.Data
                 .HasOne(x => x.Student)
                 .WithMany(x => x.ClassStudents)
                 .HasForeignKey(x => x.StudentId);
+            #endregion
+
+            #region ClassTests
+            modelBuilder.Entity<ClassTests>()
+                .ToTable("ClassTests");
+
+            modelBuilder.Entity<ClassTests>()
+                .Property(t => t.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<ClassTests>()
+                .HasOne(x => x.Class)
+                .WithMany(x => x.ClassTests)
+                .HasForeignKey(x => x.ClassId);
+
+            modelBuilder.Entity<ClassTests>()
+                .HasOne(x => x.Test)
+                .WithMany(x => x.ClassTests)
+                .HasForeignKey(x => x.TestId);
             #endregion
 
             #region Test
@@ -195,6 +217,9 @@ namespace TestIt.Data
             modelBuilder.Entity<Test>()
                 .HasMany(x => x.Questions)
                 .WithOne(x => x.Test);
+
+            modelBuilder.Entity<Test>()
+                .HasMany(x => x.ClassTests);
             #endregion
 
             #region Question
