@@ -12,7 +12,7 @@ namespace TestIt.Business
 
         User GetSingle(int id);
 
-        void Save(User u);
+        bool Save(User u);
 
         void Delete(int id);
 
