@@ -76,6 +76,7 @@ namespace TestIt.Business
         IEnumerable<Test> Get();
         Test GetSingle(int id);
         IEnumerable<Test> GetTeacherTests(int id);
+        bool Save(List<ClassTestsDTO> cts);
     }
     public interface IQuestionService
     {
