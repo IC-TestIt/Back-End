@@ -68,19 +68,16 @@ namespace TestIt.API.Controllers
         [HttpPost("{id}/classes")]
         public IActionResult Post(int id, [FromBody] CreateClassTestsViewModel viewModel)
         {
+            var classTests = new List<ClassTests>();
 
-
-            var classTests = new List<ClassTestsDTO>();
-
-            viewModel.ClassIds.ToList().ForEach(x =>
+            viewModel.ClassIds.ToList().ForEach(cs =>
             {
-                var classTest = new ClassTestsDTO()
+                var classTest = new ClassTests()
                 {
                     BeginDate = viewModel.BeginDate,
                     EndDate = viewModel.EndDate,
-                    ClassId = x,
+                    ClassId = cs,
                     TestId = id
-
                 };
 
                 classTests.Add(classTest);
@@ -93,7 +90,6 @@ namespace TestIt.API.Controllers
             }
             else
                 return Forbid();
-
         }
 
     }

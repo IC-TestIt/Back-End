@@ -2,6 +2,7 @@
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using System.Linq;
 
 namespace TestIt.Business.Services
 {
@@ -46,9 +47,15 @@ namespace TestIt.Business.Services
             return tests; 
         }
 
-        public bool Save(List<ClassTestsDTO> cts)
+        public bool Save(List<ClassTests> cts)
         {
-            return false;
+            if (cts.All(x => !Exists(x.ClassId, x.TestId)))
+            {
+                classTestsRepository.AddMultiple(cts);
+                return true;
+            }
+            else
+                return false;
         }
 
         public bool Exists(int classId, int testId)
