@@ -38,18 +38,6 @@ namespace TestIt.Business.Services
         {
             alternativeQuestionRepository.Add(q);
             alternativeQuestionRepository.Commit();
-            SaveAlternatives(q.Alternatives.ToList(), q.Id);
-        }
-
-        private void SaveAlternatives(List<Alternative> alt, int id)
-        {
-            foreach (Alternative a in alt)
-            {
-                a.AlternativeQuestionId = id;
-                alternativeRepository.Add(a);
-            }
-
-            alternativeRepository.Commit();
         }
     }
 }
