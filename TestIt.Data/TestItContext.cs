@@ -22,6 +22,7 @@ namespace TestIt.Data
         public DbSet<EssayQuestion> EssayQuestions { get; set; }
         public DbSet<AlternativeQuestion> AlternativeQuestions { get; set; }
         public DbSet<ClassTests> ClassTests { get; set; }
+        public DbSet<Alternative> Alternatives { get; set; }
 
         public TestItContext(DbContextOptions options) : base(options) { }
 

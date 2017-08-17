@@ -38,7 +38,7 @@ namespace TestIt.Business.Services
   
         public Test GetSingle(int id)
         {
-            return testRepository.SingleIncluding(id, x => x.Questions);
+            return testRepository.GetFull(id);
         }
 
         public IEnumerable<Test> GetTeacherTests(int id)
