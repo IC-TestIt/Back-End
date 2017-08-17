@@ -21,4 +21,5 @@ namespace TestIt.Data.Abstract
     public interface IAlternativeQuestionRepository : IEntityBaseRepository<AlternativeQuestion> {}
     public interface IAlternativeRepository : IEntityBaseRepository<Alternative> {}
     public interface IClassTestsRepository : IEntityBaseRepository<ClassTests> {}
+    public interface ILogRepository : IEntityBaseRepository<Log> {}
 }
