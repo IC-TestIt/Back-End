@@ -12,7 +12,10 @@ namespace TestIt.Data.Abstract
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
     public interface IClassRepository : IEntityBaseRepository<Class> {}
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
-    public interface ITestRepository : IEntityBaseRepository<Test> {}
+    public interface ITestRepository : IEntityBaseRepository<Test>
+    {
+        Test GetFull(int id);    
+    }
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}
     public interface IEssayQuestionRepository : IEntityBaseRepository<EssayQuestion> {}
     public interface IAlternativeQuestionRepository : IEntityBaseRepository<AlternativeQuestion> {}
