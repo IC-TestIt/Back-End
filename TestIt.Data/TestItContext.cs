@@ -23,7 +23,8 @@ namespace TestIt.Data
         public DbSet<AlternativeQuestion> AlternativeQuestions { get; set; }
         public DbSet<ClassTests> ClassTests { get; set; }
         public DbSet<Alternative> Alternatives { get; set; }
-
+        public DbSet<Log> Logs { get; set; }
+        
         public TestItContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -283,6 +284,15 @@ namespace TestIt.Data
             modelBuilder.Entity<Alternative>()
                 .HasOne(t => t.AlternativeQuestion)
                 .WithMany(t => t.Alternatives);
+            #endregion
+
+            #region Log
+            modelBuilder.Entity<Log>()
+                .ToTable("Logs");
+
+            modelBuilder.Entity<Log>()
+                .Property(i => i.Id)
+                .ValueGeneratedOnAdd();
             #endregion
 
         }
