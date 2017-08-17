@@ -9,6 +9,10 @@ using System.Net;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using TestIt.API.ViewModels.Mappings;
+using Microsoft.Extensions.Logging;
+using Serilog;
+using TestIt.API.Diagnostics;
+using Serilog.Events;
 
 namespace TestIt.API
 {
@@ -28,6 +32,14 @@ namespace TestIt.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("System", LogEventLevel.Warning)
+                .ReadFrom.Configuration(Configuration)
+                .CreateLogger();
+
+            Log.Information("Starting up");
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -64,6 +76,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IAlternativeQuestionRepository, Data.Repositories.AlternativeQuestionRepository>();
             services.AddScoped<Data.Abstract.IAlternativeRepository, Data.Repositories.AlternativeRepository>();
             services.AddScoped<Data.Abstract.IClassTestsRepository, Data.Repositories.ClassTestsRepository>();
+            services.AddScoped<Data.Abstract.ILogRepository, Data.Repositories.LogRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
@@ -73,7 +86,7 @@ namespace TestIt.API
             services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
             services.AddScoped<Business.ITestService, Business.Services.TestService>();
             services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
-
+            services.AddScoped<Business.ILogService, Business.Services.LogService>();
 
             AutoMapperConfiguration.Configure();
 
@@ -90,8 +103,10 @@ namespace TestIt.API
 
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddSerilog();
+
             app.UseCors(builder =>
                 builder.AllowAnyOrigin()
                 .AllowAnyHeader()
@@ -110,11 +125,13 @@ namespace TestIt.API
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
-                        {
+                        { 
                             await context.Response.WriteAsync(error.Error.Message).ConfigureAwait(false);
                         }
                     });
               });
+
+            app.UseMiddleware<SerilogMiddleware>();
 
             app.UseMvc(routes =>
             {
