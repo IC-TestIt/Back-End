@@ -20,5 +20,8 @@ namespace TestIt.Model.Entities
 
         public int TestId { get; set; }
         public Test Test { get; set; }
+
+        public virtual EssayQuestion EssayQuestion { get; set; }
+        public virtual AlternativeQuestion AlternativeQuestion { get; set; }
     }
 }
