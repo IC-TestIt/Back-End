@@ -1,16 +1,20 @@
 ﻿using System.Collections.Generic;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using System.Linq;
 
 namespace TestIt.Business.Services
 {
     public class TestService : ITestService
     {
         private ITestRepository testRepository;
+        private IClassTestsRepository classTestsRepository;
 
-        public TestService(ITestRepository testRepository)
+        public TestService(ITestRepository testRepository, IClassTestsRepository classTestsRepository)
         {
             this.testRepository = testRepository;
+            this.classTestsRepository = classTestsRepository;
 
         }
         public void Save(Test t)
@@ -41,6 +45,23 @@ namespace TestIt.Business.Services
         {
             var tests = testRepository.FindBy(x => x.TeacherId == id);
             return tests; 
+        }
+
+        public bool Save(List<ClassTests> cts)
+        {
+            if (cts.All(x => !Exists(x.ClassId, x.TestId)))
+            {
+                classTestsRepository.AddMultiple(cts);
+                classTestsRepository.Commit();
+                return true;
+            }
+            else
+                return false;
+        }
+
+        public bool Exists(int classId, int testId)
+        {
+            return  classTestsRepository.Any(x => x.ClassId  == classId && x.TestId == testId);
         }
 
     }

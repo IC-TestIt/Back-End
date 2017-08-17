@@ -80,6 +80,11 @@ namespace TestIt.Data.Repositories
             _context.Set<T>().Add(entity);
         }
 
+        public virtual void AddMultiple (List<T> entities)
+        {
+            _context.Set<T>().AddRange(entities);
+        }
+
         public virtual void Update(T entity)
         {
             EntityEntry dbEntityEntry = _context.Entry<T>(entity);

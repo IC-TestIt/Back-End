@@ -17,6 +17,7 @@ namespace TestIt.Data.Abstract
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
         bool Any(Expression<Func<T, bool>> predicate);
         void Add(T entity);
+        void AddMultiple(List<T> entities);
         void Update(T entity);
         void Delete(T entity);
         void DeleteWhere(Expression<Func<T, bool>> predicate);

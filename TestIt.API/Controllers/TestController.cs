@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.API.Controllers
@@ -64,5 +65,32 @@ namespace TestIt.API.Controllers
             else
                 return NotFound();
         }
+        [HttpPost("{id}/classes")]
+        public IActionResult Post(int id, [FromBody] CreateClassTestsViewModel viewModel)
+        {
+            var classTests = new List<ClassTests>();
+
+            viewModel.ClassIds.ToList().ForEach(cs =>
+            {
+                var classTest = new ClassTests()
+                {
+                    BeginDate = viewModel.BeginDate,
+                    EndDate = viewModel.EndDate,
+                    ClassId = cs,
+                    TestId = id
+                };
+
+                classTests.Add(classTest);
+            });
+
+            if (testService.Save(classTests))
+            {
+               OkResult result = Ok();
+               return result;
+            }
+            else
+                return Forbid();
+        }
+
     }
 }
