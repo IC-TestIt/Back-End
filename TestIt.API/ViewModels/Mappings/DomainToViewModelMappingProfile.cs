@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using TestIt.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using TestIt.API.ViewModels;
 
 namespace TestIt.API.ViewModels.Mappings
 {
@@ -15,6 +11,9 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Test, Test.ReturnTestViewModel>();
             Mapper.CreateMap<Model.Entities.Question, Question.BaseQuestionViewModel>();
             Mapper.CreateMap<Model.Entities.Test, Test.TeacherTestsViewModel>();
+            Mapper.CreateMap<Model.Entities.Question, Question.FullQuestionViewModel>();
+            Mapper.CreateMap<Alternative, Question.AlternativeViewModel>();
+            Mapper.CreateMap<AlternativeQuestion, Question.AlternativeQuestionViewModel>();
         }
     }
 }
