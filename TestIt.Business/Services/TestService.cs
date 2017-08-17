@@ -52,6 +52,7 @@ namespace TestIt.Business.Services
             if (cts.All(x => !Exists(x.ClassId, x.TestId)))
             {
                 classTestsRepository.AddMultiple(cts);
+                classTestsRepository.Commit();
                 return true;
             }
             else
