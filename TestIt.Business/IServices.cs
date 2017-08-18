@@ -60,10 +60,16 @@ namespace TestIt.Business
         IEnumerable<Test> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
     }
+
     public interface IQuestionService
     {
         void Save(Question q);
         void Save(EssayQuestion q);
         void Save(AlternativeQuestion q);
+    }
+
+    public interface ILogService
+    {
+        void Save(Log l);
     }
 }

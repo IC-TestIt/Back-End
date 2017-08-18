@@ -20,16 +20,17 @@ namespace TestIt.API.Controllers
         }
 
         [HttpGet("exists/{email}")]
-        public int StudentExists(string email)
+        public IActionResult StudentExists(string email)
         {
             var userId = userService.Exists(email);
 
             if (userId == 0)
             {
-                return 0;
+                return NotFound(1);
             }
 
-            return studentService.GetByUser(userId).Id;
+            var result = new OkObjectResult(studentService.GetByUser(userId).Id);
+            return result;
         }
     }
 }
