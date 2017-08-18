@@ -20,6 +20,7 @@ namespace TestIt.API
     {
         public IConfigurationRoot Configuration { get; }
         private static string _applicationPath = string.Empty;
+        private bool IsProd { get; set; }
         string sqlConnectionString = string.Empty;
         bool useInMemoryProvider = false;
 
@@ -32,6 +33,8 @@ namespace TestIt.API
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
+
+            IsProd = env.IsProduction();
 
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
@@ -131,7 +134,8 @@ namespace TestIt.API
                     });
               });
 
-            app.UseMiddleware<SerilogMiddleware>();
+            if (IsProd)
+                app.UseMiddleware<SerilogMiddleware>();
 
             app.UseMvc(routes =>
             {
