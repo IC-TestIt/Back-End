@@ -11,7 +11,9 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Test, Test.ReturnTestViewModel>();
             Mapper.CreateMap<Model.Entities.Question, Question.BaseQuestionViewModel>();
             Mapper.CreateMap<Model.Entities.Test, Test.TeacherTestsViewModel>();
-            Mapper.CreateMap<Model.Entities.Question, Question.FullQuestionViewModel>();
+            Mapper.CreateMap<Model.Entities.Question, Question.FullQuestionViewModel>()
+                .ForMember(x => x.IsAlternative, map => map.MapFrom(x => x.AlternativeQuestion != null))
+                .ForMember(x => x.Alternatives, map => map.MapFrom(x => x.AlternativeQuestion != null ? x.AlternativeQuestion.Alternatives : null));
             Mapper.CreateMap<Alternative, Question.AlternativeViewModel>();
             Mapper.CreateMap<AlternativeQuestion, Question.AlternativeQuestionViewModel>();
         }

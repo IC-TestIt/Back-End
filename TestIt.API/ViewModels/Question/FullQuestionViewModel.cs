@@ -11,6 +11,7 @@ namespace TestIt.API.ViewModels.Question
         public string Description { get; set; }
         public double Value { get; set; }
         public int TestId { get; set; }
-        public virtual AlternativeQuestionViewModel AlternativeQuestion { get; set; }
+        public bool IsAlternative { get; set; }
+        public virtual List<AlternativeViewModel> Alternatives { get; set; }
     }
 }
