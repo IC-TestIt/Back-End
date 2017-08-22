@@ -16,6 +16,7 @@ namespace TestIt.API.ViewModels.Mappings
                 .ForMember(x => x.Alternatives, map => map.MapFrom(x => x.AlternativeQuestion != null ? x.AlternativeQuestion.Alternatives : null));
             Mapper.CreateMap<Alternative, Question.AlternativeViewModel>();
             Mapper.CreateMap<AlternativeQuestion, Question.AlternativeQuestionViewModel>();
+            Mapper.CreateMap<Model.Entities.Log, Log.ReturnLogViewModel>();
         }
     }
 }
