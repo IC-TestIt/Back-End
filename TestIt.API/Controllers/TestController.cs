@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.NodeServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,21 @@ namespace TestIt.API.Controllers
 
             return result;
         }
+
+        [HttpGet("export/{id}")]
+        public async Task<IActionResult> Index(int id, [FromServices] INodeServices nodeServices)
+        {
+            var htmlContent = testService.ExportTest(id);
+            var result = await nodeServices.InvokeAsync<byte[]>("../TestIt.Utils/PDF/pdf", htmlContent);
+
+            HttpContext.Response.ContentType = "application/pdf";
+
+            HttpContext.Response.Headers.Add("x-filename", "report.pdf");
+            HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "x-filename");
+            HttpContext.Response.Body.Write(result, 0, result.Length);
+            return new ContentResult();
+        }
+
 
         [HttpGet]
         public IActionResult Get()
