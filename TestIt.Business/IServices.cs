@@ -33,6 +33,7 @@ namespace TestIt.Business
         IEnumerable<User> ClassUsers(int id);
         Class GetSingle(int id);
         IEnumerable<Class> Get();
+        IEnumerable<Class> GetTeacherClasses(int id);
     }
 
     public interface IStudentService
