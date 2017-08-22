@@ -50,18 +50,12 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}/classes")]
         public IActionResult GetTeacherClasses(int id)
         {
-            var teacher = teacherService.GetSingle(id);
+            var classes = classService.GetTeacherClasses(id);
 
-            if (teacher != null)
+            if (classes != null)
             {
-                var classes = classService.GetTeacherClasses(id);
-
-                if (classes != null)
-                {
-                    IEnumerable<TeacherClassesViewModel> classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
-                    return new OkObjectResult(classesVm);
-                }
-
+                IEnumerable<TeacherClassesViewModel> classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
+                return new OkObjectResult(classesVm);
             }
 
             return NotFound();

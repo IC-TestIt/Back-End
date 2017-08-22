@@ -8,6 +8,6 @@ namespace TestIt.API.ViewModels.Class
     public class TeacherClassesViewModel
     {
         public string Description { get; set; }
-        public DateTime DateCreated { get; set; }
+        public int Id { get; set; }
     }
 }
