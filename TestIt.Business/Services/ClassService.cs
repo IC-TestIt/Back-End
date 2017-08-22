@@ -34,5 +34,12 @@ namespace TestIt.Business.Services
         {
             return classRepository.GetAll();
         }
+
+        public IEnumerable<Class> GetTeacherClasses(int id)
+        {
+            var classes = classRepository.FindBy(x => x.TeacherId == id);
+            return classes;
+        }
+
     }
 }
