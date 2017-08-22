@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TestIt.API.ViewModels.Class;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -16,12 +17,15 @@ namespace TestIt.API.Controllers
         private ITeacherService teacherService;
         private IUserService userService;
         private ITestService testService;
+        private IClassService classService;
 
-        public TeacherController(ITeacherService teacherService, IUserService userService, ITestService testService)
+        public TeacherController(ITeacherService teacherService, IUserService userService, 
+                                                ITestService testService, IClassService classService)
         {
             this.teacherService = teacherService;
             this.userService = userService;
             this.testService = testService;
+            this.classService = classService;
         }
 
         [HttpGet("{id}/tests")]
@@ -43,6 +47,26 @@ namespace TestIt.API.Controllers
 
             return NotFound();
         }
+        [HttpGet("{id}/classes")]
+        public IActionResult GetTeacherClasses(int id)
+        {
+            var teacher = teacherService.GetSingle(id);
+
+            if (teacher != null)
+            {
+                var classes = classService.GetTeacherClasses(id);
+
+                if (classes != null)
+                {
+                    IEnumerable<TeacherClassesViewModel> classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
+                    return new OkObjectResult(classesVm);
+                }
+
+            }
+
+            return NotFound();
+        }
+
 
 
     }
