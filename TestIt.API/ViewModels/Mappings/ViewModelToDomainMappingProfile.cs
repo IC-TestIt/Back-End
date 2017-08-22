@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using System.Linq;
 using TestIt.Model.Entities;
 
@@ -8,12 +9,6 @@ namespace TestIt.API.ViewModels.Mappings
     {
         protected override void Configure()
         {
-
-            //Mapper.CreateMap<ScheduleViewModel, Schedule>()
-            //   .ForMember(s => s.Creator, map => map.UseValue(null))
-            //   .ForMember(s => s.Attendees, map => map.UseValue(new List<Attendee>()));
-
-            //Mapper.CreateMap<UserViewModel, User>();
             Mapper.CreateMap<User.CreateUserViewModel, Model.Entities.User>();
             Mapper.CreateMap<Class.CreateClassViewModel, Model.Entities.Class>();
             Mapper.CreateMap<Test.CreateTestViewModel, Model.Entities.Test>();
@@ -25,6 +20,8 @@ namespace TestIt.API.ViewModels.Mappings
                      Description = y.Description,
                      IsCorrect = y.IsCorrect
                  }).ToList()));
+            Mapper.CreateMap<Log.LogFilterViewModel, Model.Entities.Log>()
+                .ForMember(x => x.DateCreated, m => m.MapFrom(x => Convert.ToDateTime(x.DateCreated)));
         }
     }
 }

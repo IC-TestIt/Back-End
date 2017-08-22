@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TestIt.API.ViewModels.Log;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -13,25 +10,22 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class LogController : Controller
     {
-        private ILogService logService;
+        private readonly ILogService _logService;
 
-        public LogController(ILogService logService)
+        public LogController(ILogService logService) => _logService = logService;
+
+        [HttpPost("filter")]
+        public IActionResult Post([FromBody] LogFilterViewModel vm)
         {
-            this.logService = logService;
-        }
+            var filter = Mapper.Map<LogFilterViewModel, Log>(vm);
 
-        [HttpGet("{date}{class}{method}")]
-        public IActionResult Filter(Log log)
-        {
-            IEnumerable<Log> logs = logService.Filter(log);
+            var logs = _logService.Filter(filter);
 
-            if (logs != null)
-            {
-                IEnumerable<ReturnLogViewModel> logVm = Mapper.Map<IEnumerable<Log>, IEnumerable<ReturnLogViewModel>>(logs);
-                return new OkObjectResult(logVm);
-            }
+            if (logs == null)
+                return NotFound();
 
-            return NotFound();
+            var logVm = Mapper.Map<IEnumerable<Log>, IEnumerable<ReturnLogViewModel>>(logs);
+            return new OkObjectResult(logVm);
         }
 
          
