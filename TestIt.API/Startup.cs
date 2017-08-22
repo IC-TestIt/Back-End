@@ -90,7 +90,7 @@ namespace TestIt.API
             services.AddScoped<Business.ITestService, Business.Services.TestService>();
             services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
             services.AddScoped<Business.ILogService, Business.Services.LogService>();
-
+            services.AddNodeServices();
             AutoMapperConfiguration.Configure();
 
             services.AddCors();
