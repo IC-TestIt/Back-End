@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using System;
 
 namespace TestIt.Business
 {
@@ -71,5 +72,6 @@ namespace TestIt.Business
     public interface ILogService
     {
         void Save(Log l);
+        IEnumerable<Log> Filter(Log log);
     }
 }

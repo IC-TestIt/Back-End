@@ -20,5 +20,11 @@ namespace TestIt.Business.Services
             LogRepository.Add(log);
             LogRepository.Commit();
         }
+
+        public IEnumerable<Log> Filter(Log log )
+        {
+            var logs = LogRepository.Filter(log);
+            return logs;
+        }
     }
 }
