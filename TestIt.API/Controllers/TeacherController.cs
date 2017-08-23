@@ -31,22 +31,17 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}/tests")]
         public IActionResult GetTeacherTests(int id)
         {
-            var teacher = teacherService.GetSingle(id);
+            var tests = testService.GetTeacherTests(id);
 
-            if(teacher != null)
+            if (tests != null)
             {
-                var tests = testService.GetTeacherTests(id);
-
-                if (tests != null)
-                {
-                    IEnumerable<TeacherTestsViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
-                    return new OkObjectResult(testsVm);
-                }
-
+                IEnumerable<TeacherTestsViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
+                return new OkObjectResult(testsVm);
             }
 
             return NotFound();
         }
+
         [HttpGet("{id}/classes")]
         public IActionResult GetTeacherClasses(int id)
         {
