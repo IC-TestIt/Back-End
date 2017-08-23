@@ -31,18 +31,26 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}/tests")]
         public IActionResult GetTeacherTests(int id)
         {
-            var teacher = teacherService.GetSingle(id);
+            var tests = testService.GetTeacherTests(id);
 
-            if(teacher != null)
+            if (tests != null)
             {
-                var tests = testService.GetTeacherTests(id);
+                IEnumerable<TeacherTestsViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
+                return new OkObjectResult(testsVm);
+            }
 
-                if (tests != null)
-                {
-                    IEnumerable<TeacherTestsViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
-                    return new OkObjectResult(testsVm);
-                }
+            return NotFound();
+        }
 
+        [HttpGet("{id}/classes")]
+        public IActionResult GetTeacherClasses(int id)
+        {
+            var classes = classService.GetTeacherClasses(id);
+
+            if (classes != null)
+            {
+                IEnumerable<TeacherClassesViewModel> classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
+                return new OkObjectResult(classesVm);
             }
 
             return NotFound();
@@ -60,6 +68,7 @@ namespace TestIt.API.Controllers
 
             return NotFound();
         }
+
 
 
 
