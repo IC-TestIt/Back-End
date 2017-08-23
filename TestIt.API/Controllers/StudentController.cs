@@ -26,7 +26,7 @@ namespace TestIt.API.Controllers
 
             if (userId == 0)
             {
-                return NotFound(1);
+                return new OkObjectResult(-1);
             }
 
             var result = new OkObjectResult(studentService.GetByUser(userId).Id);
