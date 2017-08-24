@@ -64,5 +64,59 @@ namespace TestIt.Business.Services
             return  classTestsRepository.Any(x => x.ClassId  == classId && x.TestId == testId);
         }
 
+        public string ExportTest(int testId)
+        {
+            var test = GetSingle(testId);
+            string html = BuildHeader(test) + AddQuestions(test.Questions) + BuildFooter();
+
+            return html;
+        }
+
+        public string BuildHeader(Test test)
+        {
+            string html = "<html><head><meta charset='utf-8'></head><body style='font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;'>";
+
+            html += "<h1 style='text-align: center'>" + test.Title + "</h1>" + "<h2 style='text-align: center'>" + test.Description + "</h2>";
+            html += "<p style='margin: 40px 0; font - size: 14pt; '>Nome: <hr /></p>";
+            html += "<p style='margin-top: 40px; margin-bottom: 80px; font-size: 14pt; '>Data: ____/____/______</p>";
+
+            return html;
+        }
+
+        public string AddQuestions(ICollection<Question> questions)
+        {
+            string html = "";
+            var number = 1;
+            foreach (var question in questions)
+            {
+                html += "<p style='margin: 40px 0; font-size: 14pt;'>" + "Questão " + number + " : " + question.Description + "</p>";
+                if (question.AlternativeQuestion != null)
+                {
+                    var index = 0;
+                    string[] labels = { "(A)", "(B)", "(C)", "(D)", "(E)" };
+                    foreach (var alternative in question.AlternativeQuestion.Alternatives)
+                    {
+                        html += "<p>" + labels.ElementAt(index) + " " + alternative.Description + "</p>";
+                        index++;
+                    }
+                }
+                if (question.EssayQuestion != null)
+                {
+                    for (var i = 0; i < 5; i++)
+                    {
+                        html += "<hr style='margin-bottom: 30px;'>";
+                    }
+                }
+                number++;
+            }
+
+            return html;
+        }
+
+        public string BuildFooter()
+        {
+            return "</body></html>";
+        }
+
     }
 }

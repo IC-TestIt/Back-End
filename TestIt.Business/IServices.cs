@@ -61,6 +61,7 @@ namespace TestIt.Business
         Test GetSingle(int id);
         IEnumerable<Test> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
+        string ExportTest(int testId);
     }
 
     public interface IQuestionService

@@ -9,4 +9,8 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="MimeKit" Version="1.16.2" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="PDF\" />
+  </ItemGroup>
 </Project>
