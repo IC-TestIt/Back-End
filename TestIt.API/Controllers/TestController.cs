@@ -46,10 +46,10 @@ namespace TestIt.API.Controllers
             var result = await nodeServices.InvokeAsync<byte[]>("../TestIt.Utils/PDF/pdf", htmlContent);
 
             HttpContext.Response.ContentType = "application/pdf";
-
             HttpContext.Response.Headers.Add("x-filename", "report.pdf");
             HttpContext.Response.Headers.Add("Access-Control-Expose-Headers", "x-filename");
             HttpContext.Response.Body.Write(result, 0, result.Length);
+
             return new ContentResult();
         }
 
