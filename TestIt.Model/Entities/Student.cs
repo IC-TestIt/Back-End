@@ -22,6 +22,7 @@ namespace TestIt.Model.Entities
         public User User { get; set; }
         
         public IEnumerable<ClassStudents> ClassStudents { get; set; }
+        public IEnumerable<Exam> Exams { get; set; }
 
     }
 }

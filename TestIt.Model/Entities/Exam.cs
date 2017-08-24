@@ -4,12 +4,14 @@ using System.Text;
 
 namespace TestIt.Model.Entities
 {
-    public class ClassTests : IEntityBase
+    public class Exam : IEntityBase
     {
-        public ClassTests ()
+        public Exam ()
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
+
+            BeginDate = DateTime.Now;
         }
 
         public int Id { get; set; }
@@ -18,14 +20,14 @@ namespace TestIt.Model.Entities
 
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
+        public double Grade { get; set; }
+        public int Status { get; set; }
 
 
-        public int  ClassId { get; set; }
-        public Class Class { get; set; }
+        public Student Student { get; set; }
+        public int StudentId { get; set; }
 
-        public int TestId { get; set; }
-        public Test Test { get; set; }
-
-        public IEnumerable<Exam> Exams { get; set; }
+        public ClassTests ClassTests { get; set; }
+        public int ClassTestsId { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace TestIt.Data
         public DbSet<ClassTests> ClassTests { get; set; }
         public DbSet<Alternative> Alternatives { get; set; }
         public DbSet<Log> Logs { get; set; }
-        
+        public DbSet<Exam> Exams { get; set; }
         public TestItContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -116,6 +116,10 @@ namespace TestIt.Data
 
             modelBuilder.Entity<Student>()
                 .HasMany(s => s.ClassStudents);
+
+            modelBuilder.Entity<Student>()
+                .HasMany(x => x.Exams)
+                .WithOne(x => x.Student);
             #endregion
             
             #region Organization
@@ -201,6 +205,10 @@ namespace TestIt.Data
                 .HasOne(x => x.Test)
                 .WithMany(x => x.ClassTests)
                 .HasForeignKey(x => x.TestId);
+
+            modelBuilder.Entity<ClassTests>()
+                .HasMany(x => x.Exams)
+                .WithOne(x => x.ClassTests);
             #endregion
 
             #region Test
@@ -293,6 +301,26 @@ namespace TestIt.Data
             modelBuilder.Entity<Log>()
                 .Property(i => i.Id)
                 .ValueGeneratedOnAdd();
+            #endregion
+
+            #region Exam
+            modelBuilder.Entity<Exam>()
+                .ToTable("Exams");
+
+            modelBuilder.Entity<Exam>()
+                .Property(x => x.Id)
+                .ValueGeneratedOnAdd();
+
+            modelBuilder.Entity<Exam>()
+                .HasOne(x => x.Student)
+                .WithMany(x => x.Exams)
+                .HasForeignKey(x => x.StudentId);
+
+            modelBuilder.Entity<Exam>()
+                .HasOne(x => x.ClassTests)
+                .WithMany(x => x.Exams)
+                .HasForeignKey(x => x.ClassTestsId);
+            
             #endregion
 
         }
