@@ -26,4 +26,5 @@ namespace TestIt.Data.Abstract
         IEnumerable<Log> Filter(Log log);
     }
     public interface IExamRepository : IEntityBaseRepository<Exam> {}
+    public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }

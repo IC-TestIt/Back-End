@@ -12,6 +12,8 @@ namespace TestIt.Model.Entities
             DateUpdated = DateTime.Now;
 
             BeginDate = DateTime.Now;
+
+            AnsweredQuestions = new List<AnsweredQuestion>();
         }
 
         public int Id { get; set; }
@@ -20,7 +22,7 @@ namespace TestIt.Model.Entities
 
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
-        public double Grade { get; set; }
+        public double TotalGrade { get; set; }
         public int Status { get; set; }
 
 
@@ -29,5 +31,7 @@ namespace TestIt.Model.Entities
 
         public ClassTests ClassTests { get; set; }
         public int ClassTestsId { get; set; }
+
+        public IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }
     }
 }

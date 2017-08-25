@@ -8,9 +8,10 @@ using TestIt.Data;
 namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
-    partial class TestItContextModelSnapshot : ModelSnapshot
+    [Migration("20170824234639_Add-Exam-AnsweredQuestion")]
+    partial class AddExamAnsweredQuestion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")
@@ -62,7 +63,7 @@ namespace TestIt.API.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AlternativeId");
+                    b.Property<int>("AlternativeId");
 
                     b.Property<DateTime>("DateCreated");
 
