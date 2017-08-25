@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace TestIt.Model.Entities
 {
@@ -8,6 +9,8 @@ namespace TestIt.Model.Entities
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
+
+            AnsweredQuestions = new List<AnsweredQuestion>();
         }
 
         public int Id { get; set; }
@@ -19,5 +22,6 @@ namespace TestIt.Model.Entities
 
         public int AlternativeQuestionId { get; set; }
         public AlternativeQuestion AlternativeQuestion { get; set; }
+        public IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }
     }
 }

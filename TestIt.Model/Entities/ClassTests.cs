@@ -10,6 +10,8 @@ namespace TestIt.Model.Entities
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
+
+            Exams = new List<Exam>();
         }
 
         public int Id { get; set; }

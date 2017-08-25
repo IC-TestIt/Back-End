@@ -10,6 +10,8 @@ namespace TestIt.Model.Entities
         {
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
+
+            AnsweredQuestions = new List<AnsweredQuestion>();
         }
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
@@ -23,5 +25,6 @@ namespace TestIt.Model.Entities
 
         public virtual EssayQuestion EssayQuestion { get; set; }
         public virtual AlternativeQuestion AlternativeQuestion { get; set; }
+        public virtual IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }
     }
 }
