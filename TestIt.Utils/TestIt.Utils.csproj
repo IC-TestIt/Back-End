@@ -1,16 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="MailKit" Version="1.16.2" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
     <PackageReference Include="MimeKit" Version="1.16.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PDF\" />
   </ItemGroup>
 </Project>
