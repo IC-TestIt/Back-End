@@ -76,9 +76,9 @@ namespace TestIt.Business.Services
         {
             string html = "<html><head><meta charset='utf-8'></head><body style='font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;'>";
 
-            html += "<h1 style='text-align: center'>" + test.Title + "</h1>" + "<h2 style='text-align: center'>" + test.Description + "</h2>";
-            html += "<p style='margin: 40px 0; font - size: 14pt; '>Nome: <hr /></p>";
-            html += "<p style='margin-top: 40px; margin-bottom: 80px; font-size: 14pt; '>Data: ____/____/______</p>";
+            html += "<h1 style='text-align: center; font-size: 16px;'>" + test.Title + "</h1>" + "<h2 style='text-align: center; font-size: 14px;'>" + test.Description + "</h2>";
+            html += "<p style='margin: 30px 0; font-size: 14px; '>Nome: <hr /></p>";
+            html += "<p style='margin-top: 30px; margin-bottom: 50px; font-size: 14px; '>Data: ____/____/______</p>";
 
             return html;
         }
@@ -89,14 +89,14 @@ namespace TestIt.Business.Services
             var number = 1;
             foreach (var question in questions)
             {
-                html += "<p style='margin: 40px 0; font-size: 14pt;'>" + "Questão " + number + " : " + question.Description + "</p>";
+                html += "<p style='margin: 25px 0; font-size: 13px;'>" + "Questão " + number + " : " + question.Description + "</p>";
                 if (question.AlternativeQuestion != null)
                 {
                     var index = 0;
                     string[] labels = { "(A)", "(B)", "(C)", "(D)", "(E)" };
                     foreach (var alternative in question.AlternativeQuestion.Alternatives)
                     {
-                        html += "<p>" + labels.ElementAt(index) + " " + alternative.Description + "</p>";
+                        html += "<p style='font-size: 12px;'>" + labels.ElementAt(index) + " " + alternative.Description + "</p>";
                         index++;
                     }
                 }
@@ -104,7 +104,7 @@ namespace TestIt.Business.Services
                 {
                     for (var i = 0; i < 5; i++)
                     {
-                        html += "<hr style='margin-bottom: 30px;'>";
+                        html += "<hr style='margin-bottom: 25px;'>";
                     }
                 }
                 number++;
