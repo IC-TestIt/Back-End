@@ -76,4 +76,9 @@ namespace TestIt.Business
         void Save(Log l);
         IEnumerable<Log> Filter(Log log);
     }
+
+    public interface IExamService
+    {
+        void Save(Exam exam);
+    }
 }
