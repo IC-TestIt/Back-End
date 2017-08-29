@@ -8,6 +8,7 @@ namespace TestIt.API.ViewModels.Question
 {
     public class FullQuestionViewModel
     {
+        public int Id { get; set; }
         public string Description { get; set; }
         public double Value { get; set; }
         public int TestId { get; set; }
