@@ -22,6 +22,7 @@ namespace TestIt.API.ViewModels.Mappings
                  }).ToList()));
             Mapper.CreateMap<Log.LogFilterViewModel, Model.Entities.Log>()
                 .ForMember(x => x.DateCreated, m => m.MapFrom(x => Convert.ToDateTime(x.DateCreated)));
+            Mapper.CreateMap<Exam.CreateExamViewModel, Model.Entities.Exam>();
         }
     }
 }

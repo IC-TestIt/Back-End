@@ -80,6 +80,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IAlternativeRepository, Data.Repositories.AlternativeRepository>();
             services.AddScoped<Data.Abstract.IClassTestsRepository, Data.Repositories.ClassTestsRepository>();
             services.AddScoped<Data.Abstract.ILogRepository, Data.Repositories.LogRepository>();
+            services.AddScoped<Data.Abstract.IExamRepository, Data.Repositories.ExamRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
@@ -90,6 +91,7 @@ namespace TestIt.API
             services.AddScoped<Business.ITestService, Business.Services.TestService>();
             services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
             services.AddScoped<Business.ILogService, Business.Services.LogService>();
+            services.AddScoped<Business.IExamService, Business.Services.ExamService>();
             AutoMapperConfiguration.Configure();
 
             services.AddCors();
