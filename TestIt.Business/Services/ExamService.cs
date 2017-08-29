@@ -20,6 +20,10 @@ namespace TestIt.Business.Services
             examRepository.Add(e);
             examRepository.Commit();
         }
-
+        public IEnumerable<Exam> GetStudentExams(int id)
+        {
+            var exams = examRepository.FindBy(x => x.StudentId == id);
+            return exams;
+        }
     }
 }
