@@ -25,6 +25,10 @@ namespace TestIt.Data.Abstract
     {
         IEnumerable<Log> Filter(Log log);
     }
-    public interface IExamRepository : IEntityBaseRepository<Exam> {}
+
+    public interface IExamRepository : IEntityBaseRepository<Exam>
+    {
+        Exam GetFull(int id);
+    }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }
