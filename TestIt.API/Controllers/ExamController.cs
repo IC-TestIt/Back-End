@@ -36,5 +36,18 @@ namespace TestIt.API.Controllers
 
             return result;
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var exam = examService.GetSingle(id);
+            if (exam != null)
+            {
+                var examVm = Mapper.Map<Exam, ReturnExamViewModel>(exam);
+                return new OkObjectResult(examVm);
+            }
+            else
+                return NotFound(); 
+        }
     }
 }
