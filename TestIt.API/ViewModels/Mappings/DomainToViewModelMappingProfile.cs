@@ -18,6 +18,10 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<AlternativeQuestion, Question.AlternativeQuestionViewModel>();
             Mapper.CreateMap<Model.Entities.Log, Log.ReturnLogViewModel>();
             Mapper.CreateMap<Model.Entities.Class, Class.TeacherClassesViewModel>();
+            Mapper.CreateMap<Model.Entities.Exam, Exam.ReturnExamViewModel>();
+            Mapper.CreateMap<Model.Entities.AnsweredQuestion, AnsweredQuestion.ReturnAnsweredQuestionViewModel>()
+                .ForMember(x => x.EssayAnswer, map => map.MapFrom(x => x.EssayAnswer != null))
+                .ForMember(x => x.Alternative, map => map.MapFrom(x => x.Alternative != null));
         }
     }
 }
