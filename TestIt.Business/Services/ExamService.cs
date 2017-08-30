@@ -21,5 +21,10 @@ namespace TestIt.Business.Services
             examRepository.Commit();
         }
 
+        public Exam GetSingle(int id)
+        {
+            return examRepository.GetFull(id);
+        }
+
     }
 }

@@ -80,5 +80,6 @@ namespace TestIt.Business
     public interface IExamService
     {
         void Save(Exam exam);
+        Exam GetSingle(int id);
     }
 }
