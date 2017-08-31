@@ -81,6 +81,7 @@ namespace TestIt.Business
     {
         void Save(Exam exam);
         IEnumerable<Exam> GetStudentExams(int id);
+        bool EndExam(int id, Exam exam);
 
     }
 }

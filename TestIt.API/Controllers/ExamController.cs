@@ -36,5 +36,24 @@ namespace TestIt.API.Controllers
 
             return result;
         }
+
+        [HttpPut("{id}")]
+        public IActionResult EndExam(int id, [FromBody]EndExamViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Exam exam = Mapper.Map<Exam>(viewModel);
+
+            var sucess = examService.EndExam(id, exam);
+
+            if (sucess)
+                return new NoContentResult();
+            else
+                return NotFound();
+        }
+
     }
 }
