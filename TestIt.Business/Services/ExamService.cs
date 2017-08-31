@@ -25,5 +25,23 @@ namespace TestIt.Business.Services
             var exams = examRepository.FindBy(x => x.StudentId == id);
             return exams;
         }
+
+        public bool EndExam(int id, Exam exam)
+        {
+            Exam e = examRepository.GetSingle(id);
+
+            if (e != null)
+            {
+                e.DateUpdated = DateTime.Now;
+                e.Status = exam.Status;
+                e.EndDate = DateTime.Now;
+
+                examRepository.Commit();
+
+                return true;
+            }
+            else
+                return false;
+        }
     }
 }
