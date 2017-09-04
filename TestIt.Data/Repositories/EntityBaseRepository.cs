@@ -11,7 +11,7 @@ namespace TestIt.Data.Repositories
 {
     public class EntityBaseRepository<T> : IEntityBaseRepository<T> where T : class, IEntityBase, new()
     {
-        private TestItContext _context;
+        public TestItContext _context;
 
         #region Properties
         public EntityBaseRepository(TestItContext context)

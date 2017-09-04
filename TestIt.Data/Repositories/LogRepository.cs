@@ -7,12 +7,9 @@ namespace TestIt.Data.Repositories
 {
     public class LogRepository : EntityBaseRepository<Log>, ILogRepository
     {
-        private readonly TestItContext _context;
-
         public LogRepository(TestItContext context)
             : base(context)
         {
-            _context = context;
         }
 
         public IEnumerable<Log> Filter(Log log)
