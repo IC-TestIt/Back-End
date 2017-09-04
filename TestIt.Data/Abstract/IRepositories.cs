@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using TestIt.Model.DTO;
 
 namespace TestIt.Data.Abstract
 {
@@ -29,6 +30,7 @@ namespace TestIt.Data.Abstract
     public interface IExamRepository : IEntityBaseRepository<Exam>
     {
         IEnumerable<ExamDTO> GetExams(int id);
+        ExamInformationsDTO GetFull(int id);
     }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }
