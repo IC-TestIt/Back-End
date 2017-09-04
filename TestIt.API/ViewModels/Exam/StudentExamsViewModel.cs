@@ -7,12 +7,10 @@ namespace TestIt.API.ViewModels.Exam
 {
     public class StudentExamsViewModel
     {
-        public int Id { get; set; }
-        public DateTime BeginDate { get; set; }
-        public DateTime EndDate { get; set; }
-        public double TotalGrade { get; set; }
+        public int ExamId { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         public int Status { get; set; }
-        public int ClassTestsId { get; set; }
-
+        public double TotalGrade { get; set; }
     }
 }
