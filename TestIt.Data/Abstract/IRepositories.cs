@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Data.Abstract
@@ -25,6 +26,9 @@ namespace TestIt.Data.Abstract
     {
         IEnumerable<Log> Filter(Log log);
     }
-    public interface IExamRepository : IEntityBaseRepository<Exam> {}
+    public interface IExamRepository : IEntityBaseRepository<Exam>
+    {
+        IEnumerable<ExamDTO> GetExams(int id);
+    }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }

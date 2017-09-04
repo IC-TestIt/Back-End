@@ -18,7 +18,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<AlternativeQuestion, Question.AlternativeQuestionViewModel>();
             Mapper.CreateMap<Model.Entities.Log, Log.ReturnLogViewModel>();
             Mapper.CreateMap<Model.Entities.Class, Class.TeacherClassesViewModel>();
-            Mapper.CreateMap<Model.Entities.Exam, Exam.StudentExamsViewModel>();
+            Mapper.CreateMap<Model.DTO.ExamDTO, Exam.StudentExamsViewModel>();
         }
     }
 }

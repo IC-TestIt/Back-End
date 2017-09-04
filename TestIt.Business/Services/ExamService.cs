@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 using TestIt.Model.DTO;
 
@@ -23,9 +24,9 @@ namespace TestIt.Business.Services
             _examRepository.Add(e);
             _examRepository.Commit();
         }
-        public IEnumerable<Exam> GetStudentExams(int id)
+        public IEnumerable<ExamDTO> GetStudentExams(int id)
         {
-            var exams = _examRepository.FindBy(x => x.StudentId == id);
+            var exams = examRepository.GetExams(id);
             return exams;
         }
 

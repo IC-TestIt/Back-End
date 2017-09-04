@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.API.Controllers
@@ -41,7 +42,7 @@ namespace TestIt.API.Controllers
 
             if (exams != null)
             {
-                IEnumerable<StudentExamsViewModel> examsVm = Mapper.Map<IEnumerable<Exam>, IEnumerable<StudentExamsViewModel>>(exams);
+                IEnumerable<StudentExamsViewModel> examsVm = Mapper.Map<IEnumerable<ExamDTO>, IEnumerable<StudentExamsViewModel>>(exams);
                 return new OkObjectResult(examsVm);
             }
 
