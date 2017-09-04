@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
-using TestIt.Model.DTO;
 
 namespace TestIt.Data.Abstract
 {

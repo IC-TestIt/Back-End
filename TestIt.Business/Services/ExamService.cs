@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
-using TestIt.Model.DTO;
 
 namespace TestIt.Business.Services
 {
@@ -26,7 +25,7 @@ namespace TestIt.Business.Services
         }
         public IEnumerable<ExamDTO> GetStudentExams(int id)
         {
-            var exams = examRepository.GetExams(id);
+            var exams = _examRepository.GetExams(id);
             return exams;
         }
 
