@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using TestIt.Model.Entities;
 using TestIt.Model.DTO;
-using System;
 
 namespace TestIt.Business
 {
@@ -82,6 +81,6 @@ namespace TestIt.Business
         void Save(Exam exam);
         IEnumerable<Exam> GetStudentExams(int id);
         bool EndExam(int id, Exam exam);
-
+        ExamInformationsDTO Get(int id);
     }
 }

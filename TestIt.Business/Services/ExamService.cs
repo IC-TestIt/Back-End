@@ -1,34 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
+using TestIt.Model.DTO;
 
 namespace TestIt.Business.Services
 {
     public class ExamService : IExamService
     {
-        private IExamRepository examRepository;
-        
-        public ExamService(IExamRepository examRepository)
+        private IExamRepository _examRepository;
+        private ITestRepository _testRepository;
+
+
+        public ExamService(IExamRepository examRepository, ITestRepository testRepository)
         {
-            this.examRepository = examRepository;
+            _examRepository = examRepository;
+            _testRepository = testRepository;
         }
 
         public void Save(Exam e)
         {
-            examRepository.Add(e);
-            examRepository.Commit();
+            _examRepository.Add(e);
+            _examRepository.Commit();
         }
         public IEnumerable<Exam> GetStudentExams(int id)
         {
-            var exams = examRepository.FindBy(x => x.StudentId == id);
+            var exams = _examRepository.FindBy(x => x.StudentId == id);
             return exams;
         }
 
         public bool EndExam(int id, Exam exam)
         {
-            Exam e = examRepository.GetSingle(id);
+            Exam e = _examRepository.GetSingle(id);
 
             if (e != null)
             {
@@ -36,12 +39,19 @@ namespace TestIt.Business.Services
                 e.Status = exam.Status;
                 e.EndDate = DateTime.Now;
 
-                examRepository.Commit();
+                _examRepository.Commit();
 
                 return true;
             }
             else
                 return false;
+        }
+
+        public ExamInformationsDTO Get (int id)
+        {
+            var exam = _examRepository.GetFull(id);
+            
+            return exam;
         }
     }
 }

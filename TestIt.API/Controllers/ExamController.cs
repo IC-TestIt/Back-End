@@ -1,9 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -36,7 +32,7 @@ namespace TestIt.API.Controllers
 
             return result;
         }
-
+        
         [HttpPut("{id}")]
         public IActionResult EndExam(int id, [FromBody]EndExamViewModel viewModel)
         {
@@ -54,6 +50,20 @@ namespace TestIt.API.Controllers
             else
                 return NotFound();
         }
+        
+        [HttpGet("{id}")]
+        public IActionResult Get (int id)
+        {
+            var exam = examService.Get(id);
 
+            if (exam != null)
+            {
+                var vm = Mapper.Map<ReturnExamViewModel>(exam);
+
+                return Ok(vm);
+            }
+
+            return NotFound();
+        }
     }
 }
