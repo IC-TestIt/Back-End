@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using TestIt.Model;
 
 namespace TestIt.Business.Services
 {
     public class ExamService : IExamService
     {
         private IExamRepository _examRepository;
-        private ITestRepository _testRepository;
+        private IAnsweredQuestionRepository _answeredQuestionRepository;
 
 
-        public ExamService(IExamRepository examRepository, ITestRepository testRepository)
+        public ExamService(IExamRepository examRepository, IAnsweredQuestionRepository answeredQuestionRepository)
         {
             _examRepository = examRepository;
-            _testRepository = testRepository;
+            _answeredQuestionRepository = answeredQuestionRepository;
         }
 
         public void Save(Exam e)
@@ -29,15 +30,17 @@ namespace TestIt.Business.Services
             return exams;
         }
 
-        public bool EndExam(int id, Exam exam)
+        public bool EndExam(int id, List<AnsweredQuestion> answerdQuestions)
         {
-            Exam e = _examRepository.GetSingle(id);
+            var e = _examRepository.GetSingle(id);
 
             if (e != null)
             {
                 e.DateUpdated = DateTime.Now;
-                e.Status = exam.Status;
+                e.Status = (int)EnumStatus.Finished;
                 e.EndDate = DateTime.Now;
+
+                _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
 
                 _examRepository.Commit();
 
@@ -53,5 +56,6 @@ namespace TestIt.Business.Services
             
             return exam;
         }
+        
     }
 }

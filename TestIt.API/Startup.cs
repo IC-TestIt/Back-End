@@ -81,6 +81,7 @@ namespace TestIt.API
             services.AddScoped<Data.Abstract.IClassTestsRepository, Data.Repositories.ClassTestsRepository>();
             services.AddScoped<Data.Abstract.ILogRepository, Data.Repositories.LogRepository>();
             services.AddScoped<Data.Abstract.IExamRepository, Data.Repositories.ExamRepository>();
+            services.AddScoped<Data.Abstract.IAnsweredQuestionRepository, Data.Repositories.AnsweredQuestionRepository>();
 
             services.AddScoped<Business.IUserService, Business.Services.UserService>();
             services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
