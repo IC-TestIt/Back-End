@@ -24,6 +24,7 @@ namespace TestIt.API.ViewModels.Mappings
                 .ForMember(x => x.DateCreated, m => m.MapFrom(x => Convert.ToDateTime(x.DateCreated)));
             Mapper.CreateMap<Exam.CreateExamViewModel, Model.Entities.Exam>();
             Mapper.CreateMap<Exam.EndExamViewModel, Model.Entities.Exam>();
+            Mapper.CreateMap<Question.AnsweredQuestionViewModel, Model.Entities.AnsweredQuestion>();
         }
     }
 }

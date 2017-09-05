@@ -11,7 +11,7 @@ namespace TestIt.API.ViewModels.Validations.Exam
     {
         public EndExamViewModelValidator()
         {
-            RuleFor(exam => exam.Status).NotEmpty().WithMessage("Status cannot be empty");
+            
         }
     }
 }
