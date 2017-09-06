@@ -80,7 +80,12 @@ namespace TestIt.Business
     {
         void Save(Exam exam);
         IEnumerable<ExamDTO> GetStudentExams(int id);
+<<<<<<< Updated upstream
         bool EndExam(int id, Exam exam);
+=======
+        bool EndExam(int id, List<AnsweredQuestion> l);
+        bool SaveExam(int id, List<AnsweredQuestion> l);
+>>>>>>> Stashed changes
         ExamInformationsDTO Get(int id);
     }
 }

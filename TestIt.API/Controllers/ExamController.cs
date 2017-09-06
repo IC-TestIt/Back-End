@@ -50,7 +50,25 @@ namespace TestIt.API.Controllers
             else
                 return NotFound();
         }
-        
+
+        [HttpPut("save/{id}")]
+        public IActionResult SaveExam(int id, [FromBody]EndExamViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
+
+            var sucess = examService.SaveExam(id, answerdQuestions);
+
+            if (sucess)
+                return Ok();
+            else
+                return NotFound();
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get (int id)
         {

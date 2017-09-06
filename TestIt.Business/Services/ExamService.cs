@@ -47,6 +47,23 @@ namespace TestIt.Business.Services
                 return false;
         }
 
+        public bool SaveExam(int id, List<AnsweredQuestion> answerdQuestions)
+        {
+            var e = _examRepository.GetSingle(id);
+
+            if (e != null)
+            {
+                e.DateUpdated = DateTime.Now;
+
+                _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
+
+                _examRepository.Commit();
+
+                return true;
+            }
+            else
+                return false;
+        }
         public ExamInformationsDTO Get (int id)
         {
             var exam = _examRepository.GetFull(id);
