@@ -126,5 +126,17 @@ namespace TestIt.Data.Repositories
             }
             return query.AsEnumerable();
         }
+
+        public void AddOrUpdate(T entity)
+        {
+            _context.Entry(entity).State = entity.Id == 0 ?
+                                   EntityState.Added :
+                                   EntityState.Modified;
+        }
+
+        public void AddOrUpdateMultiple (List<T> list)
+        {
+            list.ForEach(x => AddOrUpdate(x));
+        }
     }
 }

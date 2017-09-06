@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -41,12 +42,12 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            Exam exam = Mapper.Map<Exam>(viewModel);
+            var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.EndExam(id, exam);
+            var sucess = examService.EndExam(id, answerdQuestions);
 
             if (sucess)
-                return new NoContentResult();
+                return Ok();
             else
                 return NotFound();
         }

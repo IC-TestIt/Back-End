@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using TestIt.API.ViewModels.Validations.Exam;
+﻿using System.Collections.Generic;
+using TestIt.API.ViewModels.Question;
 
 namespace TestIt.API.ViewModels.Exam
 {
-    public class EndExamViewModel : IValidatableObject
+    public class EndExamViewModel 
     {
-        public int Status { get; set; }
-
-        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
+        public EndExamViewModel(IEnumerable<AnsweredQuestionViewModel> answeredQuestions)
         {
+            AnsweredQuestions =  new List<AnsweredQuestionViewModel>(answeredQuestions);
 
-            var validator = new EndExamViewModelValidator();
-            var result = validator.Validate(this);
-            return result.Errors.Select(item => new ValidationResult(item.ErrorMessage, new[] { item.PropertyName }));
         }
+        public IEnumerable<AnsweredQuestionViewModel> AnsweredQuestions { get; set; }
     }
 }
