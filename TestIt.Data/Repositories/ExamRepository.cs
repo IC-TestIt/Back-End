@@ -17,17 +17,17 @@ namespace TestIt.Data.Repositories
         public IEnumerable<ExamDTO> GetExams(int id)
         {
             var exams = (from a in _context.ClassTests
-                     join b in _context.Exams on a.Id equals b.ClassTestsId
-                     join c in _context.Tests on a.TestId equals c.Id
-                     where b.StudentId == id
-                     select new ExamDTO
-                     {
-                         Description = c.Description,
-                         ExamId = b.Id,
-                         TotalGrade = b.TotalGrade,
-                         Status = b.Status,
-                         Title = c.Title
-                     }).ToList();
+                         join b in _context.Exams on a.Id equals b.ClassTestsId
+                         join c in _context.Tests on a.TestId equals c.Id
+                         where b.StudentId == id
+                         select new ExamDTO
+                         {
+                             Description = c.Description,
+                             ExamId = b.Id,
+                             TotalGrade = b.TotalGrade,
+                             Status = b.Status,
+                             Title = c.Title
+                         }).ToList();
 
             return exams;
         }

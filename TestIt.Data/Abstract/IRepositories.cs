@@ -9,7 +9,10 @@ namespace TestIt.Data.Abstract
         List<User> ClassUsers(int classId);
     }
     public interface ITeacherRepository : IEntityBaseRepository<Teacher> {}
-    public interface IStudentRepository : IEntityBaseRepository<Student> {}
+    public interface IStudentRepository : IEntityBaseRepository<Student>
+    {
+        IEnumerable<StudentTestDTO> GetTests(int id);
+    }
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
     public interface IClassRepository : IEntityBaseRepository<Class> {}
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
