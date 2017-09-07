@@ -3,6 +3,7 @@ using TestIt.Model.Entities;
 using System.Linq;
 using TestIt.Model.DTO;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace TestIt.Data.Repositories
 {
@@ -36,18 +37,19 @@ namespace TestIt.Data.Repositories
             var exam = (from a in _context.Exams
                         join b in _context.ClassTests on a.ClassTestsId equals b.Id
                         join c in _context.Tests on b.TestId equals c.Id
+                        where a.Id == id
                         select new ExamInformationsDTO
                         {
                             Id = a.Id,
                             BeginDate = a.BeginDate,
-                            EndDate = a.EndDate,
+                            EndDate = b.EndDate,
                             Title = c.Title,
                             TestId = c.Id
                         }).FirstOrDefault();
 
             exam.Questions = (from a in _context.Questions
                               where a.TestId == exam.TestId
-                              select a).ToList();
+                              select a).Include(x => x.EssayQuestion).Include(x => x.AlternativeQuestion.Alternatives).ToList();
 
             exam.AnsweredQuestions = (from a in _context.AnsweredQuestions
                                       where a.ExamId == exam.Id
