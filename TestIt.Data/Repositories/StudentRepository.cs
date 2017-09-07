@@ -17,7 +17,7 @@ namespace TestIt.Data.Repositories
         public IEnumerable<StudentTestDTO> GetTests(int id)
         {
             var unavailableClassTests = (from a in _context.Exams
-                                         where a.StudentId != id
+                                         where a.StudentId == id
                                          select a.ClassTestsId);
 
             var tests = (from a in _context.Classes
@@ -34,7 +34,7 @@ namespace TestIt.Data.Repositories
                              EndDate = c.EndDate,
                              Name = d.Description,
                              TeacherName = f.Name
-                         });
+                         }).ToList();
             
             return tests;
         }
