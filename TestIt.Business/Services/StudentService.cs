@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 using TestIt.Utils.Email;
 
@@ -74,6 +75,11 @@ namespace TestIt.Business.Services
             var bodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId;
             var email = BuildEmail(user, subject, bodyContent);
             emailService.Send(email);
+        }
+
+        public IEnumerable<StudentTestDTO> Tests(int id)
+        {
+            return studentRepository.GetTests(id);
         }
 
         private Email BuildEmail(User user, string subject, string bodyContent)

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
+using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
@@ -35,6 +36,7 @@ namespace TestIt.API.Controllers
             var result = new OkObjectResult(studentService.GetByUser(userId).Id);
             return result;
         }
+
         [HttpGet("{id}/exams")]
         public IActionResult GetStudentExams(int id)
         {
@@ -44,6 +46,21 @@ namespace TestIt.API.Controllers
             {
                 IEnumerable<StudentExamsViewModel> examsVm = Mapper.Map<IEnumerable<ExamDTO>, IEnumerable<StudentExamsViewModel>>(exams);
                 return new OkObjectResult(examsVm);
+            }
+
+            return NotFound();
+        }
+
+        [HttpGet("{id}/tests")]
+        public IActionResult GetStudentTest(int id)
+        {
+            var exams = studentService.Tests(id);
+
+            if (exams != null)
+            {
+                IEnumerable<StudentTestViewModel> examVm = Mapper.Map<IEnumerable<StudentTestDTO>, IEnumerable<StudentTestViewModel>>(exams);
+
+                return new OkObjectResult(examVm);
             }
 
             return NotFound();

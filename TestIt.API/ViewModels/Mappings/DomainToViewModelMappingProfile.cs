@@ -23,6 +23,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Exam, Exam.StudentExamsViewModel>();
             Mapper.CreateMap<ExamInformationsDTO, Exam.ReturnExamViewModel>();
             Mapper.CreateMap<AnsweredQuestion, Question.AnsweredQuestionViewModel>();
+            Mapper.CreateMap<StudentTestDTO, Test.StudentTestViewModel>();
         }
     }
 }
