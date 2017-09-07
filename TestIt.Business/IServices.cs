@@ -45,6 +45,7 @@ namespace TestIt.Business
         Student GetByUser(int id);
         void SendSignUp(User user, int studentId);
         void SendInvite(User user, Class studentClass);
+        IEnumerable<StudentTestDTO> Tests(int id);
     }
 
     public interface IClassStudentsService
