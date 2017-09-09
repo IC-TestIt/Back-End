@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Annytab.Stemmer" Version="1.2.2" />
+    <PackageReference Include="Fastenshtein" Version="1.0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TestIt.Utils\TestIt.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
