@@ -5,19 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="UnitTest1.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="xunit" Version="2.2.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
-    <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
-    <ProjectReference Include="..\TestIt.Model\TestIt.Model.csproj" />
+    <ProjectReference Include="..\TestIt.CorrectionAlgorithms\TestIt.CorrectionAlgorithms.csproj" />
   </ItemGroup>
 
   <ItemGroup>
