@@ -17,6 +17,7 @@ namespace TestIt.Model.DTO
         public DateTime EndDate { get; set; }
         public string Title { get; set; }
         public int TestId { get; set; }
+        public int Status { get; set; }
 
         public IEnumerable<Question> Questions { get; set; }
         public IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }
