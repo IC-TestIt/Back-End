@@ -44,7 +44,8 @@ namespace TestIt.Data.Repositories
                             BeginDate = a.BeginDate,
                             EndDate = b.EndDate,
                             Title = c.Title,
-                            TestId = c.Id
+                            TestId = c.Id,
+                            Status = a.Status
                         }).FirstOrDefault();
 
             exam.Questions = (from a in _context.Questions
