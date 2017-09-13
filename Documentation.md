@@ -79,5 +79,61 @@
 
       * **Code:** 200 <br />
      **Content:** `{ -1 }`
+---
+**GetStudentExams**
+
+   Return jason data with Student's Exams
+
+   * **URL**
+
+     /api/student/{id}/exams
+
+   * **Method:**
+
+     `GET`
+  
+   * **Data Params**
+
+      None
+
+   * **Success Response:**
+
+     * **Code:** 200 <br />
+     **Content:** `{ "examId": "1", "Title": "P1 Alog", "Description": " Algoritmos", "status": "1", "totalGrade":"10" }`
+ 
+    * **Error Response:**
+
+      * **Code:** 404 NOT FOUND <br />
+---     
+**GetStudentTests**
+
+   Return jason data with Student's Tests
+
+   * **URL**
+
+     /api/student/{id}/tests
+
+   * **Method:**
+
+     `GET`
+  
+   * **Data Params**
+
+      None
+
+   * **Success Response:**
+
+     * **Code:** 200 <br />
+     **Content:** `{
+      "name": "alog",
+      "className": "alog",
+      "teacherName": "medson",
+      "endDate": "2017-10-30T00:00:00",
+      "classTestId": 3
+      }`
+ 
+    * **Error Response:**
+
+      * **Code:** 404 NOT FOUND <br />
       
  
