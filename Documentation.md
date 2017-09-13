@@ -135,5 +135,74 @@
     * **Error Response:**
 
       * **Code:** 404 NOT FOUND <br />
+ ---     
+ ## User's Methods
+ 
+ **GetUsers**
+
+   Return jason data with Users
+
+   * **URL**
+
+     /api/user
+
+   * **Method:**
+
+     `GET`
+  
+   * **Data Params**
+
+      None
+
+   * **Success Response:**
+
+     * **Code:** 200 <br />
+     **Content:** `{
+      "name": "dimas",
+      "email": "dimasoprimeiro@",
+      "phone": "12345678",
+      "identifier": "Professor"
+      },
+      {
+      "name": "Cesar",
+      "email": "cesar@gmail.com",
+      "phone": "12345678",
+      "identifier": "Professor"
+      }`
+ 
+    * **Error Response:**
+
+      * **Code:** 404 NOT FOUND <br />
+---
+ **GetUser**
+
+   Return jason data with one User
+
+   * **URL**
+
+     /api/user/{id}
+
+   * **Method:**
+
+     `GET`
+  
+   * **Data Params**
+
+      None
+
+   * **Success Response:**
+
+     * **Code:** 200 <br />
+     **Content:** `{
+      "name": "dimas",
+      "email": "dimasoprimeiro@",
+      "phone": "12345678",
+      "identifier": "Professor"
+      },`
+ 
+    * **Error Response:**
+
+      * **Code:** 404 NOT FOUND <br />
+---
       
  
