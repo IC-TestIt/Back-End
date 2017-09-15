@@ -84,5 +84,16 @@ namespace TestIt.API.Controllers
 
             return NotFound();
         }
+
+        [HttpPost("correct/{id}")]
+        public IActionResult Post(int id)
+        {
+            var sucess = examService.Correct(id);
+
+            if (sucess)
+                return Ok();
+
+            return NotFound();
+        }
     }
 }
