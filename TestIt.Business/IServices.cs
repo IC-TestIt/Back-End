@@ -67,8 +67,8 @@ namespace TestIt.Business
     public interface IQuestionService
     {
         void Save(Question q);
-        void Save(EssayQuestion q);
-        void Save(AlternativeQuestion q);
+        void Save(List<EssayQuestion> q);
+        void Save(List<AlternativeQuestion> q);
     }
 
     public interface ILogService
