@@ -15,12 +15,7 @@ namespace TestIt.CorrectionAlgorithms
             
            return sentences;
         }
-
-        public static IEnumerable<string> SeparateIntoWords(string text)
-        {
-            return text.Split(' ');
-        }
-
+        
         public static int TextDif(string text1, string text2)
         {
             return Levenshtein.Distance(text1, text2);
