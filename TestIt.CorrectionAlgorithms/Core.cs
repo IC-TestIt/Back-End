@@ -16,9 +16,36 @@ namespace TestIt.CorrectionAlgorithms
            return sentences;
         }
 
+        public static IEnumerable<string> SeparateIntoWords(string text)
+        {
+            return text.Split(' ');
+        }
+
         public static int TextDif(string text1, string text2)
         {
             return Levenshtein.Distance(text1, text2);
+        }
+
+        public static double TextDifPercent(string text1, string text2)
+        {
+            var maxLength = text1.Length;
+            var result = maxLength - Levenshtein.Distance(text1, text2);
+
+            return result / maxLength;
+        }
+
+        public static double BestTextPercent(string text1, List<string> texts)
+        {
+            var bestPercent = 0.0;
+
+            texts.ForEach(x =>
+            {
+                var percent = TextDifPercent(text1, x);
+                if (percent > bestPercent)
+                    bestPercent = percent;
+            });
+
+            return bestPercent;
         }
 
         public static string NormalizeText(string text)
