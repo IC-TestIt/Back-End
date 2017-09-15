@@ -37,7 +37,7 @@ namespace TestIt.Business.Services
 
         public IEnumerable<Class> GetTeacherClasses(int id)
         {
-            var classes = classRepository.FindBy(x => x.TeacherId == id);
+            var classes = classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
             return classes;
         }
 
