@@ -33,6 +33,8 @@ namespace TestIt.API.ViewModels.Mappings
                     Description = y.Description,
                     IsCorrect = y.IsCorrect
                  }).ToList()));
+
+            Mapper.CreateMap<Question.UpdateQuestionsViewModel, Model.Entities.Question>();
         }
     }
 }
