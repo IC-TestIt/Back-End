@@ -26,7 +26,7 @@ namespace TestIt.CorrectionAlgorithms
             var maxLength = text1.Length;
             var result = maxLength - Levenshtein.Distance(text1, text2);
 
-            return result / maxLength;
+            return (double)result / maxLength;
         }
 
         public static double BestTextPercent(string text1, List<string> texts)
@@ -35,7 +35,7 @@ namespace TestIt.CorrectionAlgorithms
 
             texts.ForEach(x =>
             {
-                var percent = TextDifPercent(text1, x);
+                double percent = TextDifPercent(text1, x);
                 if (percent > bestPercent)
                     bestPercent = percent;
             });
@@ -54,10 +54,11 @@ namespace TestIt.CorrectionAlgorithms
 
         public static int KeyWordMatcher(string baseText, List<string> keywords)
         {
-            return baseText.Count(keywords);
+            var lowerKeywords = keywords = (from s in keywords select s.ToLower()).ToList();
+            return baseText.ToLower().Count(lowerKeywords);
         }
         
-        public static IEnumerable<string> StemWords(string[] words)
+        public static IEnumerable<string> NormalizeWords(string[] words)
         {
             var stemmer = new PortugueseStemmer();
 
