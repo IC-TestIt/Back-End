@@ -37,6 +37,24 @@ namespace TestIt.API.Controllers
 
         }
 
+        [HttpPut("{id}/test")]
+        public IActionResult UpdateRemoveQuestions(int id ,[FromBody]UpdateQuestionsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            questionService.Remove(viewModel.questionsRemove.ToList());
+
+            //questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
+            //questionService.Update(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
+
+            OkObjectResult result = Ok("Exclusão Realizada");
+
+            return result;
+        }
+
         public List<AlternativeQuestion> AddAlternativeQuestions(IEnumerable<QuestionsViewModel> viewModel)
         {
             var alternativeQuestions = new List<AlternativeQuestion>();
