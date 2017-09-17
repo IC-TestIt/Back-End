@@ -36,7 +36,7 @@ namespace TestIt.Business.Services
 
         public void Save(List<AlternativeQuestion> q)
         {
-            alternativeQuestionRepository.AddOrUpdateMultiple(q);
+            alternativeQuestionRepository.AddMultiple(q);
             alternativeQuestionRepository.Commit();
         }
 

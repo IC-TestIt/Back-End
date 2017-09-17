@@ -28,24 +28,27 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            questionService.Save(AddAlternativeQuestions(viewModel));
+            questionService.Save(AddEssayQuestions(viewModel));
+
+            OkObjectResult result = Ok("Cadastro Realizado");
+
+            return result;
+
+        }
+
+        public List<AlternativeQuestion> AddAlternativeQuestions(IEnumerable<QuestionsViewModel> viewModel)
+        {
             var alternativeQuestions = new List<AlternativeQuestion>();
-            var essayQuestions = new List<EssayQuestion>();
 
             foreach (var q in viewModel)
             {
                 var question = Mapper.Map<Question>(q);
-                questionService.Save(question);
-
-
-                if(q.Answer != null)
+                
+                if (string.IsNullOrEmpty(q.Answer))
                 {
-                    EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(q);
-                    essayQuestion.QuestionId = question.Id;
+                    questionService.Save(question);
 
-                    essayQuestions.Add(essayQuestion);
-                }
-                else
-                {
                     AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
                     alternativeQuestion.QuestionId = question.Id;
 
@@ -53,14 +56,31 @@ namespace TestIt.API.Controllers
                 }
             }
 
-            questionService.Save(alternativeQuestions);
-            questionService.Save(essayQuestions);
-
-
-            OkObjectResult result = Ok("Cadastro Realizado");
-
-            return result;
-
+            return alternativeQuestions;
         }
+
+        public List<EssayQuestion> AddEssayQuestions(IEnumerable<QuestionsViewModel> viewModel)
+        {
+            var essayQuestions = new List<EssayQuestion>();
+
+            foreach (var q in viewModel)
+            {
+                var question = Mapper.Map<Question>(q);
+               
+                if (!string.IsNullOrEmpty(q.Answer))
+                {
+                    questionService.Save(question);
+
+                    EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(q);
+                    essayQuestion.QuestionId = question.Id;
+
+                    essayQuestions.Add(essayQuestion);
+                }
+            }
+
+            return essayQuestions;
+        }
+
+
     }
 }
