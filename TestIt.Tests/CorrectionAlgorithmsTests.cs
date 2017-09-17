@@ -1,8 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Xunit;
 using TestIt.CorrectionAlgorithms;
 using System.Collections.Generic;
+
 namespace TestIt.Tests
 {
     public class CorrectionAlgorithmsTests

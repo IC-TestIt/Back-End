@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestIt.Business\TestIt.Business.csproj" />
     <ProjectReference Include="..\TestIt.CorrectionAlgorithms\TestIt.CorrectionAlgorithms.csproj" />
+    <ProjectReference Include="..\TestIt.Model\TestIt.Model.csproj" />
   </ItemGroup>
 
   <ItemGroup>
