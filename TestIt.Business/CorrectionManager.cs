@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestIt.CorrectionAlgorithms;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 using System.Linq;
-using TestIt.Model;
 
 namespace TestIt.Business
 {
@@ -65,9 +62,9 @@ namespace TestIt.Business
             if (!string.IsNullOrEmpty(question.EssayQuestion.KeyWords))
             {
                 var keyWords = question.EssayQuestion.KeyWords.Split(',').ToList();
-                var keyWordPercent = Core.KeyWordMatcher(answer.EssayAnswer, keyWords) / keyWords.Count();
+                var keyWordPercent = (double)Core.KeyWordMatcher(answer.EssayAnswer, keyWords) / keyWords.Count();
 
-                totalPercent = keyWordPercent * 0.7 + sentencePercent * 0.3;
+                totalPercent = keyWordPercent * 0.5 + sentencePercent * 0.5;
             }
             else
                 totalPercent = sentencePercent;
@@ -81,7 +78,7 @@ namespace TestIt.Business
 
             var answerSentences = Core.SeparateIntoSentences(studentAnswer);
             var rightAnswerSentences = Core.SeparateIntoSentences(rightAnswer);
-
+            
             foreach (var item in answerSentences)
             {
                 sentences.Add(new SentenceDTO()
@@ -98,9 +95,26 @@ namespace TestIt.Business
 
         private double SetSentenceValue(string sentence, string[] answerSentences)
         {
-            var words = sentence.Split(' ');
             var bestMatch = 0.0;
             
+            foreach(var teacherSentence in answerSentences)
+            {
+                var wordsStudent = Core.NormalizeWords(sentence.Split(' '));
+                var wordsTeacher = Core.NormalizeWords(teacherSentence.Split(' '));
+                var wordsPercentStudentSum = 0.0;
+
+                foreach(var wordStudent in wordsStudent)
+                {
+                    var bestWordMatch = Core.BestTextPercent(wordStudent, wordsTeacher.ToList());
+                    wordsPercentStudentSum += bestWordMatch;
+                }
+
+                var wordsPercentStudent = wordsPercentStudentSum / wordsStudent.Count();
+
+                if (wordsPercentStudent > bestMatch)
+                    bestMatch = wordsPercentStudent;
+            }
+
             return bestMatch;
         }
     }
