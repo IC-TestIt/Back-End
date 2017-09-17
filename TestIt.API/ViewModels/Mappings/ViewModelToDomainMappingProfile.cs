@@ -25,6 +25,14 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Exam.CreateExamViewModel, Model.Entities.Exam>();
             Mapper.CreateMap<Exam.EndExamViewModel, Model.Entities.Exam>();
             Mapper.CreateMap<Question.AnsweredQuestionViewModel, Model.Entities.AnsweredQuestion>();
+            Mapper.CreateMap<Question.QuestionsViewModel, Model.Entities.Question>();
+            Mapper.CreateMap<Question.QuestionsViewModel, EssayQuestion>();
+            Mapper.CreateMap<Question.QuestionsViewModel, AlternativeQuestion>()
+                .ForMember(x => x.Alternatives, m => m.MapFrom(x => x.Alternatives.Select(y => new Alternative()
+                 {
+                    Description = y.Description,
+                    IsCorrect = y.IsCorrect
+                 }).ToList()));
         }
     }
 }

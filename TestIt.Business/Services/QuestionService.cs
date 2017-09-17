@@ -24,20 +24,21 @@ namespace TestIt.Business.Services
 
         public void Save(Question q)
         {
-            questionRepository.Add(q);
+            questionRepository.AddOrUpdate(q);
             questionRepository.Commit();
         }
 
-        public void Save(EssayQuestion q)
+        public void Save(List<EssayQuestion> q)
         {
-            essayRepository.Add(q);
+            essayRepository.AddOrUpdateMultiple(q);
             essayRepository.Commit();
         }
 
-        public void Save(AlternativeQuestion q)
+        public void Save(List<AlternativeQuestion> q)
         {
-            alternativeQuestionRepository.Add(q);
+            alternativeQuestionRepository.AddMultiple(q);
             alternativeQuestionRepository.Commit();
         }
+
     }
 }

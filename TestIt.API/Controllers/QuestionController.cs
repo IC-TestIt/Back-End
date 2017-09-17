@@ -4,6 +4,7 @@ using TestIt.Business;
 using TestIt.Model.Entities;
 using TestIt.API.ViewModels.Question;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace TestIt.API.Controllers
 {
@@ -20,48 +21,66 @@ namespace TestIt.API.Controllers
         }
         
         [HttpPost]
-        [Route("essay")]
-        public IActionResult Post([FromBody]CreateEssayQuestionViewModel viewModel)
+        public IActionResult Post([FromBody]IEnumerable<QuestionsViewModel> viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Question question = Mapper.Map<Question>(viewModel);
-            EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(viewModel);
-            
-            questionService.Save(question);
+            questionService.Save(AddAlternativeQuestions(viewModel));
+            questionService.Save(AddEssayQuestions(viewModel));
 
-            essayQuestion.QuestionId = question.Id;
-            questionService.Save(essayQuestion);
-
-            OkObjectResult result = Ok(new { questionId = question.Id, essayQuestionId = essayQuestion.Id });
+            OkObjectResult result = Ok("Cadastro Realizado");
 
             return result;
+
         }
 
-        [HttpPost]
-        [Route("alternative")]
-        public IActionResult Post([FromBody]CreateAlternativeQuestionViewModel viewModel)
+        public List<AlternativeQuestion> AddAlternativeQuestions(IEnumerable<QuestionsViewModel> viewModel)
         {
-            if (!ModelState.IsValid)
+            var alternativeQuestions = new List<AlternativeQuestion>();
+
+            foreach (var q in viewModel)
             {
-                return BadRequest(ModelState);
+                var question = Mapper.Map<Question>(q);
+                
+                if (string.IsNullOrEmpty(q.Answer))
+                {
+                    questionService.Save(question);
+
+                    AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
+                    alternativeQuestion.QuestionId = question.Id;
+
+                    alternativeQuestions.Add(alternativeQuestion);
+                }
             }
 
-            Question question = Mapper.Map<Question>(viewModel);
-            AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(viewModel);
-
-            questionService.Save(question);
-
-            alternativeQuestion.QuestionId = question.Id;
-
-            questionService.Save(alternativeQuestion);
-
-            OkObjectResult result = Ok(new { questionId = question.Id, alternativeQuestionId = alternativeQuestion.Id });
-
-            return result;
+            return alternativeQuestions;
         }
+
+        public List<EssayQuestion> AddEssayQuestions(IEnumerable<QuestionsViewModel> viewModel)
+        {
+            var essayQuestions = new List<EssayQuestion>();
+
+            foreach (var q in viewModel)
+            {
+                var question = Mapper.Map<Question>(q);
+               
+                if (!string.IsNullOrEmpty(q.Answer))
+                {
+                    questionService.Save(question);
+
+                    EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(q);
+                    essayQuestion.QuestionId = question.Id;
+
+                    essayQuestions.Add(essayQuestion);
+                }
+            }
+
+            return essayQuestions;
+        }
+
+
     }
 }
