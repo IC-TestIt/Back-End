@@ -50,9 +50,7 @@ namespace TestIt.Business.Services
                 questionRepository.DeleteWhere(x => x.Id == id);
 
                 alternativeRepository.Commit();
-                alternativeQuestionRepository.Commit();
-                essayRepository.Commit();
-                questionRepository.Commit();
+
             }
         }
         public void Update(List<AlternativeQuestion> q)
