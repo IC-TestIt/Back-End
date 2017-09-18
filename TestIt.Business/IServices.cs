@@ -63,6 +63,7 @@ namespace TestIt.Business
         IEnumerable<Test> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
         string ExportTest(int testId);
+        bool Update(ClassTests cts);
     }
 
     public interface IQuestionService
