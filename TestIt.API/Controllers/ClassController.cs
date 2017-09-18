@@ -102,8 +102,8 @@ namespace TestIt.API.Controllers
             if( c != null)
             {
 
-                classStudentService.Delete(id);
-                classTestsService.Delete(id);
+                classService.DeleteClassStudents(id);
+                classService.DeleteClassTests(id);
                 classService.Delete(id);
                 return new OkObjectResult("Excluido com sucesso");
             }

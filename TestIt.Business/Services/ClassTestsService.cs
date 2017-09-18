@@ -10,11 +10,5 @@ namespace TestIt.Business.Services
         {
             this.classTestsRepository = classTestsRepository;
         }
-
-        public void Delete(int id)
-        {
-            classTestsRepository.DeleteWhere(x => x.ClassId == id);
-            classTestsRepository.Commit();
-        }
     }
 }

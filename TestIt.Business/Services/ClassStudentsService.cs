@@ -28,10 +28,6 @@ namespace TestIt.Business.Services
             classStudentsRepository.Commit();
         }
 
-        public void Delete(int id)
-        {
-            classStudentsRepository.DeleteWhere(x => x.ClassId == id);
-            classStudentsRepository.Commit();
-        }
+
     }
 }
