@@ -25,6 +25,9 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<ExamInformationsDTO, Exam.ReturnExamViewModel>();
             Mapper.CreateMap<AnsweredQuestion, Question.AnsweredQuestionViewModel>();
             Mapper.CreateMap<StudentTestDTO, Test.StudentTestViewModel>();
+            Mapper.CreateMap<ClassTests, Class.ClassTestsViewModel>()
+                .ForMember(x => x.ClassName, map => map.MapFrom(x => x.Class.Description))
+                .ForMember(x => x.TestTitle, map => map.MapFrom(x => x.Test.Title));
         }
     }
 }
