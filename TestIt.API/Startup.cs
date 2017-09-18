@@ -88,6 +88,7 @@ namespace TestIt.API
             services.AddScoped<Business.IClassService, Business.Services.ClassService>();
             services.AddScoped<Business.IStudentService, Business.Services.StudentService>();
             services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
+            services.AddScoped<Business.IClassTestsService, Business.Services.ClassTestsService>();
             services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
             services.AddScoped<Business.ITestService, Business.Services.TestService>();
             services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
