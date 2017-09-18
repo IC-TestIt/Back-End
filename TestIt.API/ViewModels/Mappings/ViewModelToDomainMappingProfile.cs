@@ -33,6 +33,7 @@ namespace TestIt.API.ViewModels.Mappings
                     Description = y.Description,
                     IsCorrect = y.IsCorrect
                  }).ToList()));
+            Mapper.CreateMap<Test.UpdateClassTestsViewModel, ClassTests>();
         }
     }
 }
