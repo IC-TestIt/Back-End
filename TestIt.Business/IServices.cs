@@ -39,7 +39,7 @@ namespace TestIt.Business
         void DeleteStudent(int id, int studentId);
     }
 
-    public interface IClassTestsServices { };
+    public interface IClassTestsService { }
 
 
     public interface IStudentService
