@@ -40,5 +40,28 @@ namespace TestIt.Business.Services
             alternativeQuestionRepository.Commit();
         }
 
+        public void Remove(List<int> questionsId)
+        {
+            foreach (var id in questionsId)
+            {
+                alternativeRepository.DeleteWhere(x => x.AlternativeQuestion.QuestionId == id);
+                alternativeQuestionRepository.DeleteWhere(x => x.QuestionId == id);
+                essayRepository.DeleteWhere(x => x.QuestionId == id);
+                questionRepository.DeleteWhere(x => x.Id == id);
+
+                alternativeRepository.Commit();
+
+            }
+        }
+        public void Update(List<AlternativeQuestion> q)
+        {
+            q.ForEach(x =>
+            {
+                alternativeQuestionRepository.Update(x);
+                alternativeRepository.AddOrUpdateMultiple(x.Alternatives.ToList());
+            });
+            alternativeRepository.Commit();
+        }
+
     }
 }
