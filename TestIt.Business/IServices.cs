@@ -24,6 +24,7 @@ namespace TestIt.Business
         void Delete(int id);
         void Update(int id, Teacher teacher);
         Teacher GetByUser(int id);
+        IEnumerable<ClassTests> GetClassTests(int id);
     }
 
     public interface IClassService
