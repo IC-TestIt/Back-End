@@ -71,6 +71,8 @@ namespace TestIt.Business
         void Save(Question q);
         void Save(List<EssayQuestion> q);
         void Save(List<AlternativeQuestion> q);
+        void Remove(List<int> questionsId);
+        void Update(List<AlternativeQuestion> q);
     }
 
     public interface ILogService
@@ -86,5 +88,6 @@ namespace TestIt.Business
         bool EndExam(int id, List<AnsweredQuestion> l);
         bool SaveExam(int id, List<AnsweredQuestion> l);
         ExamInformationsDTO Get(int id);
+        bool Correct(int id);
     }
 }

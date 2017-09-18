@@ -37,6 +37,27 @@ namespace TestIt.API.Controllers
 
         }
 
+        [HttpPut]
+        public IActionResult UpdateRemoveQuestions([FromBody]UpdateQuestionsViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            
+            questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
+            questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
+
+            questionService.Update(UpdateAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
+
+            questionService.Remove(viewModel.questionsRemove.ToList());
+
+            OkObjectResult result = Ok("Operação Realizada");
+
+            return result;
+        }
+
         public List<AlternativeQuestion> AddAlternativeQuestions(IEnumerable<QuestionsViewModel> viewModel)
         {
             var alternativeQuestions = new List<AlternativeQuestion>();
@@ -45,12 +66,33 @@ namespace TestIt.API.Controllers
             {
                 var question = Mapper.Map<Question>(q);
                 
-                if (string.IsNullOrEmpty(q.Answer))
+                if (string.IsNullOrEmpty(q.Answer) && q.Id == 0)
                 {
                     questionService.Save(question);
 
                     AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
                     alternativeQuestion.QuestionId = question.Id;
+
+                    alternativeQuestions.Add(alternativeQuestion);
+                }
+            }
+
+            return alternativeQuestions;
+        }
+
+        public List<AlternativeQuestion> UpdateAlternativeQuestions(IEnumerable<QuestionsViewModel> viewModel)
+        {
+            var alternativeQuestions = new List<AlternativeQuestion>();
+
+            foreach (var q in viewModel)
+            {
+                var question = Mapper.Map<Question>(q);
+
+                if (string.IsNullOrEmpty(q.Answer) && q.Id != 0)
+                {
+                    questionService.Save(question);
+
+                    AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
 
                     alternativeQuestions.Add(alternativeQuestion);
                 }

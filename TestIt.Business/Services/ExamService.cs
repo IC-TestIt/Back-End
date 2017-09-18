@@ -75,5 +75,25 @@ namespace TestIt.Business.Services
             return exam;
         }
         
+        public bool Correct(int id)
+        {
+            var fullExam = _examRepository.GetFull(id);
+
+            if (fullExam == null)
+                return false;
+
+            var correctionManager = new CorrectionManager(fullExam);
+
+            var correction = correctionManager.Correct();
+
+            var exam = _examRepository.GetSingle(id);
+            exam.TotalGrade = correction.TotalGrade;
+
+            _answeredQuestionRepository.AddOrUpdateMultiple(correction.AnsweredQuestions);
+
+            _examRepository.Commit();
+            
+            return true;
+        }
     }
 }
