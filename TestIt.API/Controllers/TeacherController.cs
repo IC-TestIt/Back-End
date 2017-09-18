@@ -55,5 +55,20 @@ namespace TestIt.API.Controllers
 
             return NotFound();
         }
+
+        [HttpGet("{id}/appliedTests")]
+        public IActionResult GetTeacherClassTests(int id)
+        {
+            var classTests = teacherService.GetClassTests(id);
+
+            if (classTests != null)
+            {
+                var classTestsVm = Mapper.Map<IEnumerable<ClassTests>,IEnumerable<ClassTestsViewModel>>(classTests);
+
+                return Ok(classTestsVm);
+            }
+
+            return NotFound();
+        }
     }
 }
