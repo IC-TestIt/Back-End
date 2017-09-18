@@ -40,6 +40,11 @@ namespace TestIt.Business.Services
             var classes = classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
             return classes;
         }
+        public void Delete(int id)
+        {
+            classRepository.DeleteWhere(X => X.Id == id);
+            classRepository.Commit();
+        }
 
     }
 }
