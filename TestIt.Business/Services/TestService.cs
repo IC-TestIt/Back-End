@@ -59,6 +59,15 @@ namespace TestIt.Business.Services
                 return false;
         }
 
+        public bool Update(ClassTests cts)
+        {
+            if (!classTestsRepository.Any(x => x.Id == cts.Id))
+                return false;
+
+            classTestsRepository.Update(cts);
+            return true;
+        }
+
         public bool Exists(int classId, int testId)
         {
             return  classTestsRepository.Any(x => x.ClassId  == classId && x.TestId == testId);

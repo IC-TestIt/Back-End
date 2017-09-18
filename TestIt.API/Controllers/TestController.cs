@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.NodeServices;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
-using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.API.Controllers
@@ -15,7 +11,7 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class TestController : Controller
     {
-        private Business.ITestService testService;
+        private ITestService testService;
 
         public TestController(ITestService testService)
         {
@@ -75,6 +71,7 @@ namespace TestIt.API.Controllers
             else
                 return NotFound();
         }
+
         [HttpPost("{id}/classes")]
         public IActionResult Post(int id, [FromBody] CreateClassTestsViewModel viewModel)
         {
@@ -101,6 +98,5 @@ namespace TestIt.API.Controllers
             else
                 return Forbid();
         }
-
     }
 }
