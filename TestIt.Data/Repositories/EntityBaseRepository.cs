@@ -129,7 +129,7 @@ namespace TestIt.Data.Repositories
 
         public void AddOrUpdate(T entity)
         {
-            _context.Entry(entity).State = entity.Id == 0 ?
+            _context.Entry(entity).State = entity.Id <= 0 ?
                                    EntityState.Added :
                                    EntityState.Modified;
         }

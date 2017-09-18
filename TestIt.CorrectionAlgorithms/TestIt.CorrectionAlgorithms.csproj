@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TestIt.CorrectionAlgorithms\TestIt.CorrectionAlgorithms.csproj" />
-    <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
+    <PackageReference Include="Annytab.Stemmer" Version="1.2.2" />
+    <PackageReference Include="Fastenshtein" Version="1.0.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TestIt.Utils\TestIt.Utils.csproj" />
   </ItemGroup>
 
