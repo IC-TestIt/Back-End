@@ -34,7 +34,14 @@ namespace TestIt.Business
         Class GetSingle(int id);
         IEnumerable<Class> Get();
         IEnumerable<Class> GetTeacherClasses(int id);
+        void Delete(int id);
+        void DeleteClassTests(int id);
+        void DeleteClassStudents(int id);
+        void DeleteStudent(int id, int studentId);
     }
+
+    public interface IClassTestsService { }
+
 
     public interface IStudentService
     {
@@ -52,6 +59,7 @@ namespace TestIt.Business
     public interface IClassStudentsService
     {
         void Save(ClassStudents cs);
+        void DeleteStudent(int id, int studentId);
     }
 
     public interface ITestService

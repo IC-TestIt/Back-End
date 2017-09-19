@@ -16,13 +16,15 @@ namespace TestIt.API.Controllers
         private IClassStudentsService classStudentService;
         private IStudentService studentService;
         private IUserService userService;
+        private IClassTestsService classTestsService;
 
-        public ClassController(IClassService classService, IClassStudentsService classStudentService, IStudentService studentService, IUserService userService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService, IStudentService studentService, IUserService userService, IClassTestsService classTestsService)
         {
             this.classService = classService;
             this.classStudentService = classStudentService;
             this.studentService = studentService;
             this.userService = userService;
+            this.classTestsService = classTestsService;
         }
 
         [HttpPost]
@@ -83,6 +85,30 @@ namespace TestIt.API.Controllers
 
             return NotFound();
 
+        }
+        
+        [HttpDelete("{id}/student/{studentId}")]
+        public IActionResult DeleteStudent(int id, int studentId)
+        {
+                classStudentService.DeleteStudent(id, studentId);
+                return new OkObjectResult("Excluido com sucesso");
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteClass(int id)
+        {
+            Class c = classService.GetSingle(id);
+
+            if( c != null)
+            {
+
+                classService.DeleteClassStudents(id);
+                classService.DeleteClassTests(id);
+                classService.Delete(id);
+                return new OkObjectResult("Excluido com sucesso");
+            }
+
+            return NotFound();
         }
     }
 }

@@ -8,11 +8,15 @@ namespace TestIt.Business.Services
     {
         private IClassRepository classRepository;
         private IUserRepository userRepository;
+        private IClassStudentsRepository classStudentRepository;
+        private IClassTestsRepository classTestsRepository;
 
-        public ClassService (IClassRepository classRepository, IUserRepository userRepository)
+        public ClassService (IClassRepository classRepository, IUserRepository userRepository, IClassStudentsRepository classStudentRepository, IClassTestsRepository classTestsRepository)
         {
             this.classRepository = classRepository;
             this.userRepository = userRepository;
+            this.classStudentRepository = classStudentRepository;
+            this.classTestsRepository = classTestsRepository;
         }
         public void Save(Class c)
         {
@@ -39,6 +43,28 @@ namespace TestIt.Business.Services
         {
             var classes = classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
             return classes;
+        }
+        public void Delete(int id)
+        {
+            classRepository.DeleteWhere(X => X.Id == id);
+            classRepository.Commit();
+        }
+
+        public void DeleteStudent(int id, int studentId)
+        {
+            classStudentRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
+            classStudentRepository.Commit();
+        }
+
+        public void DeleteClassStudents(int id)
+        {
+            classStudentRepository.DeleteWhere(x => x.ClassId == id);
+            classStudentRepository.Commit();
+        }
+        public void DeleteClassTests(int id)
+        {
+            classTestsRepository.DeleteWhere(x => x.ClassId == id);
+            classTestsRepository.Commit();
         }
 
     }

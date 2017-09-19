@@ -21,5 +21,13 @@ namespace TestIt.Business.Services
             classStudentsRepository.Add(cs);
             classStudentsRepository.Commit();
         }
+
+        public void DeleteStudent(int id, int studentId)
+        {
+            classStudentsRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
+            classStudentsRepository.Commit();
+        }
+
+
     }
 }
