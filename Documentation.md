@@ -204,5 +204,44 @@
 
       * **Code:** 404 NOT FOUND <br />
 ---
-      
+**PostUser**
+
+   Save one User
+
+   * **URL**
+
+     /api/user
+
+   * **Method:**
+
+     `POST`
+  
+   * **Data Params**
+   `{
+	   "Email" : "luiztopper@gmail.com",
+	   "Identifyer": "123.456.344-9",
+	   "Type" : 1,
+	   "OrganizationId" : 7,
+	   "Name" : "Larsson",
+      "Phone":"33273700"
+      "Birthday":"23/08/1997"
+    }`
+         
+   * **Success Response:**
+
+     * **Code:** 200 <br />
+     **Content:** `{
+       "TeacherId": 2,
+       "UserId": 12,
+      }, 
+      OR 
+      {
+       "StudentId": 1,
+       "UserId": 10,
+      },`
+ 
+    * **Error Response:**
+
+      * **Code:** 403 FORBID <br />
+---      
  
