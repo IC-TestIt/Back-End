@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Fastenshtein;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Annytab.Stemmer;
+using Fastenshtein;
 using TestIt.Utils.Extend;
 
 namespace TestIt.CorrectionAlgorithms
@@ -21,7 +21,7 @@ namespace TestIt.CorrectionAlgorithms
             return Levenshtein.Distance(text1, text2);
         }
 
-        public static double TextDifPercent(string text1, string text2)
+        private static double TextDifPercent(string text1, string text2)
         {
             var maxLength = text1.Length;
             var result = maxLength - Levenshtein.Distance(text1, text2);
@@ -35,7 +35,7 @@ namespace TestIt.CorrectionAlgorithms
 
             texts.ForEach(x =>
             {
-                double percent = TextDifPercent(text1, x);
+                var percent = TextDifPercent(text1, x);
                 if (percent > bestPercent)
                     bestPercent = percent;
             });
@@ -52,9 +52,9 @@ namespace TestIt.CorrectionAlgorithms
             return steamWord;
         }
 
-        public static int KeyWordMatcher(string baseText, List<string> keywords)
+        public static int KeyWordMatcher(string baseText, IEnumerable<string> keywords)
         {
-            var lowerKeywords = keywords = (from s in keywords select s.ToLower()).ToList();
+            var lowerKeywords = (from s in keywords select s.ToLower()).ToList();
             return baseText.ToLower().Count(lowerKeywords);
         }
         
