@@ -1,6 +1,6 @@
 ﻿namespace TestIt.Model.DTO
 {
-    public class ExamDTO
+    public class ExamDto
     {
         public int ExamId { get; set; }
         public string Title { get; set; }
