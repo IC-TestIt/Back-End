@@ -1,35 +1,40 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Net;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TestIt.Data;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json.Serialization;
-using System.Net;
-using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.EntityFrameworkCore;
-using TestIt.API.ViewModels.Mappings;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using Serilog;
-using TestIt.API.Diagnostics;
 using Serilog.Events;
+using TestIt.API.Diagnostics;
+using TestIt.API.ViewModels.Mappings;
+using TestIt.Business;
+using TestIt.Business.Services;
+using TestIt.Data;
+using TestIt.Data.Abstract;
+using TestIt.Data.Repositories;
+using TestIt.Utils.Email;
 
 namespace TestIt.API
 {
     public partial class Startup
     {
-        public IConfigurationRoot Configuration { get; }
+        private IConfigurationRoot Configuration { get; }
         private static string _applicationPath = string.Empty;
         private bool IsProd { get; set; }
-        string sqlConnectionString = string.Empty;
-        bool useInMemoryProvider = false;
+        string _sqlConnectionString = string.Empty;
+        bool _useInMemoryProvider;
 
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddJsonFile("appsettings.json", false, true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", true)
                 .AddEnvironmentVariables();
 
             Configuration = builder.Build();
@@ -47,15 +52,18 @@ namespace TestIt.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string sqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            var sqlConnectionString = Configuration.GetConnectionString("DefaultConnection");
             try
             {
-                useInMemoryProvider = bool.Parse(Configuration["AppSettings:InMemoryProvider"]);
+                _useInMemoryProvider = bool.Parse(Configuration["AppSettings:InMemoryProvider"]);
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             services.AddDbContext<TestItContext>(options => {
-                switch (useInMemoryProvider)
+                switch (_useInMemoryProvider)
                 {
                     case true:
                         options.UseInMemoryDatabase();
@@ -67,33 +75,32 @@ namespace TestIt.API
                 }
             });
 
-            services.AddScoped<Data.Abstract.IClassRepository, Data.Repositories.ClassRepository>();
-            services.AddScoped<Data.Abstract.IOrganizationRepository, Data.Repositories.OrganizationRepository>();
-            services.AddScoped<Data.Abstract.IStudentRepository, Data.Repositories.StudentRepository>();
-            services.AddScoped<Data.Abstract.ITeacherRepository, Data.Repositories.TeacherRepository>();
-            services.AddScoped<Data.Abstract.IUserRepository, Data.Repositories.UserRepository>();
-            services.AddScoped<Data.Abstract.IClassStudentsRepository, Data.Repositories.ClassStudentsRepository>();
-            services.AddScoped<Data.Abstract.ITestRepository, Data.Repositories.TestRepository>();
-            services.AddScoped<Data.Abstract.IQuestionRepository, Data.Repositories.QuestionRepository>();
-            services.AddScoped<Data.Abstract.IEssayQuestionRepository, Data.Repositories.EssayQuestionRepository>();
-            services.AddScoped<Data.Abstract.IAlternativeQuestionRepository, Data.Repositories.AlternativeQuestionRepository>();
-            services.AddScoped<Data.Abstract.IAlternativeRepository, Data.Repositories.AlternativeRepository>();
-            services.AddScoped<Data.Abstract.IClassTestsRepository, Data.Repositories.ClassTestsRepository>();
-            services.AddScoped<Data.Abstract.ILogRepository, Data.Repositories.LogRepository>();
-            services.AddScoped<Data.Abstract.IExamRepository, Data.Repositories.ExamRepository>();
-            services.AddScoped<Data.Abstract.IAnsweredQuestionRepository, Data.Repositories.AnsweredQuestionRepository>();
+            services.AddScoped<IClassRepository, ClassRepository>();
+            services.AddScoped<IOrganizationRepository, OrganizationRepository>();
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IClassStudentsRepository, ClassStudentsRepository>();
+            services.AddScoped<ITestRepository, TestRepository>();
+            services.AddScoped<IQuestionRepository, QuestionRepository>();
+            services.AddScoped<IEssayQuestionRepository, EssayQuestionRepository>();
+            services.AddScoped<IAlternativeQuestionRepository, AlternativeQuestionRepository>();
+            services.AddScoped<IAlternativeRepository, AlternativeRepository>();
+            services.AddScoped<IClassTestsRepository, ClassTestsRepository>();
+            services.AddScoped<ILogRepository, LogRepository>();
+            services.AddScoped<IExamRepository, ExamRepository>();
+            services.AddScoped<IAnsweredQuestionRepository, AnsweredQuestionRepository>();
 
-            services.AddScoped<Business.IUserService, Business.Services.UserService>();
-            services.AddScoped<Business.ITeacherService, Business.Services.TeacherService>();
-            services.AddScoped<Business.IClassService, Business.Services.ClassService>();
-            services.AddScoped<Business.IStudentService, Business.Services.StudentService>();
-            services.AddScoped<Business.IClassStudentsService, Business.Services.ClassStudentsService>();
-            services.AddScoped<Business.IClassTestsService, Business.Services.ClassTestsService>();
-            services.AddScoped<Utils.Email.IEmailService, Utils.Email.EmailService>();
-            services.AddScoped<Business.ITestService, Business.Services.TestService>();
-            services.AddScoped<Business.IQuestionService, Business.Services.QuestionService>();
-            services.AddScoped<Business.ILogService, Business.Services.LogService>();
-            services.AddScoped<Business.IExamService, Business.Services.ExamService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<IClassService, ClassService>();
+            services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<IClassStudentsService, ClassStudentsService>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<ITestService, TestService>();
+            services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IExamService, ExamService>();
             AutoMapperConfiguration.Configure();
 
             services.AddCors();

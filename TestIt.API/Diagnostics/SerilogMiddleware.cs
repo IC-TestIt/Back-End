@@ -1,28 +1,29 @@
-﻿using Microsoft.AspNetCore.Http;
-using Serilog;
-using Serilog.Events;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Serilog;
+using Serilog.Events;
 using TestIt.Business;
+using Log = TestIt.Model.Entities.Log;
 
 namespace TestIt.API.Diagnostics
 {
     public class SerilogMiddleware
     {
-        const string MessageTemplate =
+        private const string MessageTemplate =
             "HTTP {RequestMethod} {RequestPath} responded {StatusCode} in {Elapsed:0.0000} ms";
 
-        static readonly ILogger Log = Serilog.Log.ForContext<SerilogMiddleware>();
+        private static readonly ILogger Log = Serilog.Log.ForContext<SerilogMiddleware>();
 
-        readonly RequestDelegate _next;
+        private readonly RequestDelegate _next;
 
-        private ILogService logService { get; set; }
+        private ILogService LogService { get; set; }
 
         public SerilogMiddleware(RequestDelegate next, ILogService logService)
         {
-            this.logService = logService;
+            LogService = logService;
 
             _next = next ?? throw new ArgumentNullException(nameof(next));
         }
@@ -47,12 +48,12 @@ namespace TestIt.API.Diagnostics
             catch (Exception ex) when (LogException(httpContext, sw, ex)) { }
         }
 
-        public bool LogException(HttpContext httpContext, Stopwatch sw, Exception ex)
+        private bool LogException(HttpContext httpContext, Stopwatch sw, Exception ex)
         {
             sw.Stop();
 
             var log = BuildLog(ex);
-            logService.Save(log);
+            LogService.Save(log);
 
             LogForErrorContext(httpContext)
                 .Error(ex, MessageTemplate, httpContext.Request.Method, httpContext.Request.Path, 500, sw.Elapsed.TotalMilliseconds);
@@ -60,7 +61,7 @@ namespace TestIt.API.Diagnostics
             return false;
         }
 
-        static ILogger LogForErrorContext(HttpContext httpContext)
+        private static ILogger LogForErrorContext(HttpContext httpContext)
         {
             var request = httpContext.Request;
 
@@ -75,17 +76,17 @@ namespace TestIt.API.Diagnostics
             return result;
         }
 
-        static Model.Entities.Log BuildLog (Exception ex)
+        private static Log BuildLog (Exception ex)
         {
-            StackTrace trace = new StackTrace(ex, true);
+            var trace = new StackTrace(ex, true);
 
-            var log = new Model.Entities.Log()
+            var log = new Log
             {
                 Source = ex.Source,
-                Message = ex.InnerException.Message ?? null,
+                Message = ex.InnerException.Message,
                 StackTrace = ex.StackTrace,
-                Method = trace.GetFrames().FirstOrDefault().GetMethod().Name ?? null,
-                Class = trace.GetFrames().FirstOrDefault(x => x.GetFileName() != null).GetFileName() ?? null
+                Method = trace.GetFrames().FirstOrDefault()?.GetMethod().Name,
+                Class = trace.GetFrames().FirstOrDefault(x => x.GetFileName() != null)?.GetFileName()
             };
 
             return log;
