@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TestIt.API.Migrations
 {
-    public partial class addDateClassStudents : Migration
+    public partial class AddDateClassStudents : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
