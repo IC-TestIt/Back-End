@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace TestIt.API.ViewModels.Question
 {
@@ -14,6 +11,6 @@ namespace TestIt.API.ViewModels.Question
 
         public IEnumerable<QuestionsViewModel> QuestionsUpdate { get; set; }
 
-        public IEnumerable<int> questionsRemove { get; set; }
+        public IEnumerable<int> QuestionsRemove { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TestIt.API.ViewModels.Exam
+﻿namespace TestIt.API.ViewModels.Exam
 {
     public class StudentExamsViewModel
     {

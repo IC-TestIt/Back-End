@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 using TestIt.API.ViewModels.Validations.Exam;
 
 namespace TestIt.API.ViewModels.Exam
@@ -13,7 +11,7 @@ namespace TestIt.API.ViewModels.Exam
         public int ClassTestsId { get; set; }
 
 
-        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validator = new CreateExamViewModelValidator();
             var result = validator.Validate(this);
