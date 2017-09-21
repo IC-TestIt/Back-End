@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Linq;
-using Xunit;
-using TestIt.CorrectionAlgorithms;
 using System.Collections.Generic;
+using System.Linq;
 using TestIt.Business;
 using TestIt.Model;
-using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using TestIt.Model.Entities;
+using Xunit;
 
 namespace TestIt.Tests
 {
@@ -17,7 +16,7 @@ namespace TestIt.Tests
         {
             var alternatives = new List<Alternative>
             {
-                new Alternative()
+                new Alternative
                 {
                     AlternativeQuestionId = 1,
                     Id = 1,
@@ -25,7 +24,7 @@ namespace TestIt.Tests
                     Description = "2"
                 },
 
-                new Alternative()
+                new Alternative
                 {
                     AlternativeQuestionId = 1,
                     Id = 2,
@@ -36,31 +35,31 @@ namespace TestIt.Tests
 
             var questions = new List<Question>
             {
-                new Question()
+                new Question
                 {
                     Id = 1,
                     TestId = 1,
                     Value = 1,
-                    EssayQuestion = new EssayQuestion()
+                    EssayQuestion = new EssayQuestion
                     {
                         Answer = "Meu nome é Vitor. E eu gosto de git",
                         Id = 1,
                         QuestionId = 1,
                         KeyWords = "Vitor,Git",
                         DateCreated = DateTime.Now.AddDays(-2),
-                        DateUpdated = DateTime.Now.AddDays(-2),
+                        DateUpdated = DateTime.Now.AddDays(-2)
                     },
                     Description = "Qual seu nome e hobbie?",
                     DateCreated = DateTime.Now.AddDays(-2),
                     DateUpdated = DateTime.Now.AddDays(-2)
                 },
 
-                new Question()
+                new Question
                 {
                     Id = 2,
                     TestId = 1,
                     Value = 1,
-                    AlternativeQuestion = new AlternativeQuestion()
+                    AlternativeQuestion = new AlternativeQuestion
                     {
                         DateCreated = DateTime.Now.AddDays(-2),
                         DateUpdated = DateTime.Now.AddDays(-2),
@@ -76,7 +75,7 @@ namespace TestIt.Tests
 
             var answeredQuestions = new List<AnsweredQuestion>
             {
-                new AnsweredQuestion()
+                new AnsweredQuestion
                 {
                     AlternativeId = 2,
                     ExamId = 1,
@@ -84,7 +83,7 @@ namespace TestIt.Tests
                     QuestionId = 2
                 },
 
-                new AnsweredQuestion()
+                new AnsweredQuestion
                 {
                     EssayAnswer = "Meu nome é gitor. e eu gosto de git",
                     Id = 2,
@@ -93,7 +92,7 @@ namespace TestIt.Tests
                 }
             };
 
-            var exam = new ExamInformationsDTO()
+            var exam = new ExamInformationsDto
             {
                 Id = 1,
                 Title = "Prova Teste",
@@ -110,12 +109,17 @@ namespace TestIt.Tests
             var actualCorrection = manager.Correct();
             Assert.Equal(1, actualCorrection.TotalGrade);
 
-            var gradeQuestion1 = actualCorrection.AnsweredQuestions.FirstOrDefault(x => x.QuestionId == 1).PercentCorrect;
-            Assert.Equal(0.73958333333333337, gradeQuestion1);
+            var answeredQuestion = actualCorrection.AnsweredQuestions.FirstOrDefault(x => x.QuestionId == 1);
+            if (answeredQuestion != null)
+            {
+                var gradeQuestion1 = answeredQuestion.PercentCorrect;
+                Assert.Equal(0.73958333333333337, gradeQuestion1);
+            }
 
-            var valueQuestion2 = actualCorrection.AnsweredQuestions.FirstOrDefault(x => x.QuestionId == 2).Grade;
+            var question = actualCorrection.AnsweredQuestions.FirstOrDefault(x => x.QuestionId == 2);
+            if (question == null) return;
+            var valueQuestion2 = question.Grade;
             Assert.Equal(1, valueQuestion2);
-
         }
     }
 }
