@@ -1,10 +1,7 @@
-﻿using System;
-using TestIt.Data;
-using TestIt.Data.Abstract;
-using TestIt.Data.Repositories;
-using TestIt.Model.Entities;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TestIt.Data.Abstract;
+using TestIt.Model.Entities;
 
 namespace TestIt.Data.Repositories
 {
@@ -17,8 +14,8 @@ namespace TestIt.Data.Repositories
 
         public Test GetFull(int id)
         {
-            var question = (from a in _context.Questions
-                        join b in _context.Tests on a.TestId equals b.Id
+            var question = (from a in Context.Questions
+                        join b in Context.Tests on a.TestId equals b.Id
                         where a.TestId == id
                         select a).Include(x => x.EssayQuestion).Include(x => x.Test).Include(x => x.AlternativeQuestion.Alternatives).ToList();
 

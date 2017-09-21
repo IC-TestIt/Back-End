@@ -14,7 +14,7 @@ namespace TestIt.Data.Repositories
 
         public IEnumerable<Log> Filter(Log log)
         {
-            IQueryable<Log> queryLog = _context.Logs;
+            IQueryable<Log> queryLog = Context.Logs;
            
             if (!string.IsNullOrEmpty(log.Class))
             {

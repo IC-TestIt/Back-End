@@ -1,7 +1,7 @@
-﻿using TestIt.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using TestIt.Model;
 
 namespace TestIt.Data.Abstract
 {
@@ -17,7 +17,7 @@ namespace TestIt.Data.Abstract
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
         bool Any(Expression<Func<T, bool>> predicate);
         void Add(T entity);
-        void AddMultiple(List<T> entities);
+        void AddMultiple(IEnumerable<T> entities);
         void Update(T entity);
         void Delete(T entity);
         void DeleteWhere(Expression<Func<T, bool>> predicate);

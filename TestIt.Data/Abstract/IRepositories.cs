@@ -6,12 +6,12 @@ namespace TestIt.Data.Abstract
 {
     public interface IUserRepository : IEntityBaseRepository<User>
     {
-        List<User> ClassUsers(int classId);
+        IEnumerable<User> ClassUsers(int classId);
     }
     public interface ITeacherRepository : IEntityBaseRepository<Teacher> {}
     public interface IStudentRepository : IEntityBaseRepository<Student>
     {
-        IEnumerable<StudentTestDTO> GetTests(int id);
+        IEnumerable<StudentTestDto> GetTests(int id);
     }
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
     public interface IClassRepository : IEntityBaseRepository<Class> {}
@@ -31,8 +31,8 @@ namespace TestIt.Data.Abstract
     }
     public interface IExamRepository : IEntityBaseRepository<Exam>
     {
-        IEnumerable<ExamDTO> GetExams(int id);
-        ExamInformationsDTO GetFull(int id);
+        IEnumerable<ExamDto> GetExams(int id);
+        ExamInformationsDto GetFull(int id);
     }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }

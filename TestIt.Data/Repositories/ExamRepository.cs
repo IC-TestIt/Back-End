@@ -1,9 +1,9 @@
-using TestIt.Data.Abstract;
-using TestIt.Model.Entities;
-using System.Linq;
-using TestIt.Model.DTO;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
+using TestIt.Model.Entities;
 
 namespace TestIt.Data.Repositories
 {
@@ -14,13 +14,13 @@ namespace TestIt.Data.Repositories
         {
         }
 
-        public IEnumerable<ExamDTO> GetExams(int id)
+        public IEnumerable<ExamDto> GetExams(int id)
         {
-            var exams = (from a in _context.ClassTests
-                         join b in _context.Exams on a.Id equals b.ClassTestsId
-                         join c in _context.Tests on a.TestId equals c.Id
+            var exams = (from a in Context.ClassTests
+                         join b in Context.Exams on a.Id equals b.ClassTestsId
+                         join c in Context.Tests on a.TestId equals c.Id
                          where b.StudentId == id
-                         select new ExamDTO
+                         select new ExamDto
                          {
                              Description = c.Description,
                              ExamId = b.Id,
@@ -32,13 +32,13 @@ namespace TestIt.Data.Repositories
             return exams;
         }
 
-        public ExamInformationsDTO GetFull(int id)
+        public ExamInformationsDto GetFull(int id)
         {
-            var exam = (from a in _context.Exams
-                        join b in _context.ClassTests on a.ClassTestsId equals b.Id
-                        join c in _context.Tests on b.TestId equals c.Id
+            var exam = (from a in Context.Exams
+                        join b in Context.ClassTests on a.ClassTestsId equals b.Id
+                        join c in Context.Tests on b.TestId equals c.Id
                         where a.Id == id
-                        select new ExamInformationsDTO
+                        select new ExamInformationsDto
                         {
                             Id = a.Id,
                             BeginDate = a.BeginDate,
@@ -48,11 +48,11 @@ namespace TestIt.Data.Repositories
                             Status = a.Status
                         }).FirstOrDefault();
 
-            exam.Questions = (from a in _context.Questions
+            exam.Questions = (from a in Context.Questions
                               where a.TestId == exam.TestId
                               select a).Include(x => x.EssayQuestion).Include(x => x.AlternativeQuestion.Alternatives).ToList();
 
-            exam.AnsweredQuestions = (from a in _context.AnsweredQuestions
+            exam.AnsweredQuestions = (from a in Context.AnsweredQuestions
                                       where a.ExamId == exam.Id
                                       select a).ToList();
 
