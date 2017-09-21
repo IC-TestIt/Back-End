@@ -1,55 +1,54 @@
-﻿using TestIt.Data.Abstract;
-using TestIt.Model.Entities;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System;
-using System.Collections.Generic;
+using TestIt.Data.Abstract;
+using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
 {
     public class QuestionService : IQuestionService
     {
-        private IQuestionRepository questionRepository;
-        private IEssayQuestionRepository essayRepository;
-        private IAlternativeQuestionRepository alternativeQuestionRepository;
-        private IAlternativeRepository alternativeRepository;
+        private readonly IQuestionRepository _questionRepository;
+        private readonly IEssayQuestionRepository _essayRepository;
+        private readonly IAlternativeQuestionRepository _alternativeQuestionRepository;
+        private readonly IAlternativeRepository _alternativeRepository;
 
         public QuestionService(IQuestionRepository questionRepository, IEssayQuestionRepository essayRepository,
                                IAlternativeQuestionRepository alternativeQuestionRepository, IAlternativeRepository alternativeRepository)
         {
-            this.questionRepository = questionRepository;
-            this.essayRepository = essayRepository;
-            this.alternativeQuestionRepository = alternativeQuestionRepository;
-            this.alternativeRepository = alternativeRepository;
+            _questionRepository = questionRepository;
+            _essayRepository = essayRepository;
+            _alternativeQuestionRepository = alternativeQuestionRepository;
+            _alternativeRepository = alternativeRepository;
         }
 
         public void Save(Question q)
         {
-            questionRepository.AddOrUpdate(q);
-            questionRepository.Commit();
+            _questionRepository.AddOrUpdate(q);
+            _questionRepository.Commit();
         }
 
         public void Save(List<EssayQuestion> q)
         {
-            essayRepository.AddOrUpdateMultiple(q);
-            essayRepository.Commit();
+            _essayRepository.AddOrUpdateMultiple(q);
+            _essayRepository.Commit();
         }
 
         public void Save(List<AlternativeQuestion> q)
         {
-            alternativeQuestionRepository.AddMultiple(q);
-            alternativeQuestionRepository.Commit();
+            _alternativeQuestionRepository.AddMultiple(q);
+            _alternativeQuestionRepository.Commit();
         }
 
-        public void Remove(List<int> questionsId)
+        public void Remove(IEnumerable<int> questionsId)
         {
             foreach (var id in questionsId)
             {
-                alternativeRepository.DeleteWhere(x => x.AlternativeQuestion.QuestionId == id);
-                alternativeQuestionRepository.DeleteWhere(x => x.QuestionId == id);
-                essayRepository.DeleteWhere(x => x.QuestionId == id);
-                questionRepository.DeleteWhere(x => x.Id == id);
+                _alternativeRepository.DeleteWhere(x => x.AlternativeQuestion.QuestionId == id);
+                _alternativeQuestionRepository.DeleteWhere(x => x.QuestionId == id);
+                _essayRepository.DeleteWhere(x => x.QuestionId == id);
+                _questionRepository.DeleteWhere(x => x.Id == id);
 
-                alternativeRepository.Commit();
+                _alternativeRepository.Commit();
 
             }
         }
@@ -57,10 +56,10 @@ namespace TestIt.Business.Services
         {
             q.ForEach(x =>
             {
-                alternativeQuestionRepository.Update(x);
-                alternativeRepository.AddOrUpdateMultiple(x.Alternatives.ToList());
+                _alternativeQuestionRepository.Update(x);
+                _alternativeRepository.AddOrUpdateMultiple(x.Alternatives.ToList());
             });
-            alternativeRepository.Commit();
+            _alternativeRepository.Commit();
         }
 
     }

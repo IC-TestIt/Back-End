@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TestIt.CorrectionAlgorithms;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
-using System.Linq;
 
 namespace TestIt.Business
 {
     public class CorrectionManager
     {
-        private ExamInformationsDTO Exam { get; set; }
+        private ExamInformationsDto Exam { get; set; }
 
-        public CorrectionManager(ExamInformationsDTO exam)
+        public CorrectionManager(ExamInformationsDto exam)
         {
             Exam = exam;
         }
 
-        public CorrectionDTO Correct()
+        public CorrectionDto Correct()
         {
-            var correction = new CorrectionDTO()
+            var correction = new CorrectionDto
             {
                 AnsweredQuestions = CorrectAnswers(Exam.AnsweredQuestions.ToList(), Exam.Questions.ToList())
             };
@@ -46,17 +46,17 @@ namespace TestIt.Business
             return studentAnswers;
         }
 
-        private double CorrectAlternative(AnsweredQuestion answer, Question question)
+        private static double CorrectAlternative(AnsweredQuestion answer, Question question)
         {
             var selectedAlternative = question.AlternativeQuestion.Alternatives.FirstOrDefault(x => x.Id == answer.AlternativeId);
-            var isCorrect = selectedAlternative.IsCorrect;
+            var isCorrect = selectedAlternative != null && selectedAlternative.IsCorrect;
 
             return isCorrect ? question.Value : 0;
         }
 
         private double CorrectEssay(AnsweredQuestion answer, Question question)
         {
-            var totalPercent = 0.0;
+            double totalPercent;
             var sentencePercent = GetSentencesPercent(answer.EssayAnswer, question.EssayQuestion.Answer);
 
             if (!string.IsNullOrEmpty(question.EssayQuestion.KeyWords))
@@ -72,50 +72,26 @@ namespace TestIt.Business
             return totalPercent;
         }
 
-        private double GetSentencesPercent(string studentAnswer, string rightAnswer)
+        private static double GetSentencesPercent(string studentAnswer, string rightAnswer)
         {
-            var sentences = new List<SentenceDTO>();
-
             var answerSentences = Core.SeparateIntoSentences(studentAnswer);
             var rightAnswerSentences = Core.SeparateIntoSentences(rightAnswer);
-            
-            foreach (var item in answerSentences)
-            {
-                sentences.Add(new SentenceDTO()
+
+            var sentences = answerSentences.Select(item => new SentenceDto
                 {
                     Sentence = item,
                     Value = 0
-                });
-            }
+                })
+                .ToList();
 
             sentences.ForEach(x => x.Value = SetSentenceValue(x.Sentence, rightAnswerSentences.ToArray()));
 
             return sentences.Average(x => x.Value);
         }
 
-        private double SetSentenceValue(string sentence, string[] answerSentences)
+        private static double SetSentenceValue(string sentence, IEnumerable<string> answerSentences)
         {
-            var bestMatch = 0.0;
-            
-            foreach(var teacherSentence in answerSentences)
-            {
-                var wordsStudent = Core.NormalizeWords(sentence.Split(' '));
-                var wordsTeacher = Core.NormalizeWords(teacherSentence.Split(' '));
-                var wordsPercentStudentSum = 0.0;
-
-                foreach(var wordStudent in wordsStudent)
-                {
-                    var bestWordMatch = Core.BestTextPercent(wordStudent, wordsTeacher.ToList());
-                    wordsPercentStudentSum += bestWordMatch;
-                }
-
-                var wordsPercentStudent = wordsPercentStudentSum / wordsStudent.Count();
-
-                if (wordsPercentStudent > bestMatch)
-                    bestMatch = wordsPercentStudent;
-            }
-
-            return bestMatch;
+            return (from teacherSentence in answerSentences let wordsStudent = Core.NormalizeWords(sentence.Split(' ')) let wordsTeacher = Core.NormalizeWords(teacherSentence.Split(' ')) let enumerable = wordsStudent as IList<string> ?? wordsStudent.ToList() let wordsPercentStudentSum = enumerable.Sum(wordStudent => Core.BestTextPercent(wordStudent, wordsTeacher.ToList())) select wordsPercentStudentSum / enumerable.Count).Concat(new[] {0.0}).Max();
         }
     }
 }

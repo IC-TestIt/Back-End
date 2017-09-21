@@ -1,104 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
-using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
 {
     public class UserService : IUserService
     {
-        private IUserRepository userRepository;
-        private IStudentRepository studentRepository;
-        private ITeacherRepository teacherRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly ITeacherRepository _teacherRepository;
         
         public UserService (IUserRepository userRepository, IStudentRepository studentRepository, ITeacherRepository teacherRepository)
         {
-            this.userRepository = userRepository;
-            this.studentRepository = studentRepository;
-            this.teacherRepository = teacherRepository;
+            _userRepository = userRepository;
+            _studentRepository = studentRepository;
+            _teacherRepository = teacherRepository;
         }
         
         public bool ValidLogin(string email, string pswd)
         {
-            return userRepository.Any(x => x.Email == email && x.Password == pswd);
+            return _userRepository.Any(x => x.Email == email && x.Password == pswd);
         }
 
         public IEnumerable<User> Get() 
         {
-            return userRepository.GetAll();
+            return _userRepository.GetAll();
         }
 
         public User GetSingle(int id)
         {
-            return userRepository.GetSingle(id);
+            return _userRepository.GetSingle(id);
         }
 
-        public bool Save(User t) 
+        public bool Save(User t)
         {
-            if (Exists(t.Email)== 0)
-            {
-                userRepository.Add(t);
-                userRepository.Commit();
-                return true; 
-            }
-            else
-                return false;
-            
+            if (Exists(t.Email) != 0) return false;
+            _userRepository.Add(t);
+            _userRepository.Commit();
+            return true;
         }
 
         public void Delete(int id)
         {
-            User t = userRepository.GetSingle(id);
+            var t = _userRepository.GetSingle(id);
 
-            if(t != null) 
-            {
-                userRepository.DeleteWhere(x => x.Id == t.Id);
-                userRepository.Commit();
-            }
+            if (t == null) return;
+            _userRepository.DeleteWhere(x => x.Id == t.Id);
+            _userRepository.Commit();
         }
 
         public bool Update(int id, User user)
         {
-            User t = userRepository.GetSingle(id);
+            var t = _userRepository.GetSingle(id);
 
-            if (t != null)
-            {
-                t.DateUpdated = DateTime.Now;
-                t.Birthday = user.Birthday;
-                t.Password = user.Password;
-                t.Phone = user.Phone;
-                t.OrganizationId = user.OrganizationId;
+            if (t == null) return false;
+            t.DateUpdated = DateTime.Now;
+            t.Birthday = user.Birthday;
+            t.Password = user.Password;
+            t.Phone = user.Phone;
+            t.OrganizationId = user.OrganizationId;
 
-                userRepository.Commit();
+            _userRepository.Commit();
 
-                return true;
-            }
-            else
-                return false;
+            return true;
         }
 
         public int Exists(string email)
         {
-            var u =  userRepository.GetSingle(x => x.Email == email);
-            return u == null ? 0 : u.Id;
+            var u =  _userRepository.GetSingle(x => x.Email == email);
+            return u?.Id ?? 0;
         }
 
         public LoggedUser GetByEmail(string email)
         {
-            LoggedUser loggedUser = new LoggedUser();
+            var loggedUser = new LoggedUser();
 
-            var user = userRepository.GetSingle(x => x.Email == email);
+            var user = _userRepository.GetSingle(x => x.Email == email);
 
             if (user != null)
                 loggedUser.UserId = user.Id;
 
-            var student = studentRepository.GetSingle(x => x.UserId == user.Id);
+            var student = _studentRepository.GetSingle(x => x.UserId == user.Id);
 
             if (student != null)
                 loggedUser.StudentId = student.Id;
 
-            var teacher = teacherRepository.GetSingle(x => x.UserId == user.Id);
+            var teacher = _teacherRepository.GetSingle(x => x.UserId == user.Id);
 
             if (teacher != null)
                 loggedUser.TeacherId = teacher.Id;

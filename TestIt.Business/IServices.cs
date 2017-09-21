@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using TestIt.Model.Entities;
 
 namespace TestIt.Business
 {
@@ -39,10 +39,7 @@ namespace TestIt.Business
         void DeleteClassStudents(int id);
         void DeleteStudent(int id, int studentId);
     }
-
-    public interface IClassTestsService { }
-
-
+    
     public interface IStudentService
     {
         IEnumerable<Student> Get();
@@ -53,7 +50,7 @@ namespace TestIt.Business
         Student GetByUser(int id);
         void SendSignUp(User user, int studentId);
         void SendInvite(User user, Class studentClass);
-        IEnumerable<StudentTestDTO> Tests(int id);
+        IEnumerable<StudentTestDto> Tests(int id);
     }
 
     public interface IClassStudentsService
@@ -79,7 +76,7 @@ namespace TestIt.Business
         void Save(Question q);
         void Save(List<EssayQuestion> q);
         void Save(List<AlternativeQuestion> q);
-        void Remove(List<int> questionsId);
+        void Remove(IEnumerable<int> questionsId);
         void Update(List<AlternativeQuestion> q);
     }
 
@@ -92,10 +89,10 @@ namespace TestIt.Business
     public interface IExamService
     {
         void Save(Exam exam);
-        IEnumerable<ExamDTO> GetStudentExams(int id);
+        IEnumerable<ExamDto> GetStudentExams(int id);
         bool EndExam(int id, List<AnsweredQuestion> l);
         bool SaveExam(int id, List<AnsweredQuestion> l);
-        ExamInformationsDTO Get(int id);
+        ExamInformationsDto Get(int id);
         bool Correct(int id);
     }
 }

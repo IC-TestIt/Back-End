@@ -6,65 +6,65 @@ namespace TestIt.Business.Services
 {
     public class ClassService : IClassService
     {
-        private IClassRepository classRepository;
-        private IUserRepository userRepository;
-        private IClassStudentsRepository classStudentRepository;
-        private IClassTestsRepository classTestsRepository;
+        private readonly IClassRepository _classRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly IClassStudentsRepository _classStudentRepository;
+        private readonly IClassTestsRepository _classTestsRepository;
 
         public ClassService (IClassRepository classRepository, IUserRepository userRepository, IClassStudentsRepository classStudentRepository, IClassTestsRepository classTestsRepository)
         {
-            this.classRepository = classRepository;
-            this.userRepository = userRepository;
-            this.classStudentRepository = classStudentRepository;
-            this.classTestsRepository = classTestsRepository;
+            _classRepository = classRepository;
+            _userRepository = userRepository;
+            _classStudentRepository = classStudentRepository;
+            _classTestsRepository = classTestsRepository;
         }
         public void Save(Class c)
         {
-            classRepository.Add(c);
-            classRepository.Commit();
+            _classRepository.Add(c);
+            _classRepository.Commit();
         }
 
         public IEnumerable<User> ClassUsers (int id)
         {
-            return userRepository.ClassUsers(id);
+            return _userRepository.ClassUsers(id);
         }
 
         public Class GetSingle(int id)
         {
-            return classRepository.GetSingle(id);
+            return _classRepository.GetSingle(id);
         }
 
         public IEnumerable<Class> Get()
         {
-            return classRepository.GetAll();
+            return _classRepository.GetAll();
         }
 
         public IEnumerable<Class> GetTeacherClasses(int id)
         {
-            var classes = classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
+            var classes = _classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
             return classes;
         }
         public void Delete(int id)
         {
-            classRepository.DeleteWhere(X => X.Id == id);
-            classRepository.Commit();
+            _classRepository.DeleteWhere(x => x.Id == id);
+            _classRepository.Commit();
         }
 
         public void DeleteStudent(int id, int studentId)
         {
-            classStudentRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
-            classStudentRepository.Commit();
+            _classStudentRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
+            _classStudentRepository.Commit();
         }
 
         public void DeleteClassStudents(int id)
         {
-            classStudentRepository.DeleteWhere(x => x.ClassId == id);
-            classStudentRepository.Commit();
+            _classStudentRepository.DeleteWhere(x => x.ClassId == id);
+            _classStudentRepository.Commit();
         }
         public void DeleteClassTests(int id)
         {
-            classTestsRepository.DeleteWhere(x => x.ClassId == id);
-            classTestsRepository.Commit();
+            _classTestsRepository.DeleteWhere(x => x.ClassId == id);
+            _classTestsRepository.Commit();
         }
 
     }
