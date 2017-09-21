@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using TestIt.API.ViewModels.Log;
 using TestIt.Business;
 using TestIt.Model.Entities;

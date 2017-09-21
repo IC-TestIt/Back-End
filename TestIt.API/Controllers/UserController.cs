@@ -10,44 +10,35 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class UserController : Controller
     {
-        private IUserService userService;
-        private ITeacherService teacherService;
-        private IStudentService studentService;
+        private readonly IUserService _userService;
+        private readonly ITeacherService _teacherService;
+        private readonly IStudentService _studentService;
 
         public UserController(IUserService userService, ITeacherService teacherService, IStudentService studentService)
         {
-            this.userService = userService;
-            this.teacherService = teacherService;
-            this.studentService = studentService;
+            _userService = userService;
+            _teacherService = teacherService;
+            _studentService = studentService;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            IEnumerable<User> users = userService.Get();
-          
-            if(users != null)
-            {
-                IEnumerable<ReturnUserViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
-                return new OkObjectResult(usersVm);
-            }
+            var users = _userService.Get();
 
-            return NotFound();
-
+            if (users == null) return NotFound();
+            var usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
+            return new OkObjectResult(usersVm);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var user = userService.GetSingle(id);
+            var user = _userService.GetSingle(id);
 
-            if (user != null)
-            {
-                var userVm = Mapper.Map<User, ReturnUserViewModel>(user);
-                return new OkObjectResult(userVm); //TODO: UserViewModel
-            }
-            else
-                return NotFound();
+            if (user == null) return NotFound();
+            var userVm = Mapper.Map<User, ReturnUserViewModel>(user);
+            return new OkObjectResult(userVm); //TODO: UserViewModel
         }
 
         [HttpPost]
@@ -60,22 +51,22 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = Mapper.Map<User>(viewModel);
+            var user = Mapper.Map<User>(viewModel);
 
             user.IsActive = true;
-            if (userService.Save(user))
+            if (_userService.Save(user))
             {
                 if (viewModel.Type == 1)
                 {
                     var teacherId = CreateTeacher(user);
 
-                    result = Ok(new { teacherId = teacherId, userId = user.Id });
+                    result = Ok(new {teacherId, userId = user.Id });
                 }
                 else
                 {
                     var studentId = CreateStudent(user);
 
-                    result = Ok(new { studentId = studentId, userId = user.Id });
+                    result = Ok(new {studentId, userId = user.Id });
                 }
 
             }
@@ -93,94 +84,90 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            User user = Mapper.Map<User>(viewModel);
+            var user = Mapper.Map<User>(viewModel);
 
-            var sucess = userService.Update(id, user);
+            var sucess = _userService.Update(id, user);
 
             if (sucess)
                 return new NoContentResult();
-            else
-                return NotFound();
+            return NotFound();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            User user = userService.GetSingle(id);
+            var user = _userService.GetSingle(id);
 
             if (user == null)
                 return new NotFoundResult();
-            else
-            {
-                var tId = GetTeacherId(user.Id);
-                var sId = GetStudentId(user.Id);
+            var tId = GetTeacherId(user.Id);
+            var sId = GetStudentId(user.Id);
                 
-                if (tId != 0)
-                    teacherService.Delete(tId);
-                if (sId != 0)
-                    studentService.Delete(sId);
+            if (tId != 0)
+                _teacherService.Delete(tId);
+            if (sId != 0)
+                _studentService.Delete(sId);
                 
-                userService.Delete(id);
+            _userService.Delete(id);
 
-                return new NoContentResult();
-            }
+            return new NoContentResult();
         }
 
         [HttpGet("exists/{email}")]
         public int UserExists(string email)
         {
-            return userService.Exists(email);
+            return _userService.Exists(email);
         }
 
 
         private int CreateStudent(User user)
         {
-            var student = new Student()
+            var student = new Student
             {
                 User = user
             };
 
-            studentService.Save(student);
+            _studentService.Save(student);
 
-            studentService.SendSignUp(user, student.Id );
+            _studentService.SendSignUp(user, student.Id );
 
             return student.Id;
         }
 
         private int CreateTeacher(User user)
         {
-            var teacher = new Teacher()
+            var teacher = new Teacher
             {
                 User = user
             };
 
-            teacherService.Save(teacher);
+            _teacherService.Save(teacher);
 
             return teacher.Id;
         }
 
         private void DeleteTeacher(int id)
         {
-            teacherService.Delete(id);
+            _teacherService.Delete(id);
         }
 
         private void DeleteStudent(int id)
         {
-            studentService.Delete(id);
+            _studentService.Delete(id);
         }
 
         private int GetTeacherId (int id)
         {
-            Teacher t = teacherService.GetByUser(id);
+            var t = _teacherService.GetByUser(id);
 
-            return t != null ? t.Id : 0;
+            return t?.Id ?? 0;
         }
 
         private int GetStudentId(int id)
         {
-            Student t = studentService.GetByUser(id);
+            var t = _studentService.GetByUser(id);
 
-            return t != null ? t.Id : 0;
+            return t?.Id ?? 0;
         }
     }
 }

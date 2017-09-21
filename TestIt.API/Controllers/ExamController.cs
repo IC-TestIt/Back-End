@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -10,11 +10,11 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ExamController : Controller
     {
-        private IExamService examService;
+        private readonly IExamService _examService;
 
         public ExamController(IExamService examService)
         {
-            this.examService = examService;
+            _examService = examService;
         }
 
         [HttpPost]
@@ -25,11 +25,11 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            Exam exam = Mapper.Map<Exam>(viewModel);
+            var exam = Mapper.Map<Exam>(viewModel);
 
-            examService.Save(exam);
+            _examService.Save(exam);
 
-            OkObjectResult result = Ok(new { examId = exam.Id });
+            var result = Ok(new { examId = exam.Id });
 
             return result;
         }
@@ -44,12 +44,11 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.EndExam(id, answerdQuestions);
+            var sucess = _examService.EndExam(id, answerdQuestions);
 
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return NotFound();
         }
 
         [HttpPut("save/{id}")]
@@ -62,18 +61,17 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.SaveExam(id, answerdQuestions);
+            var sucess = _examService.SaveExam(id, answerdQuestions);
 
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return NotFound();
         }
 
         [HttpGet("{id}")]
         public IActionResult Get (int id)
         {
-            var exam = examService.Get(id);
+            var exam = _examService.Get(id);
 
             if (exam != null)
             {
@@ -88,7 +86,7 @@ namespace TestIt.API.Controllers
         [HttpPost("correct/{id}")]
         public IActionResult Post(int id)
         {
-            var sucess = examService.Correct(id);
+            var sucess = _examService.Correct(id);
 
             if (sucess)
                 return Ok();

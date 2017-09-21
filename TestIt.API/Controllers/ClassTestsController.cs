@@ -9,7 +9,7 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ClassTestsController : Controller
     {
-        private ITestService _testService;
+        private readonly ITestService _testService;
 
         public ClassTestsController(ITestService testService)
         {

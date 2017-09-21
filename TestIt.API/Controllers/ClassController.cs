@@ -1,45 +1,41 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TestIt.API.ViewModels.Mappings;
 using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.User;
 using TestIt.Business;
 using TestIt.Model.Entities;
-using TestIt.API.ViewModels.User;
 
 namespace TestIt.API.Controllers
 {
     [Route("api/[controller]")]
     public class ClassController : Controller
     {
-        private IClassService classService;
-        private IClassStudentsService classStudentService;
-        private IStudentService studentService;
-        private IUserService userService;
-        private IClassTestsService classTestsService;
+        private readonly IClassService _classService;
+        private readonly IClassStudentsService _classStudentService;
+        private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
 
-        public ClassController(IClassService classService, IClassStudentsService classStudentService, IStudentService studentService, IUserService userService, IClassTestsService classTestsService)
+        public ClassController(IClassService classService, IClassStudentsService classStudentService,
+            IStudentService studentService, IUserService userService)
         {
-            this.classService = classService;
-            this.classStudentService = classStudentService;
-            this.studentService = studentService;
-            this.userService = userService;
-            this.classTestsService = classTestsService;
+            _classService = classService;
+            _classStudentService = classStudentService;
+            _studentService = studentService;
+            _userService = userService;
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody]CreateClassViewModel viewModel)
+        public IActionResult Post([FromBody] CreateClassViewModel viewModel)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
 
-            Class newClass = Mapper.Map<Class>(viewModel);
+            var newClass = Mapper.Map<Class>(viewModel);
 
-            classService.Save(newClass);
+            _classService.Save(newClass);
 
-            OkObjectResult result = Ok(new { classId = newClass.Id});
+            var result = Ok(new {classId = newClass.Id});
 
             return result;
         }
@@ -47,68 +43,58 @@ namespace TestIt.API.Controllers
         [HttpPost("{id}/student/{studentId}")]
         public IActionResult Post(int id, int studentId)
         {
-            classStudentService.Save(new ClassStudents()
+            _classStudentService.Save(new ClassStudents
             {
                 ClassId = id,
                 StudentId = studentId
             });
 
-            OkObjectResult result = Ok(new { classId = id, studentId = studentId });
+            var result = Ok(new {classId = id, studentId});
 
-            var student = studentService.GetSingle(studentId);
-            var user = userService.GetSingle(student.UserId);
-            var classStudent = classService.GetSingle(id);
+            var student = _studentService.GetSingle(studentId);
+            var user = _userService.GetSingle(student.UserId);
+            var classStudent = _classService.GetSingle(id);
 
-            studentService.SendInvite(user, classStudent);
+            _studentService.SendInvite(user, classStudent);
 
             return result;
         }
-        
+
         [HttpGet("{id}")]
         public IActionResult GetUsers(int id)
         {
-            OkObjectResult result = Ok(classService.ClassUsers(id));
+            var result = Ok(_classService.ClassUsers(id));
 
             return result;
         }
 
         [HttpGet("{id}/users")]
-        public IActionResult Get (int id)
+        public IActionResult Get(int id)
         {
-            IEnumerable<User> usersClass = classService.ClassUsers(id);
+            var usersClass = _classService.ClassUsers(id);
 
-            if (usersClass != null)
-            {
-                IEnumerable<ReturnUserViewModel> usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(usersClass);
-                return new OkObjectResult(usersVm);
-            }
-
-            return NotFound();
-
+            if (usersClass == null) return NotFound();
+            var usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(usersClass);
+            return new OkObjectResult(usersVm);
         }
-        
+
         [HttpDelete("{id}/student/{studentId}")]
         public IActionResult DeleteStudent(int id, int studentId)
         {
-                classStudentService.DeleteStudent(id, studentId);
-                return new OkObjectResult("Excluido com sucesso");
+            _classStudentService.DeleteStudent(id, studentId);
+            return new OkObjectResult("Excluido com sucesso");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteClass(int id)
         {
-            Class c = classService.GetSingle(id);
+            var c = _classService.GetSingle(id);
 
-            if( c != null)
-            {
-
-                classService.DeleteClassStudents(id);
-                classService.DeleteClassTests(id);
-                classService.Delete(id);
-                return new OkObjectResult("Excluido com sucesso");
-            }
-
-            return NotFound();
+            if (c == null) return NotFound();
+            _classService.DeleteClassStudents(id);
+            _classService.DeleteClassTests(id);
+            _classService.Delete(id);
+            return new OkObjectResult("Excluido com sucesso");
         }
     }
 }

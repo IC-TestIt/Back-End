@@ -1,9 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using TestIt.API.ViewModels.Class;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
@@ -14,61 +11,46 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class TeacherController : Controller
     {
-        private ITeacherService teacherService;
-        private IUserService userService;
-        private ITestService testService;
-        private IClassService classService;
+        private readonly ITeacherService _teacherService;
+        private readonly ITestService _testService;
+        private readonly IClassService _classService;
 
-        public TeacherController(ITeacherService teacherService, IUserService userService, 
-                                                ITestService testService, IClassService classService)
+        public TeacherController(ITeacherService teacherService, ITestService testService, IClassService classService)
         {
-            this.teacherService = teacherService;
-            this.userService = userService;
-            this.testService = testService;
-            this.classService = classService;
+            _teacherService = teacherService;
+            _testService = testService;
+            _classService = classService;
         }
 
         [HttpGet("{id}/tests")]
         public IActionResult GetTeacherTests(int id)
         {
-            var tests = testService.GetTeacherTests(id);
+            var tests = _testService.GetTeacherTests(id);
 
-            if (tests != null)
-            {
-                IEnumerable<TeacherTestsViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
-                return new OkObjectResult(testsVm);
-            }
-
-            return NotFound();
+            if (tests == null) return NotFound();
+            var testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
+            return new OkObjectResult(testsVm);
         }
 
         [HttpGet("{id}/classes")]
         public IActionResult GetTeacherClasses(int id)
         {
-            var classes = classService.GetTeacherClasses(id);
+            var classes = _classService.GetTeacherClasses(id);
 
-            if (classes != null)
-            {
-                IEnumerable<TeacherClassesViewModel> classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
-                return new OkObjectResult(classesVm);
-            }
-
-            return NotFound();
+            if (classes == null) return NotFound();
+            var classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
+            return new OkObjectResult(classesVm);
         }
 
         [HttpGet("{id}/appliedTests")]
         public IActionResult GetTeacherClassTests(int id)
         {
-            var classTests = teacherService.GetClassTests(id);
+            var classTests = _teacherService.GetClassTests(id);
 
-            if (classTests != null)
-            {
-                var classTestsVm = Mapper.Map<IEnumerable<ClassTests>,IEnumerable<ClassTestsViewModel>>(classTests);
+            if (classTests == null) return NotFound();
+            var classTestsVm = Mapper.Map<IEnumerable<ClassTests>,IEnumerable<ClassTestsViewModel>>(classTests);
 
-                return Ok(classTestsVm);
-            }
-
-            return NotFound();
+            return Ok(classTestsVm);
         }
     }
 }
