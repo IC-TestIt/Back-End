@@ -74,6 +74,19 @@ namespace TestIt.Business.Services
             
             return exam;
         }
+
+        public bool ExistsExam(Exam exam)
+        {
+            var e = _examRepository.GetSingle(x => x.ClassTestsId == exam.ClassTestsId && x.StudentId == exam.StudentId);
+
+            if (e != null)
+            {
+                return true;
+            }
+            else
+                return false;
+
+        }
         
         public bool Correct(int id)
         {
@@ -95,5 +108,6 @@ namespace TestIt.Business.Services
             
             return true;
         }
+
     }
 }
