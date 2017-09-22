@@ -17,7 +17,7 @@ namespace TestIt.Data.Repositories
             var question = (from a in Context.Questions
                         join b in Context.Tests on a.TestId equals b.Id
                         where a.TestId == id
-                        select a).Include(x => x.EssayQuestion).Include(x => x.Test).Include(x => x.AlternativeQuestion.Alternatives).ToList();
+                        select a).Include(x => x.EssayQuestion).Include(x => x.Test).Include(x => x.AlternativeQuestion.Alternatives).OrderBy(x => x.Order).ToList();
 
             return question.FirstOrDefault().Test ?? null;
         }
