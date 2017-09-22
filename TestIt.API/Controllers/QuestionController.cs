@@ -48,6 +48,7 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            viewModel.QuestionsUpdate.ForEachWithIndex((item, index) => item.Order = index);
             
             _questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
             _questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
