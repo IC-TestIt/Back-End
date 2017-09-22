@@ -20,6 +20,8 @@ namespace TestIt.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]CreateExamViewModel viewModel)
         {
+            OkObjectResult result;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -27,9 +29,13 @@ namespace TestIt.API.Controllers
 
             Exam exam = Mapper.Map<Exam>(viewModel);
 
-            examService.Save(exam);
-
-            OkObjectResult result = Ok(new { examId = exam.Id });
+            if (!examService.ExistsExam(exam))
+            {
+                examService.Save(exam);
+                result = Ok(new { examId = exam.Id });
+            }
+            else
+                result = Ok("Esse aluno já esta realizando essa prova");
 
             return result;
         }
