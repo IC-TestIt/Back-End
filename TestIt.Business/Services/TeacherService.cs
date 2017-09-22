@@ -6,8 +6,8 @@ namespace TestIt.Business.Services
 {
     public class TeacherService : ITeacherService
     {
-        private ITeacherRepository _teacherRepository;
-        private IClassTestsRepository _classTestRepository;
+        private readonly ITeacherRepository _teacherRepository;
+        private readonly IClassTestsRepository _classTestRepository;
 
         public TeacherService(ITeacherRepository teacherRepository, IClassTestsRepository classTestRepository)
         {
@@ -38,23 +38,19 @@ namespace TestIt.Business.Services
 
         public void Delete(int id)
         {
-            Teacher t = _teacherRepository.GetSingle(id);
+            var t = _teacherRepository.GetSingle(id);
 
-            if(t != null) 
-            {
-                _teacherRepository.DeleteWhere(x => x.Id == t.Id);
-                _teacherRepository.Commit();
-            }
+            if (t == null) return;
+            _teacherRepository.DeleteWhere(x => x.Id == t.Id);
+            _teacherRepository.Commit();
         }
 
         public void Update(int id, Teacher teacher)
         {
-            Teacher t = _teacherRepository.GetSingle(id);
-            if (t != null && teacher.Id == t.Id)
-            {
-                _teacherRepository.Update(teacher);
-                _teacherRepository.Commit();
-            }
+            var t = _teacherRepository.GetSingle(id);
+            if (t == null || teacher.Id != t.Id) return;
+            _teacherRepository.Update(teacher);
+            _teacherRepository.Commit();
         }
         
         public IEnumerable<ClassTests> GetClassTests(int id)

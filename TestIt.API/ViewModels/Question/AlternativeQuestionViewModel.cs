@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TestIt.Model.Entities;
 
 namespace TestIt.API.ViewModels.Question
 {

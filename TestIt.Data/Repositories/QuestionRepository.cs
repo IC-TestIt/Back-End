@@ -1,8 +1,5 @@
-﻿using TestIt.Data;
-using TestIt.Data.Abstract;
-using TestIt.Data.Repositories;
+﻿using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
-
 
 namespace TestIt.Data.Repositories
 {

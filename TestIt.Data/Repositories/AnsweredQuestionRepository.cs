@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
-using TestIt.Data.Abstract;
 
 namespace TestIt.Data.Repositories
 {

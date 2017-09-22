@@ -1,23 +1,21 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TestIt.API.ViewModels.Question;
 using TestIt.Business;
 using TestIt.Model.Entities;
-using TestIt.API.ViewModels.Question;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace TestIt.API.Controllers
 {
     [Route("api/[controller]")]
     public class QuestionController : Controller
     {
-        private IQuestionService questionService;
-        private ITestService testService;
+        private readonly IQuestionService _questionService;
 
-        public QuestionController(IQuestionService questionService, ITestService testService)
+        public QuestionController(IQuestionService questionService)
         {
-            this.questionService = questionService;
-            this.testService = testService;
+            _questionService = questionService;
         }
         
         [HttpPost]
@@ -28,10 +26,11 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            questionService.Save(AddAlternativeQuestions(viewModel));
-            questionService.Save(AddEssayQuestions(viewModel));
+            var questionsViewModels = viewModel as IList<QuestionsViewModel> ?? viewModel.ToList();
+            _questionService.Save(AddAlternativeQuestions(questionsViewModels));
+            _questionService.Save(AddEssayQuestions(questionsViewModels));
 
-            OkObjectResult result = Ok("Cadastro Realizado");
+            var result = Ok("Cadastro Realizado");
 
             return result;
 
@@ -46,14 +45,14 @@ namespace TestIt.API.Controllers
             }
 
             
-            questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
-            questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
+            _questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
+            _questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
 
-            questionService.Update(UpdateAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
+            _questionService.Update(UpdateAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
 
-            questionService.Remove(viewModel.questionsRemove.ToList());
+            _questionService.Remove(viewModel.QuestionsRemove.ToList());
 
-            OkObjectResult result = Ok("Operação Realizada");
+            var result = Ok("Operação Realizada");
 
             return result;
         }
@@ -68,9 +67,9 @@ namespace TestIt.API.Controllers
                 
                 if (string.IsNullOrEmpty(q.Answer) && q.Id == 0)
                 {
-                    questionService.Save(question);
+                    _questionService.Save(question);
 
-                    AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
+                    var alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
                     alternativeQuestion.QuestionId = question.Id;
 
                     alternativeQuestions.Add(alternativeQuestion);
@@ -88,14 +87,12 @@ namespace TestIt.API.Controllers
             {
                 var question = Mapper.Map<Question>(q);
 
-                if (string.IsNullOrEmpty(q.Answer) && q.Id != 0)
-                {
-                    questionService.Save(question);
+                if (!string.IsNullOrEmpty(q.Answer) || q.Id == 0) continue;
+                _questionService.Save(question);
 
-                    AlternativeQuestion alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
+                var alternativeQuestion = Mapper.Map<AlternativeQuestion>(q);
 
-                    alternativeQuestions.Add(alternativeQuestion);
-                }
+                alternativeQuestions.Add(alternativeQuestion);
             }
 
             return alternativeQuestions;
@@ -108,16 +105,14 @@ namespace TestIt.API.Controllers
             foreach (var q in viewModel)
             {
                 var question = Mapper.Map<Question>(q);
-               
-                if (!string.IsNullOrEmpty(q.Answer))
-                {
-                    questionService.Save(question);
 
-                    EssayQuestion essayQuestion = Mapper.Map<EssayQuestion>(q);
-                    essayQuestion.QuestionId = question.Id;
+                if (string.IsNullOrEmpty(q.Answer)) continue;
+                _questionService.Save(question);
 
-                    essayQuestions.Add(essayQuestion);
-                }
+                var essayQuestion = Mapper.Map<EssayQuestion>(q);
+                essayQuestion.QuestionId = question.Id;
+
+                essayQuestions.Add(essayQuestion);
             }
 
             return essayQuestions;

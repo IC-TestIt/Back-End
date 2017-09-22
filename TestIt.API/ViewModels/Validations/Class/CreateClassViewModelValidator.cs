@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using TestIt.API.ViewModels.Class;
 
-
 namespace TestIt.API.ViewModels.Validations.Class
 {
     public class CreateClassViewModelValidator : AbstractValidator<CreateClassViewModel>

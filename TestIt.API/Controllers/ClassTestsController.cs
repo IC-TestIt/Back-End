@@ -9,7 +9,7 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ClassTestsController : Controller
     {
-        private ITestService _testService;
+        private readonly ITestService _testService;
 
         public ClassTestsController(ITestService testService)
         {
@@ -26,7 +26,7 @@ namespace TestIt.API.Controllers
                 return Ok();
             }
 
-            return NotFound();
+            return Ok(0);
         }
     }
 }

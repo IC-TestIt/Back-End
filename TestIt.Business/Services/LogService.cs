@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.Entities;
 
@@ -12,7 +10,7 @@ namespace TestIt.Business.Services
 
         public LogService(ILogRepository logRepository)
         {
-            this.LogRepository = logRepository;
+            LogRepository = logRepository;
         }
 
         public void Save(Log log)

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
+using TestIt.Model;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
-using TestIt.Model;
 
 namespace TestIt.Business.Services
 {
     public class ExamService : IExamService
     {
-        private IExamRepository _examRepository;
-        private IAnsweredQuestionRepository _answeredQuestionRepository;
+        private readonly IExamRepository _examRepository;
+        private readonly IAnsweredQuestionRepository _answeredQuestionRepository;
 
 
         public ExamService(IExamRepository examRepository, IAnsweredQuestionRepository answeredQuestionRepository)
@@ -24,7 +24,7 @@ namespace TestIt.Business.Services
             _examRepository.Add(e);
             _examRepository.Commit();
         }
-        public IEnumerable<ExamDTO> GetStudentExams(int id)
+        public IEnumerable<ExamDto> GetStudentExams(int id)
         {
             var exams = _examRepository.GetExams(id);
             return exams;
@@ -34,41 +34,33 @@ namespace TestIt.Business.Services
         {
             var e = _examRepository.GetSingle(id);
 
-            if (e != null)
-            {
-                e.DateUpdated = DateTime.Now;
-                e.Status = (int)EnumStatus.Finished;
-                e.EndDate = DateTime.Now;
+            if (e == null) return false;
+            e.DateUpdated = DateTime.Now;
+            e.Status = (int)EnumStatus.Finished;
+            e.EndDate = DateTime.Now;
 
-                _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
+            _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
 
-                _examRepository.Commit();
+            _examRepository.Commit();
 
-                return true;
-            }
-            else
-                return false;
+            return true;
         }
 
         public bool SaveExam(int id, List<AnsweredQuestion> answerdQuestions)
         {
             var e = _examRepository.GetSingle(id);
 
-            if (e != null)
-            {
-                e.DateUpdated = DateTime.Now;
+            if (e == null) return false;
+            e.DateUpdated = DateTime.Now;
 
-                _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
+            _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
 
-                _examRepository.Commit();
+            _examRepository.Commit();
 
-                return true;
-            }
-            else
-                return false;
+            return true;
         }
 
-        public ExamInformationsDTO Get (int id)
+        public ExamInformationsDto Get (int id)
         {
             var exam = _examRepository.GetFull(id);
             
@@ -77,15 +69,7 @@ namespace TestIt.Business.Services
 
         public bool ExistsExam(Exam exam)
         {
-            var e = _examRepository.GetSingle(x => x.ClassTestsId == exam.ClassTestsId && x.StudentId == exam.StudentId);
-
-            if (e != null)
-            {
-                return true;
-            }
-            else
-                return false;
-
+            return _examRepository.Any(x => x.ClassTestsId == exam.ClassTestsId && x.StudentId == exam.StudentId);
         }
         
         public bool Correct(int id)

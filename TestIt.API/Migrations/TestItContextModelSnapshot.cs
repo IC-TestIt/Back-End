@@ -2,13 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using TestIt.Data;
 
 namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
-    partial class TestItContextModelSnapshot : ModelSnapshot
+    class TestItContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {

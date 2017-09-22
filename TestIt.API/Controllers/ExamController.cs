@@ -1,6 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -10,11 +10,11 @@ namespace TestIt.API.Controllers
     [Route("api/[controller]")]
     public class ExamController : Controller
     {
-        private IExamService examService;
+        private readonly IExamService _examService;
 
         public ExamController(IExamService examService)
         {
-            this.examService = examService;
+            _examService = examService;
         }
 
         [HttpPost]
@@ -27,11 +27,11 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            Exam exam = Mapper.Map<Exam>(viewModel);
+            var exam = Mapper.Map<Exam>(viewModel);
 
-            if (!examService.ExistsExam(exam))
+            if (!_examService.ExistsExam(exam))
             {
-                examService.Save(exam);
+                _examService.Save(exam);
                 result = Ok(new { examId = exam.Id });
             }
             else
@@ -50,12 +50,11 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.EndExam(id, answerdQuestions);
+            var sucess = _examService.EndExam(id, answerdQuestions);
 
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return Ok(0);
         }
 
         [HttpPut("save/{id}")]
@@ -68,18 +67,17 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.SaveExam(id, answerdQuestions);
-
+            var sucess = _examService.SaveExam(id, answerdQuestions);
+            
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return Ok(0);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get (int id)
         {
-            var exam = examService.Get(id);
+            var exam = _examService.Get(id);
 
             if (exam != null)
             {
@@ -88,18 +86,18 @@ namespace TestIt.API.Controllers
                 return Ok(vm);
             }
 
-            return NotFound();
+            return Ok(0);
         }
 
         [HttpPost("correct/{id}")]
         public IActionResult Post(int id)
         {
-            var sucess = examService.Correct(id);
+            var sucess = _examService.Correct(id);
 
             if (sucess)
                 return Ok();
 
-            return NotFound();
+            return Ok(0);
         }
     }
 }

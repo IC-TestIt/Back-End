@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TestIt.API.ViewModels.Log
+﻿namespace TestIt.API.ViewModels.Log
 {
     public class LogFilterViewModel
     {

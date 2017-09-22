@@ -6,28 +6,26 @@ namespace TestIt.Data
 {
     public class TestItDbInitializer
     {
-        private static TestItContext context;
+        private static TestItContext _context;
 
         public static void Initialize (IServiceProvider serviceProvider)
         {
-            context = (TestItContext)serviceProvider.GetService(typeof(TestItContext));
+            _context = (TestItContext)serviceProvider.GetService(typeof(TestItContext));
 
             InitializeTestIt();
         }
 
         private static void InitializeTestIt()
         {
-            if (!context.Organizations.Any())
+            if (_context.Organizations.Any()) return;
+            var organization1 = new Organization
             {
-                var organization_1 = new Organization
-                {
-                    Name = "Fatec",
-                    Description = "Faculdade de tecnologia"
-                };
+                Name = "Fatec",
+                Description = "Faculdade de tecnologia"
+            };
 
-                context.Organizations.Add(organization_1);
-                context.SaveChanges();
-            }
+            _context.Organizations.Add(organization1);
+            _context.SaveChanges();
         }
     }
 }

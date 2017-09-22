@@ -9,7 +9,7 @@ namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
     [Migration("20170825000740_Nullable-FK")]
-    partial class NullableFK
+    partial class NullableFk
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

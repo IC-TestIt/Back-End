@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace TestIt.API.ViewModels.User
+﻿namespace TestIt.API.ViewModels.User
 {
     public class ReturnUserViewModel 
     {

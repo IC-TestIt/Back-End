@@ -9,7 +9,7 @@ namespace TestIt.API.Migrations
 {
     [DbContext(typeof(TestItContext))]
     [Migration("20170718035251_add-Date-ClassStudents")]
-    partial class addDateClassStudents
+    partial class AddDateClassStudents
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
