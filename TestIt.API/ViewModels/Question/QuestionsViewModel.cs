@@ -12,6 +12,7 @@ namespace TestIt.API.ViewModels.Question
         public int EssayQuestionId { get; set; }
         public int AlternativeQuestionId { get; set; }
         public virtual string KeyWords { get; set; }
+        public virtual int Order {get; set;}
         public virtual List<AlternativeViewModel> Alternatives { get; set; }
     }
 }
