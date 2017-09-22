@@ -26,7 +26,7 @@ namespace TestIt.API.Controllers
         {
             var users = _userService.Get();
 
-            if (users == null) return NotFound();
+            if (users == null) return Ok(0);
             var usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(users);
             return new OkObjectResult(usersVm);
         }
@@ -36,7 +36,7 @@ namespace TestIt.API.Controllers
         {
             var user = _userService.GetSingle(id);
 
-            if (user == null) return NotFound();
+            if (user == null) return Ok(0);
             var userVm = Mapper.Map<User, ReturnUserViewModel>(user);
             return new OkObjectResult(userVm); //TODO: UserViewModel
         }
@@ -90,7 +90,7 @@ namespace TestIt.API.Controllers
 
             if (sucess)
                 return new NoContentResult();
-            return NotFound();
+            return Ok(0);
         }
 
         [HttpDelete("{id}")]

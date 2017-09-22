@@ -49,7 +49,7 @@ namespace TestIt.API.Controllers
         {
             var tests = _testService.Get();
 
-            if (tests == null) return NotFound();
+            if (tests == null) return Ok(0);
             var testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<ReturnTestViewModel>>(tests);
             return new OkObjectResult(testsVm);
         }
@@ -58,7 +58,7 @@ namespace TestIt.API.Controllers
         {
             var test = _testService.GetSingle(id);
 
-            if (test == null) return NotFound();
+            if (test == null) return Ok(0);
             var testVm = Mapper.Map<Test, ReturnTestViewModel>(test);
             return new OkObjectResult(testVm);
         }

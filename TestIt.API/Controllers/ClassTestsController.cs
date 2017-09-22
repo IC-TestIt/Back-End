@@ -26,7 +26,7 @@ namespace TestIt.API.Controllers
                 return Ok();
             }
 
-            return NotFound();
+            return Ok(0);
         }
     }
 }

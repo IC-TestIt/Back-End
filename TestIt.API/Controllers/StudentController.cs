@@ -41,7 +41,7 @@ namespace TestIt.API.Controllers
         {
             var exams = _examService.GetStudentExams(id);
 
-            if (exams == null) return NotFound();
+            if (exams == null) return Ok(0);
             var examsVm = Mapper.Map<IEnumerable<ExamDto>, IEnumerable<StudentExamsViewModel>>(exams);
             return new OkObjectResult(examsVm);
         }
@@ -51,7 +51,7 @@ namespace TestIt.API.Controllers
         {
             var exams = _studentService.Tests(id);
 
-            if (exams == null) return NotFound();
+            if (exams == null) return Ok(0);
             var examVm = Mapper.Map<IEnumerable<StudentTestDto>, IEnumerable<StudentTestViewModel>>(exams);
 
             return new OkObjectResult(examVm);

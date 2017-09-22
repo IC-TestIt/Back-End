@@ -27,7 +27,7 @@ namespace TestIt.API.Controllers
         {
             var tests = _testService.GetTeacherTests(id);
 
-            if (tests == null) return NotFound();
+            if (tests == null) return Ok(0);
             var testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
             return new OkObjectResult(testsVm);
         }
@@ -37,7 +37,7 @@ namespace TestIt.API.Controllers
         {
             var classes = _classService.GetTeacherClasses(id);
 
-            if (classes == null) return NotFound();
+            if (classes == null) return Ok(0);
             var classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
             return new OkObjectResult(classesVm);
         }
@@ -47,7 +47,7 @@ namespace TestIt.API.Controllers
         {
             var classTests = _teacherService.GetClassTests(id);
 
-            if (classTests == null) return NotFound();
+            if (classTests == null) return Ok(0);
             var classTestsVm = Mapper.Map<IEnumerable<ClassTests>,IEnumerable<ClassTestsViewModel>>(classTests);
 
             return Ok(classTestsVm);

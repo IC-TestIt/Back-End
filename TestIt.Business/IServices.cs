@@ -94,5 +94,6 @@ namespace TestIt.Business
         bool SaveExam(int id, List<AnsweredQuestion> l);
         ExamInformationsDto Get(int id);
         bool Correct(int id);
+        bool ExistsExam(Exam exam);
     }
 }

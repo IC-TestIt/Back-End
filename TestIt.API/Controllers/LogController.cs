@@ -22,7 +22,7 @@ namespace TestIt.API.Controllers
             var logs = _logService.Filter(filter);
 
             if (logs == null)
-                return NotFound();
+                return Ok(0);
 
             var logVm = Mapper.Map<IEnumerable<Log>, IEnumerable<ReturnLogViewModel>>(logs);
             return new OkObjectResult(logVm);

@@ -73,7 +73,7 @@ namespace TestIt.API.Controllers
         {
             var usersClass = _classService.ClassUsers(id);
 
-            if (usersClass == null) return NotFound();
+            if (usersClass == null) return Ok(0);
             var usersVm = Mapper.Map<IEnumerable<User>, IEnumerable<ReturnUserViewModel>>(usersClass);
             return new OkObjectResult(usersVm);
         }
@@ -90,7 +90,7 @@ namespace TestIt.API.Controllers
         {
             var c = _classService.GetSingle(id);
 
-            if (c == null) return NotFound();
+            if (c == null) return Ok(0);
             _classService.DeleteClassStudents(id);
             _classService.DeleteClassTests(id);
             _classService.Delete(id);

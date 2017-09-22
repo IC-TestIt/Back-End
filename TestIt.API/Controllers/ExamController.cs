@@ -20,6 +20,8 @@ namespace TestIt.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody]CreateExamViewModel viewModel)
         {
+            OkObjectResult result;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -27,9 +29,13 @@ namespace TestIt.API.Controllers
 
             var exam = Mapper.Map<Exam>(viewModel);
 
-            _examService.Save(exam);
-
-            var result = Ok(new { examId = exam.Id });
+            if (!_examService.ExistsExam(exam))
+            {
+                _examService.Save(exam);
+                result = Ok(new { examId = exam.Id });
+            }
+            else
+                result = Ok("Esse aluno já esta realizando essa prova");
 
             return result;
         }
@@ -48,7 +54,7 @@ namespace TestIt.API.Controllers
 
             if (sucess)
                 return Ok();
-            return NotFound();
+            return Ok(0);
         }
 
         [HttpPut("save/{id}")]
@@ -62,10 +68,10 @@ namespace TestIt.API.Controllers
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
             var sucess = _examService.SaveExam(id, answerdQuestions);
-
+            
             if (sucess)
                 return Ok();
-            return NotFound();
+            return Ok(0);
         }
 
         [HttpGet("{id}")]
@@ -80,7 +86,7 @@ namespace TestIt.API.Controllers
                 return Ok(vm);
             }
 
-            return NotFound();
+            return Ok(0);
         }
 
         [HttpPost("correct/{id}")]
@@ -91,7 +97,7 @@ namespace TestIt.API.Controllers
             if (sucess)
                 return Ok();
 
-            return NotFound();
+            return Ok(0);
         }
     }
 }
