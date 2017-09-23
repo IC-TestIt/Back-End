@@ -28,8 +28,6 @@ namespace TestIt.API.Controllers
             }
 
             var questionsViewModel = viewModel as IList<QuestionsViewModel> ?? viewModel.ToList();
-
-            questionsViewModel.ForEachWithIndex((item, index) => item.Order = index);
             
             _questionService.Save(AddAlternativeQuestions(questionsViewModel));
             _questionService.Save(AddEssayQuestions(questionsViewModel));
@@ -47,8 +45,6 @@ namespace TestIt.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            viewModel.QuestionsUpdate.ForEachWithIndex((item, index) => item.Order = index);
             
             _questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
             _questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
