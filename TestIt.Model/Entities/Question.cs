@@ -18,6 +18,7 @@ namespace TestIt.Model.Entities
 
         public string Description { get; set; }
         public double Value { get; set; }
+        public int Order { get; set; }
 
         public int TestId { get; set; }
         public Test Test { get; set; }

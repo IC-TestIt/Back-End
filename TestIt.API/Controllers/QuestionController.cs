@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.Question;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.Utils.Extend;
 
 namespace TestIt.API.Controllers
 {
@@ -26,9 +27,10 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            var questionsViewModels = viewModel as IList<QuestionsViewModel> ?? viewModel.ToList();
-            _questionService.Save(AddAlternativeQuestions(questionsViewModels));
-            _questionService.Save(AddEssayQuestions(questionsViewModels));
+            var questionsViewModel = viewModel as IList<QuestionsViewModel> ?? viewModel.ToList();
+            
+            _questionService.Save(AddAlternativeQuestions(questionsViewModel));
+            _questionService.Save(AddEssayQuestions(questionsViewModel));
 
             var result = Ok("Cadastro Realizado");
 
@@ -43,7 +45,6 @@ namespace TestIt.API.Controllers
             {
                 return BadRequest(ModelState);
             }
-
             
             _questionService.Save(AddEssayQuestions(viewModel.QuestionsUpdate.ToList()));
             _questionService.Save(AddAlternativeQuestions(viewModel.QuestionsUpdate.ToList()));
