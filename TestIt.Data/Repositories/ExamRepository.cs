@@ -37,6 +37,7 @@ namespace TestIt.Data.Repositories
             var exam = (from a in Context.Exams
                         join b in Context.ClassTests on a.ClassTestsId equals b.Id
                         join c in Context.Tests on b.TestId equals c.Id
+                        join d in Context.Classes on b.ClassId equals d.Id
                         where a.Id == id
                         select new ExamInformationsDto
                         {
@@ -45,7 +46,8 @@ namespace TestIt.Data.Repositories
                             EndDate = b.EndDate,
                             Title = c.Title,
                             TestId = c.Id,
-                            Status = a.Status
+                            Status = a.Status,
+                            Description = d.Description
                         }).FirstOrDefault();
 
             exam.Questions = (from a in Context.Questions
