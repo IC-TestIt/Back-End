@@ -17,6 +17,7 @@ namespace TestIt.API.ViewModels.Exam
         public DateTime EndDate { get; set; }
         public string Title { get; set; }
         public int Status { get; set; }
+        public string Description { get; set; }
 
         public IEnumerable<FullQuestionViewModel> Questions { get; set; }
         public IEnumerable<AnsweredQuestionViewModel> AnsweredQuestions { get; set; }
