@@ -65,7 +65,7 @@ namespace TestIt.Business
         void AddQuestion(Question q);
         IEnumerable<Test> Get();
         Test GetSingle(int id);
-        IEnumerable<Test> GetTeacherTests(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
         string ExportTest(int testId);
         bool Update(ClassTests cts);
