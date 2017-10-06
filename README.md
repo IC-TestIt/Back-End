@@ -6,35 +6,35 @@ This project haves all the content of the back-end of the web application TestIt
 
 ```
 ASP.NET Core
-Docker
+Docker (Optional)
 ```
+## Download Links
+
+* [ASP.NET Core](https://github.com/dotnet/core/blob/master/release-notes/download-archives/1.1.1-download.md)
 
 ## Getting Started
 
-* Linux
 ```
 git clone git@github.com:IC-TestIt/Back-End.git
 cd Back-End
+
+Stantard way: 
+dotnet restore
+dotnet run
+
+With Docker:
 docker-compose up
 ````
-* Windows
-```
-git clone git@github.com:IC-TestIt/Back-End.git
-open the sln in VS2017 or greater and then you can 
-run with Docker or with the standard way
-```
+
+* If you want to use Visual Studio
+  * open the sln in VS2017 or greater
 
 
 ## Running the tests
 
-* Linux
 ```
 cd Testit.tests
 dotnet test
-```
-* Windows
-```
-run with the VS test explorer
 ```
 
 ## References
