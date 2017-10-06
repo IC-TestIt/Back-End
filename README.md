@@ -37,6 +37,14 @@ cd Testit.tests
 dotnet test
 ```
 
+## Contribuição
+
+* Deve-se criar uma branch no seguinte padrão
+    * bug/bug-que-sera-corrigido
+    * feat/nova-funcionalidade
+    * impv/funcionalidade-a-ser-melhorada
+* Depois é só abrir um PR para a master e solicitar o Review do Time de Back-End
+
 ## Referencias
 
 * [ASP.NET Core](https://www.microsoft.com/net/core)
@@ -44,5 +52,11 @@ dotnet test
 * [Docker](https://www.docker.com/)
 * [SQL Server](https://www.microsoft.com/pt-br/sql-server/sql-server-2016)
 * [XUnit](https://xunit.github.io/)
+
+## Colaboradores
+
+* [Vitor Manfré](http://github.com/vitormdias)
+* [Medson Oliveira](http://github.com/medson10)
+* [Luiz Soares](http://github.com/LuizGuilhermeSoares)
 
 
