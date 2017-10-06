@@ -34,6 +34,8 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<ClassTests, ClassTestsViewModel>()
                 .ForMember(x => x.ClassName, map => map.MapFrom(x => x.Class.Description))
                 .ForMember(x => x.TestTitle, map => map.MapFrom(x => x.Test.Title));
+            Mapper.CreateMap<TeacherTestsDTO, TeacherTestsViewModel>();
+            Mapper.CreateMap<Model.Entities.Class, ReturnClassViewModel>();
         }
     }
 }
