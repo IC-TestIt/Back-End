@@ -11,7 +11,7 @@
         Corrected = 1,
         Uncorrected = 2,
         Applied = 3,
-        notApplied = 4
+        NotApplied = 4
 
     }
 }
