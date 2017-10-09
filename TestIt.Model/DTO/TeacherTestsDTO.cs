@@ -9,13 +9,12 @@ namespace TestIt.Model.DTO
     {
         public TeacherTestsDTO()
         {
-            ClassTestsApplied = new List<Class>();
+            ClassTestsApplied = new List<ClassTestsDTO>();
         }
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
         public EnumTestStatus Status { get; set; }
-        public IEnumerable<Class> ClassTestsApplied { get; set; }
+        public IEnumerable<ClassTestsDTO> ClassTestsApplied { get; set; }
     }
 }
