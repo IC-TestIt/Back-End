@@ -30,12 +30,11 @@ namespace TestIt.Data.Repositories
         {
             var tests = (from a in Context.Tests
                          join b in Context.ClassTests on a.Id equals b.TestId
-                         join c in Context.Exams on b.Id equals c.ClassTestsId
-                         where a.TeacherId == id && c.TotalGrade == 0
+                         join c in Context.Exams on b.Id equals c.ClassTestsId 
+                         where a.TeacherId == id && c.TotalGrade == 0 && b.EndDate <= DateTime.Now
                          select new TeacherTestsDTO
                          {
                              Title = a.Title,
-                             Description = a.Description,
                              Id = a.Id,
                              Status = EnumTestStatus.Uncorrected
                          }).ToList();
@@ -47,7 +46,6 @@ namespace TestIt.Data.Repositories
                            select new TeacherTestsDTO
                            {
                                Title = a.Title,
-                               Description = a.Description,
                                Id = a.Id,
                                Status = EnumTestStatus.Corrected
                            });
@@ -58,7 +56,6 @@ namespace TestIt.Data.Repositories
                            select new TeacherTestsDTO
                            {
                                Title = a.Title,
-                               Description = a.Description,
                                Id = a.Id,
                                Status = EnumTestStatus.Applied
                            });
@@ -68,18 +65,22 @@ namespace TestIt.Data.Repositories
                            select new TeacherTestsDTO
                            {
                                Title = a.Title,
-                               Description = a.Description,
                                Id = a.Id,
-                               Status = EnumTestStatus.notApplied
+                               Status = EnumTestStatus.NotApplied
                            });
+
+            
 
             foreach (TeacherTestsDTO tt in tests)
             {
                 tt.ClassTestsApplied = (from a in Context.Classes
                                         join b in Context.ClassTests on a.Id equals b.ClassId
-                                        join c in Context.Tests on b.TestId equals c.Id
-                                        where c.TeacherId == id
-                                        select a).ToList();
+                                        where b.TestId == tt.Id
+                                        select new ClassTestsDTO
+                                        {
+                                            ClassTestId = b.Id,
+                                            Description = a.Description
+                                        }).ToList();
             }
 
             return tests;
