@@ -7,7 +7,7 @@ namespace TestIt.API.ViewModels.Class
 {
     public class ReturnClassViewModel
     {
+        public int ClassTestId { get; set; }
         public string Description { get; set; }
-        public int TeacherId { get; set; }
     }
 }
