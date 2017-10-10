@@ -7,14 +7,11 @@ namespace TestIt.Model.DTO
 {
     public class TeacherTestsDTO
     {
-        public TeacherTestsDTO()
-        {
-            ClassTestsApplied = new List<ClassTestsDTO>();
-        }
-
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public int TestId { get; set; }
+        public int ClassTestId { get; set; }
+        public string TestTitle { get; set; }
+        public string ClassName { get; set; }
+        public DateTime BeginDate { get; set; }
         public EnumTestStatus Status { get; set; }
-        public IEnumerable<ClassTestsDTO> ClassTestsApplied { get; set; }
     }
 }
