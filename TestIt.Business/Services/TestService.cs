@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
@@ -40,9 +41,9 @@ namespace TestIt.Business.Services
             return _testRepository.GetFull(id);
         }
 
-        public IEnumerable<Test> GetTeacherTests(int id)
+        public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id)
         {
-            var tests = _testRepository.FindBy(x => x.TeacherId == id);
+            var tests = _testRepository.GetTeacherTests(id);
             return tests; 
         }
 

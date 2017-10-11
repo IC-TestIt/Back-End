@@ -18,7 +18,8 @@ namespace TestIt.Data.Abstract
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
     public interface ITestRepository : IEntityBaseRepository<Test>
     {
-        Test GetFull(int id);    
+        Test GetFull(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
     }
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}
     public interface IEssayQuestionRepository : IEntityBaseRepository<EssayQuestion> {}
