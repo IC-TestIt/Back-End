@@ -12,6 +12,7 @@ namespace TestIt.Model.DTO
         public string TestTitle { get; set; }
         public string ClassName { get; set; }
         public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
         public EnumTestStatus Status { get; set; }
     }
 }

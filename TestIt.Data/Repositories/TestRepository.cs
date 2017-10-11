@@ -37,7 +37,7 @@ namespace TestIt.Data.Repositories
                               select a).ToList();
 
             var classes = (from a in Context.Classes
-                           join b in classTests on a.Id equals b.ClassId
+                           where a.TeacherId == id
                            select a);
 
             var exams = (from a in classTests
@@ -45,9 +45,16 @@ namespace TestIt.Data.Repositories
                          select b).ToList();
 
             var returnTests = new List<TeacherTestsDTO>();
+            
+            var classesCount = classes.Count();
+
+            var notFullClassTests = (from a in classTests
+                                     group a by a.ClassId into g
+                                     where g.Count() < classesCount
+                                     select g).SelectMany(x => x);
 
             var notAppliedTests = (from a in tests
-                                   where !classTests.Any(b => (b.TestId == a.Id))
+                                   where notFullClassTests.Any(x => x.TestId == a.Id)
                                    select new TeacherTestsDTO
                                    {
                                        TestId = a.Id,
@@ -66,28 +73,31 @@ namespace TestIt.Data.Repositories
                                     ClassTestId = b.Id,
                                     TestTitle = a.Title,
                                     BeginDate = b.BeginDate,
+                                    EndDate = b.EndDate,
                                     Status = EnumTestStatus.Applied
                                 }).ToList();
 
             var notCorrectedTests = (from a in tests
                                      join b in classTests on a.Id equals b.TestId
                                      join c in classes on b.ClassId equals c.Id
-                                     where b.EndDate <= DateTime.Now
+                                     where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
+                                                                             .Any(x => x.Status == (int)EnumStatus.Finished)
                                      select new TeacherTestsDTO
                                      {
-                                        TestId = a.Id,
-                                        ClassName = c.Description,
-                                        ClassTestId = b.Id,
-                                        TestTitle = a.Title,
-                                        BeginDate = b.BeginDate,
+                                         TestId = a.Id,
+                                         ClassName = c.Description,
+                                         ClassTestId = b.Id,
+                                         TestTitle = a.Title,
+                                         BeginDate = b.BeginDate,
+                                         EndDate = b.EndDate,
                                         Status = EnumTestStatus.Uncorrected
                                      }).ToList();
-            
+
             var correctedTests = (from a in tests
                                   join b in classTests on a.Id equals b.TestId
                                   join c in classes on b.ClassId equals c.Id
-                                  join d in exams on b.Id equals d.ClassTestsId
-                                  where b.EndDate <= DateTime.Now && d.TotalGrade > 0
+                                  where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
+                                                                             .All(x => x.Status == (int)EnumStatus.Corrected)
                                   select new TeacherTestsDTO
                                   {
                                       TestId = a.Id,
@@ -95,15 +105,17 @@ namespace TestIt.Data.Repositories
                                       ClassTestId = b.Id,
                                       TestTitle = a.Title,
                                       BeginDate = b.BeginDate,
+                                      EndDate = b.EndDate,
                                       Status = EnumTestStatus.Corrected
                                   }).ToList();
-
-            returnTests.AddRange(notAppliedTests);
+            
             returnTests.AddRange(appliedTests);
             returnTests.AddRange(notCorrectedTests);
             returnTests.AddRange(correctedTests);
 
             returnTests = returnTests.GroupBy(x => x.ClassTestId).Select(x => x.First()).ToList();
+
+            returnTests.AddRange(notAppliedTests);
 
             return returnTests;
         }
