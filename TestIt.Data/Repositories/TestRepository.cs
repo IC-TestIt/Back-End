@@ -54,7 +54,7 @@ namespace TestIt.Data.Repositories
                                      select g).SelectMany(x => x);
 
             var notAppliedTests = (from a in tests
-                                   where notFullClassTests.Any(x => x.TestId == a.Id)
+                                   where !notFullClassTests.Any(x => x.TestId == a.Id)
                                    select new TeacherTestsDTO
                                    {
                                        TestId = a.Id,
