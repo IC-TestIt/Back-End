@@ -10,6 +10,7 @@ namespace TestIt.API.ViewModels.Question
         public int TestId { get; set; }
         public bool IsAlternative { get; set; }
         public int Order { get; set; }
+        public string Answer { get; set; }
         public virtual List<AlternativeViewModel> Alternatives { get; set; }
     }
 }
