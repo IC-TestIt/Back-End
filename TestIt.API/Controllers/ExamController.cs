@@ -100,7 +100,7 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPut("{corrected}")]
+        [HttpPut("correct")]
         public IActionResult CorrectedExams([FromBody]IEnumerable<CorrectedExamViewModel> viewModel)
         {
             if (!ModelState.IsValid)
