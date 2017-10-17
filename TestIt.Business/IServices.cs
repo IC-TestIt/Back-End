@@ -95,5 +95,6 @@ namespace TestIt.Business
         ExamInformationsDto Get(int id);
         bool Correct(int id);
         bool ExistsExam(Exam exam);
+        bool CorrectedExams(IEnumerable<Exam> exams);
     }
 }
