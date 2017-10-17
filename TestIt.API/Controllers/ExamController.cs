@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Test;
 
 namespace TestIt.API.Controllers
 {
@@ -11,10 +12,12 @@ namespace TestIt.API.Controllers
     public class ExamController : Controller
     {
         private readonly IExamService _examService;
+        private readonly ITestService _testService;
 
-        public ExamController(IExamService examService)
-        {
+        public ExamController(IExamService examService, ITestService testService)
+        { 
             _examService = examService;
+            _testService = testService ;  
         }
 
         [HttpPost]
@@ -96,6 +99,24 @@ namespace TestIt.API.Controllers
 
             if (sucess)
                 return Ok();
+
+            return Ok(0);
+        }
+
+        [HttpGet("correction/{id}")]
+        public IActionResult GetClassTestsCorrection(int id, IEnumerable<int> classtests)
+        {
+            var exams = _examService.GetExamsCorrection(classtests);
+            var test = _testService.GetSingle(id);
+
+            if (exams != null)
+            {
+                var vm = Mapper.Map<IEnumerable<Exam>, ClassTestsCorrectionViewModel>(exams);
+                vm.Test = Mapper.Map<Test, ReturnTestViewModel>(test);
+
+
+                return Ok(vm);
+            }
 
             return Ok(0);
         }

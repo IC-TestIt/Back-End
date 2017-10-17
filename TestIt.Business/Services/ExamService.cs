@@ -93,5 +93,18 @@ namespace TestIt.Business.Services
             return true;
         }
 
+        public IEnumerable<Exam> GetExamsCorrection(IEnumerable<int> classtests)
+        {
+            var exams = new List<Exam>();
+
+            foreach(int ct in classtests)
+            {
+                exams.AddRange(_examRepository.FindByIncluding(x => x.ClassTestsId == ct, x => x.AnsweredQuestions));
+            }
+
+            return exams;
+
+        }
+
     }
 }
