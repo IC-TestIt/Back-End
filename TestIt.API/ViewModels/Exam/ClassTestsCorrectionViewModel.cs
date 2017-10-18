@@ -9,9 +9,9 @@ namespace TestIt.API.ViewModels.Exam
 {
     public class ClassTestsCorrectionViewModel
     {
-        public ClassTestsCorrectionViewModel(IEnumerable<CorrectedExamViewModel> correctedExams)
+        public ClassTestsCorrectionViewModel()
         {
-            CorrectedExams = new List<CorrectedExamViewModel>(correctedExams);
+            CorrectedExams = new List<CorrectedExamViewModel>();
         }
 
         public ReturnTestViewModel Test { get; set; }

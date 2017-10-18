@@ -97,7 +97,7 @@ namespace TestIt.Business.Services
         {
             var exams = new List<Exam>();
 
-            foreach(int ct in classtests)
+            foreach (int ct in classtests)
             {
                 exams.AddRange(_examRepository.FindByIncluding(x => x.ClassTestsId == ct, x => x.AnsweredQuestions));
             }
@@ -105,6 +105,5 @@ namespace TestIt.Business.Services
             return exams;
 
         }
-
     }
 }

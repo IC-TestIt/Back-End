@@ -5,6 +5,7 @@ using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
 using TestIt.API.ViewModels.Test;
+using TestIt.API.ViewModels.Class;
 
 namespace TestIt.API.Controllers
 {
@@ -103,17 +104,17 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpGet("correction/{id}")]
-        public IActionResult GetClassTestsCorrection(int id, IEnumerable<int> classtests)
+        [HttpPost("correction/{id}")]
+        public IActionResult GetClassTestsCorrection(int id, CorrectionClassTestsViewModel classtests)
         {
-            var exams = _examService.GetExamsCorrection(classtests);
+            var exams = _examService.GetExamsCorrection(classtests.Ids);
             var test = _testService.GetSingle(id);
 
             if (exams != null)
             {
-                var vm = Mapper.Map<IEnumerable<Exam>, ClassTestsCorrectionViewModel>(exams);
+                var vm = new ClassTestsCorrectionViewModel();
                 vm.Test = Mapper.Map<Test, ReturnTestViewModel>(test);
-
+                vm.CorrectedExams = Mapper.Map<IEnumerable<Exam>, IEnumerable<CorrectedExamViewModel>>(exams);
 
                 return Ok(vm);
             }
