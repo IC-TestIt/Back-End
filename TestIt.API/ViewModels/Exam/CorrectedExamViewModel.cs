@@ -10,7 +10,7 @@ namespace TestIt.API.ViewModels.Exam
     {
         public CorrectedExamViewModel()
         {
-           AnsweredQuestions = new List<AnsweredQuestionViewModel>();
+           AnsweredQuestions = new List<CorrectAnsweredQuestionViewModel>();
 
         }
  
@@ -19,6 +19,6 @@ namespace TestIt.API.ViewModels.Exam
         public double TotalGrade { get; set; }
         public int ClassTestsId { get; set; }
         public int StudentId { get; set; }
-        public IEnumerable<AnsweredQuestionViewModel> AnsweredQuestions { get; set; }
+        public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; }
     }
 }

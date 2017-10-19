@@ -106,7 +106,7 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPost("correction/{id}")]
-        public IActionResult GetClassTestsCorrection(int id, CorrectionClassTestsViewModel classtests)
+        public IActionResult GetClassTestsCorrection(int id, [FromBody]CorrectionClassTestsViewModel classtests)
         {
             var exams = _examService.GetExamsCorrection(classtests.Ids);
             var test = _testService.GetForCorrection(id);

@@ -78,7 +78,13 @@ namespace TestIt.Data.Repositories
 
             exams.ForEach(x => x.AnsweredQuestions = (from a in Context.AnsweredQuestions
                                                       where a.ExamId == x.ExamId && a.AlternativeId == null
-                                                      select a).ToList());
+                                                      select new AnsweredQuestionDTO()
+                                                      {
+                                                          Id = a.Id,
+                                                          StudentAnswer = a.EssayAnswer,
+                                                          PercentCorrect = a.PercentCorrect,
+                                                          QuestionId = a.QuestionId
+                                                      }).ToList());
                          
             return exams;
         }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using TestIt.Model.Entities;
+﻿using System.Collections.Generic;
 
 namespace TestIt.Model.DTO
 {
@@ -12,6 +9,6 @@ namespace TestIt.Model.DTO
         public int ExamId { get; set; }
         public int ClassTestId { get; set; }
         public double TotalGrade { get; set; }
-        public IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }
+        public IEnumerable<AnsweredQuestionDTO> AnsweredQuestions { get; set; }
     }
 }
