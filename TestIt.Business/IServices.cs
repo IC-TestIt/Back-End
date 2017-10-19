@@ -97,5 +97,6 @@ namespace TestIt.Business
         bool Correct(int id);
         IEnumerable<ExamCorrectionDTO> GetExamsCorrection(IEnumerable<int> classtests);
         bool ExistsExam(Exam exam);
+        bool CorrectedExams(IEnumerable<Exam> exams);
     }
 }

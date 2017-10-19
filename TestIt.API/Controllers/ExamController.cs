@@ -122,6 +122,21 @@ namespace TestIt.API.Controllers
                 return Ok(vm);
             }
 
+        [HttpPut("correct")]
+        public IActionResult CorrectedExams([FromBody]IEnumerable<CorrectedExamViewModel> viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var exams = Mapper.Map<IEnumerable<Exam>>(viewModel);
+
+            var sucess = _examService.CorrectedExams(exams);
+
+            if (sucess)
+                return Ok();
+
             return Ok(0);
         }
     }

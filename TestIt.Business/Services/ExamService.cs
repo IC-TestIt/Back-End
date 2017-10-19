@@ -60,6 +60,18 @@ namespace TestIt.Business.Services
             return true;
         }
 
+        public bool CorrectedExams(IEnumerable<Exam> exams)
+        {
+            foreach( Exam e in exams)
+            {
+                _examRepository.Update(e);
+                _answeredQuestionRepository.AddOrUpdateMultiple(new List<AnsweredQuestion>(e.AnsweredQuestions));
+            }
+
+            _examRepository.Commit();
+            return true;
+        }
+
         public ExamInformationsDto Get (int id)
         {
             var exam = _examRepository.GetFull(id);

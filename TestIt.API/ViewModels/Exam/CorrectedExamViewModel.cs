@@ -19,6 +19,7 @@ namespace TestIt.API.ViewModels.Exam
         public double TotalGrade { get; set; }
         public int ClassTestsId { get; set; }
         public int StudentId { get; set; }
-        public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; }
+        public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; } 
+                                                                                
     }
 }
