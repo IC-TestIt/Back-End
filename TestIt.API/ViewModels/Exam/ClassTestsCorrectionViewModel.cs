@@ -14,7 +14,7 @@ namespace TestIt.API.ViewModels.Exam
             CorrectedExams = new List<CorrectedExamViewModel>();
         }
 
-        public ReturnTestViewModel Test { get; set; }
+        public CorrectionTestViewModel Test { get; set; }
         public IEnumerable<CorrectedExamViewModel> CorrectedExams { get; set; }
     }
 }

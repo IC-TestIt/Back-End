@@ -6,6 +6,7 @@ using TestIt.Business;
 using TestIt.Model.Entities;
 using TestIt.API.ViewModels.Test;
 using TestIt.API.ViewModels.Class;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
@@ -108,13 +109,15 @@ namespace TestIt.API.Controllers
         public IActionResult GetClassTestsCorrection(int id, CorrectionClassTestsViewModel classtests)
         {
             var exams = _examService.GetExamsCorrection(classtests.Ids);
-            var test = _testService.GetSingle(id);
+            var test = _testService.GetForCorrection(id);
 
             if (exams != null)
             {
-                var vm = new ClassTestsCorrectionViewModel();
-                vm.Test = Mapper.Map<Test, ReturnTestViewModel>(test);
-                vm.CorrectedExams = Mapper.Map<IEnumerable<Exam>, IEnumerable<CorrectedExamViewModel>>(exams);
+                var vm = new ClassTestsCorrectionViewModel()
+                {
+                    Test = Mapper.Map<Test, CorrectionTestViewModel>(test),
+                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<CorrectedExamViewModel>>(exams)
+                };
 
                 return Ok(vm);
             }

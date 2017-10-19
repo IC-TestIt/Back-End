@@ -60,5 +60,27 @@ namespace TestIt.Data.Repositories
 
             return exam;
         }
+
+        public IEnumerable<ExamCorrectionDTO> GetForCorrection(int classTestId)
+        {
+            var exams = (from a in Context.Exams
+                         join b in Context.Students on a.StudentId equals b.Id
+                         join c in Context.Users on b.UserId equals c.Id
+                         where a.ClassTestsId == classTestId
+                         select new ExamCorrectionDTO()
+                         {
+                             StudentId = c.Id,
+                             StudentName = c.Name,
+                             ClassTestId = classTestId,
+                             ExamId = a.Id,
+                             TotalGrade = a.TotalGrade
+                         }).OrderBy(x => x.StudentName).ToList();
+
+            exams.ForEach(x => x.AnsweredQuestions = (from a in Context.AnsweredQuestions
+                                                      where a.ExamId == x.ExamId && a.AlternativeId == null
+                                                      select a).ToList());
+                         
+            return exams;
+        }
     }
 }

@@ -26,6 +26,16 @@ namespace TestIt.Data.Repositories
             return question.FirstOrDefault().Test ?? null;
         }
 
+        public Test GetForCorrection(int id)
+        {
+            var questions = (from a in Context.Questions
+                             join b in Context.Tests on a.TestId equals b.Id
+                             where a.TestId == id
+                             select a).Include(x => x.EssayQuestion).Where(x => x.EssayQuestion != null).Include(x => x.Test).OrderBy(x => x.Order).ToList();
+
+            return questions.FirstOrDefault().Test ?? null;
+        }
+
         public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id)
         {
             var tests = (from a in Context.Tests
