@@ -69,6 +69,7 @@ namespace TestIt.Business
         bool Save(List<ClassTests> cts);
         string ExportTest(int testId);
         bool Update(ClassTests cts);
+        Test GetForCorrection(int id);
     }
 
     public interface IQuestionService
@@ -94,6 +95,7 @@ namespace TestIt.Business
         bool SaveExam(int id, List<AnsweredQuestion> l);
         ExamInformationsDto Get(int id);
         bool Correct(int id);
+        IEnumerable<ExamCorrectionDTO> GetExamsCorrection(IEnumerable<int> classtests);
         bool ExistsExam(Exam exam);
         bool CorrectedExams(IEnumerable<Exam> exams);
     }

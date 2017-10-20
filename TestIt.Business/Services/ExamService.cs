@@ -105,5 +105,17 @@ namespace TestIt.Business.Services
             return true;
         }
 
+        public IEnumerable<ExamCorrectionDTO> GetExamsCorrection(IEnumerable<int> classtests)
+        {
+            var exams = new List<ExamCorrectionDTO>();
+
+            foreach (int ct in classtests)
+            {
+                exams.AddRange(_examRepository.GetForCorrection(ct));
+            }
+
+            return exams;
+
+        }
     }
 }

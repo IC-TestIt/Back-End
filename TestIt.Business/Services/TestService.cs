@@ -41,6 +41,11 @@ namespace TestIt.Business.Services
             return _testRepository.GetFull(id);
         }
 
+        public Test GetForCorrection(int id)
+        {
+            return _testRepository.GetForCorrection(id);
+        }
+
         public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id)
         {
             var tests = _testRepository.GetTeacherTests(id);

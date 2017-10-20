@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Test;
+using TestIt.API.ViewModels.Class;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
@@ -11,10 +14,12 @@ namespace TestIt.API.Controllers
     public class ExamController : Controller
     {
         private readonly IExamService _examService;
+        private readonly ITestService _testService;
 
-        public ExamController(IExamService examService)
-        {
+        public ExamController(IExamService examService, ITestService testService)
+        { 
             _examService = examService;
+            _testService = testService ;  
         }
 
         [HttpPost]
@@ -100,6 +105,26 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
+        [HttpPost("correction/{id}")]
+        public IActionResult GetClassTestsCorrection(int id, [FromBody]CorrectionClassTestsViewModel classtests)
+        {
+            var exams = _examService.GetExamsCorrection(classtests.Ids);
+            var test = _testService.GetForCorrection(id);
+
+            if (exams != null)
+            {
+                var vm = new ClassTestsCorrectionViewModel()
+                {
+                    Test = Mapper.Map<Test, CorrectionTestViewModel>(test),
+                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<CorrectedExamViewModel>>(exams)
+                };
+
+                return Ok(vm);
+            }
+
+            return Ok(0);
+        }
+
         [HttpPut("correct")]
         public IActionResult CorrectedExams([FromBody]IEnumerable<CorrectedExamViewModel> viewModel)
         {
@@ -114,6 +139,7 @@ namespace TestIt.API.Controllers
 
             if (sucess)
                 return Ok();
+
             return Ok(0);
         }
     }
