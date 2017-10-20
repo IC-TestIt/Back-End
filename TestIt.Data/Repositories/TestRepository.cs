@@ -33,7 +33,10 @@ namespace TestIt.Data.Repositories
                              where a.TestId == id
                              select a).Include(x => x.EssayQuestion).Where(x => x.EssayQuestion != null).Include(x => x.Test).OrderBy(x => x.Order).ToList();
 
-            return questions.FirstOrDefault().Test ?? null;
+            if (questions.Count > 0)
+                return questions.FirstOrDefault().Test ?? null;
+
+            return null;
         }
 
         public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id)
