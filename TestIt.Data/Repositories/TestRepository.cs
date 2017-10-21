@@ -61,13 +61,13 @@ namespace TestIt.Data.Repositories
             
             var classesCount = classes.Count();
 
-            var notFullClassTests = (from a in classTests
-                                     group a by a.ClassId into g
-                                     where g.Count() < classesCount
-                                     select g).SelectMany(x => x);
+            var fullClassTests = (from a in classTests
+                                  group a by a.TestId into g
+                                  where g.Count() >= classesCount
+                                  select g).SelectMany(x => x).ToList();
 
             var notAppliedTests = (from a in tests
-                                   where !notFullClassTests.Any(x => x.TestId == a.Id)
+                                   where !fullClassTests.Any(x => x.TestId == a.Id)
                                    select new TeacherTestsDTO
                                    {
                                        TestId = a.Id,
