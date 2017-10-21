@@ -4,6 +4,7 @@ using TestIt.Data.Abstract;
 using TestIt.Model;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using System.Linq;
 
 namespace TestIt.Business.Services
 {
@@ -62,14 +63,29 @@ namespace TestIt.Business.Services
 
         public bool CorrectedExams(IEnumerable<Exam> exams)
         {
-            foreach( Exam e in exams)
+            try
             {
-                _examRepository.Update(e);
-                _answeredQuestionRepository.AddOrUpdateMultiple(new List<AnsweredQuestion>(e.AnsweredQuestions));
-            }
+                foreach (Exam e in exams)
+                {
+                    var currentExam = _examRepository.GetSingle(x => x.Id == e.Id);
+                    var questions = new List<AnsweredQuestion>(e.AnsweredQuestions);
 
-            _examRepository.Commit();
-            return true;
+                    var totalGrade = questions.Sum(x => x.Grade) + currentExam.TotalGrade;
+
+                    _answeredQuestionRepository.AddOrUpdateMultiple(questions);
+
+                    e.TotalGrade = totalGrade;
+                    e.Status = (int)EnumStatus.Corrected;
+                }
+
+                _examRepository.Commit();
+
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
+            
         }
 
         public ExamInformationsDto Get (int id)
