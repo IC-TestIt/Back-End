@@ -11,14 +11,9 @@ namespace TestIt.API.ViewModels.Exam
         public CorrectedExamViewModel()
         {
            AnsweredQuestions = new List<CorrectAnsweredQuestionViewModel>();
-
         }
  
-        public int ExamId { get; set; }
-        public string StudentName { get; set; }
-        public double TotalGrade { get; set; }
-        public int ClassTestsId { get; set; }
-        public int StudentId { get; set; }
+        public int Id { get; set; }
         public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; } 
                                                                                 
     }
