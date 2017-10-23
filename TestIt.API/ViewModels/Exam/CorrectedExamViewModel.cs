@@ -13,13 +13,21 @@ namespace TestIt.API.ViewModels.Exam
            AnsweredQuestions = new List<CorrectAnsweredQuestionViewModel>();
 
         }
+<<<<<<< Updated upstream
  
+=======
+         
+>>>>>>> Stashed changes
         public int ExamId { get; set; }
         public string StudentName { get; set; }
         public double TotalGrade { get; set; }
         public int ClassTestsId { get; set; }
         public int StudentId { get; set; }
+<<<<<<< Updated upstream
         public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; } 
                                                                                 
+=======
+        public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; }
+>>>>>>> Stashed changes
     }
 }
