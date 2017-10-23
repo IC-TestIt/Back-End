@@ -126,7 +126,7 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPut("{id}/correction")]
-        public IActionResult CorrectedExams([FromBody]IEnumerable<CorrectedExamViewModel> viewModel)
+        public IActionResult CorrectedExams([FromBody]IEnumerable<ExamCorrectionViewModel> viewModel)
         {
             if (!ModelState.IsValid)
             {
