@@ -7,11 +7,11 @@ namespace TestIt.API.ViewModels.Exam
     {
         public ExamCorrectionViewModel()
         {
-            AnsweredQuestions = new List<CorrectAnsweredQuestionViewModel>();
+            AnsweredQuestions = new List<AnsweredQuestionCorrectionViewModel>();
         }
 
         public int Id { get; set; }
-        public IEnumerable<CorrectAnsweredQuestionViewModel> AnsweredQuestions { get; set; }
+        public IEnumerable<AnsweredQuestionCorrectionViewModel> AnsweredQuestions { get; set; }
 
     }
 }

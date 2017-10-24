@@ -31,6 +31,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<CreateExamViewModel, Model.Entities.Exam>();
             Mapper.CreateMap<EndExamViewModel, Model.Entities.Exam>();
             Mapper.CreateMap<AnsweredQuestionViewModel, AnsweredQuestion>();
+            Mapper.CreateMap<AnsweredQuestionCorrectionViewModel, AnsweredQuestion>();
             Mapper.CreateMap<QuestionsViewModel, Model.Entities.Question>();
             Mapper.CreateMap<QuestionsViewModel, EssayQuestion>()
                 .ForMember(x => x.Id, m => m.MapFrom(x => x.EssayQuestionId))
