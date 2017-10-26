@@ -6,9 +6,9 @@ using TestIt.API.ViewModels.Question;
 
 namespace TestIt.API.ViewModels.Exam
 {
-    public class CorrectedExamViewModel
+    public class ExamEstimatedCorrectionViewModel
     {
-        public CorrectedExamViewModel()
+        public ExamEstimatedCorrectionViewModel()
         {
            AnsweredQuestions = new List<CorrectAnsweredQuestionViewModel>();
         }

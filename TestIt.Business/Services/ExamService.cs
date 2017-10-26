@@ -61,7 +61,7 @@ namespace TestIt.Business.Services
             return true;
         }
 
-        public bool CorrectedExams(IEnumerable<Exam> exams)
+        public bool ExamsRealCorrection(IEnumerable<Exam> exams)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace TestIt.Business.Services
             return true;
         }
 
-        public IEnumerable<ExamCorrectionDTO> GetExamsCorrection(IEnumerable<int> classtests)
+        public IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests)
         {
             var exams = new List<ExamCorrectionDTO>();
 

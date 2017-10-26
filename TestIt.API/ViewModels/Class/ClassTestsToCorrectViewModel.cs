@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace TestIt.API.ViewModels.Class
 {
-    public class CorrectionClassTestsViewModel
+    public class ClassTestsToCorrectViewModel
     {
-        public CorrectionClassTestsViewModel()
+        public ClassTestsToCorrectViewModel()
         {
             Ids = new List<int>();
         }
