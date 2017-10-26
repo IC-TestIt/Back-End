@@ -106,17 +106,17 @@ namespace TestIt.API.Controllers
         }
 
         [HttpPost("correction/{id}")]
-        public IActionResult GetClassTestsCorrection(int id, [FromBody]CorrectionClassTestsViewModel classtests)
+        public IActionResult GetClassTestsCorrectionEstimated(int id, [FromBody]ClassTestsToCorrectViewModel classtests)
         {
-            var exams = _examService.GetExamsCorrection(classtests.Ids);
+            var exams = _examService.GetExamsCorrectionEstimated(classtests.Ids);
             var test = _testService.GetForCorrection(id);
 
             if (exams != null)
             {
-                var vm = new ClassTestsCorrectionViewModel()
+                var vm = new ClassTestsCorrectionEstimatedViewModel()
                 {
                     Test = Mapper.Map<Test, CorrectionTestViewModel>(test),
-                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<CorrectedExamViewModel>>(exams)
+                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<ExamCorrectionEstimatedViewModel>>(exams)
                 };
 
                 return Ok(vm);
@@ -125,8 +125,8 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPut("{id}/correction")]
-        public IActionResult CorrectedExams([FromBody]IEnumerable<ExamCorrectionViewModel> viewModel)
+        [HttpPut("correction")]
+        public IActionResult ExamsCorrectionReal([FromBody]IEnumerable<ExamCorrectionRealViewModel> viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -135,7 +135,7 @@ namespace TestIt.API.Controllers
 
             var exams = Mapper.Map<IEnumerable<Exam>>(viewModel);
 
-            var sucess = _examService.CorrectedExams(exams);
+            var sucess = _examService.ExamsCorrectionReal(exams);
 
             if (sucess)
                 return Ok();
