@@ -7,14 +7,14 @@ using TestIt.API.ViewModels.Test;
 
 namespace TestIt.API.ViewModels.Exam
 {
-    public class ClassTestsCorrectionViewModel
+    public class ClassTestsEstimatedCorrectionViewModel
     {
-        public ClassTestsCorrectionViewModel()
+        public ClassTestsEstimatedCorrectionViewModel()
         {
-            CorrectedExams = new List<CorrectedExamViewModel>();
+            CorrectedExams = new List<ExamEstimatedCorrectionViewModel>();
         }
 
         public CorrectionTestViewModel Test { get; set; }
-        public IEnumerable<CorrectedExamViewModel> CorrectedExams { get; set; }
+        public IEnumerable<ExamEstimatedCorrectionViewModel> CorrectedExams { get; set; }
     }
 }

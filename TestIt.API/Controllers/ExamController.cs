@@ -62,7 +62,7 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPut("save/{id}")]
+        [HttpPut("{id}/save")]
         public IActionResult SaveExam(int id, [FromBody]EndExamViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -94,7 +94,7 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPost("correct/{id}")]
+        [HttpPost("{id}/correct")]
         public IActionResult Post(int id)
         {
             var sucess = _examService.Correct(id);
@@ -105,28 +105,9 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPost("correction/{id}")]
-        public IActionResult GetClassTestsCorrectionEstimated(int id, [FromBody]ClassTestsToCorrectViewModel classtests)
-        {
-            var exams = _examService.GetExamsCorrectionEstimated(classtests.Ids);
-            var test = _testService.GetForCorrection(id);
-
-            if (exams != null)
-            {
-                var vm = new ClassTestsCorrectionEstimatedViewModel()
-                {
-                    Test = Mapper.Map<Test, CorrectionTestViewModel>(test),
-                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<ExamCorrectionEstimatedViewModel>>(exams)
-                };
-
-                return Ok(vm);
-            }
-
-            return Ok(0);
-        }
 
         [HttpPut("correction")]
-        public IActionResult ExamsCorrectionReal([FromBody]IEnumerable<ExamCorrectionRealViewModel> viewModel)
+        public IActionResult ExamsRealCorrection([FromBody]IEnumerable<ExamRealCorrectionViewModel> viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -135,7 +116,7 @@ namespace TestIt.API.Controllers
 
             var exams = Mapper.Map<IEnumerable<Exam>>(viewModel);
 
-            var sucess = _examService.ExamsCorrectionReal(exams);
+            var sucess = _examService.ExamsRealCorrection(exams);
 
             if (sucess)
                 return Ok();

@@ -46,7 +46,7 @@ namespace TestIt.API.ViewModels.Mappings
                  }).ToList()));
             Mapper.CreateMap<UpdateClassTestsViewModel, ClassTests>();
             Mapper.CreateMap<UpdateQuestionsViewModel, Model.Entities.Question>();
-            Mapper.CreateMap<ExamCorrectionViewModel, Model.Entities.Exam>();
+            Mapper.CreateMap<ExamRealCorrectionViewModel, Model.Entities.Exam>();
         }
     }
 }

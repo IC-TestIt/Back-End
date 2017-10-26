@@ -36,10 +36,10 @@ namespace TestIt.API.ViewModels.Mappings
                 .ForMember(x => x.TestTitle, map => map.MapFrom(x => x.Test.Title));
             Mapper.CreateMap<TeacherTestsDTO, TeacherTestsViewModel>();
             Mapper.CreateMap<ClassTestsDTO, ReturnClassViewModel>();
-            Mapper.CreateMap<ExamCorrectionDTO, ClassTestsCorrectionViewModel>();
-            Mapper.CreateMap<Model.Entities.Test, ClassTestsCorrectionViewModel>();
+            Mapper.CreateMap<ExamCorrectionDTO, ClassTestsEstimatedCorrectionViewModel>();
+            Mapper.CreateMap<Model.Entities.Test, ClassTestsEstimatedCorrectionViewModel>();
             Mapper.CreateMap<Model.Entities.Test, CorrectionTestViewModel>();
-            Mapper.CreateMap<ExamCorrectionDTO, CorrectedExamViewModel>();
+            Mapper.CreateMap<ExamCorrectionDTO, ExamEstimatedCorrectionViewModel>();
             Mapper.CreateMap<Model.Entities.Question, EssayQuestionViewModel>()
                 .ForMember(x => x.Answer, map => map.MapFrom(x => x.EssayQuestion.Answer));
             Mapper.CreateMap<AnsweredQuestionDTO, CorrectAnsweredQuestionViewModel>();
