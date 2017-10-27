@@ -96,4 +96,9 @@ namespace TestIt.Business
         bool Correct(int id);
         bool ExistsExam(Exam exam);
     }
+
+    public interface IClassTestService
+    {
+        CorrectedClassTestDTO GetCorrected(int id);
+    }
 }
