@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using TestIt.API.ViewModels.ClassTest;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.Entities;
@@ -10,10 +11,12 @@ namespace TestIt.API.Controllers
     public class ClassTestsController : Controller
     {
         private readonly ITestService _testService;
+        private readonly IClassTestService _classTestService;
 
-        public ClassTestsController(ITestService testService)
+        public ClassTestsController(ITestService testService, IClassTestService classTestService)
         {
             _testService = testService;
+            _classTestService = classTestService;
         }
 
         [HttpPut("{id}")]
@@ -26,6 +29,28 @@ namespace TestIt.API.Controllers
                 return Ok();
             }
 
+            return Ok(0);
+        }
+
+        [HttpGet("{id}/correction")]
+        public IActionResult GetCorrected(int id)
+        {
+            var classTest = _classTestService.GetCorrected(id);
+
+            if(classTest != null)
+            {
+                var vm = Mapper.Map<CorrectedClassTestViewModel, CorrectedClassTestViewModel>(classTest);
+                
+                return Ok(vm);
+
+            }
+
+            return Ok(0);
+        }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
             return Ok(0);
         }
     }
