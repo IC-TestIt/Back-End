@@ -19,6 +19,7 @@ namespace TestIt.Model.Entities
         public Alternative Alternative { get; set; }
         public int? AlternativeId { get; set; }
         public double PercentCorrect { get; set; }
+        public bool Corrected { get; set; }
 
         public Question Question { get; set; }
         public int QuestionId { get; set; }

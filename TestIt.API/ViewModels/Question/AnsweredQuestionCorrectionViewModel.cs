@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public double Grade { get; set; }
+        public bool Corrected { get; set; }
     }
 }
