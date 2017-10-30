@@ -22,7 +22,7 @@ namespace TestIt.Business.Services
             var classTest = new CorrectedClassTestDTO()
             {
                 ClassAverageGrade = GetClassGrade(students),
-                Questions = GetClassTestQuestions(),
+                Questions = GetClassTestQuestions(id),
                 Students = students
             };
 
@@ -39,9 +39,9 @@ namespace TestIt.Business.Services
             return _classTestRepository.GetStudents(id);
         }
 
-        private IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions()
+        private IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions(int id)
         {
-            throw new NotImplementedException();
+            return _classTestRepository.GetClassTestQuestions(id);
         }
         
     }

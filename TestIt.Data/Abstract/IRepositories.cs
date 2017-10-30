@@ -28,6 +28,7 @@ namespace TestIt.Data.Abstract
     public interface IAlternativeRepository : IEntityBaseRepository<Alternative> {}
     public interface IClassTestsRepository : IEntityBaseRepository<ClassTests>
     {
+        IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions(int id);
         IEnumerable<ClassTestStudentDTO> GetStudents(int id);
     }
     public interface ILogRepository : IEntityBaseRepository<Log>

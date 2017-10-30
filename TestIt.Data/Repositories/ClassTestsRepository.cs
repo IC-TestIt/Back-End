@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TestIt.Data.Abstract;
 using TestIt.Model;
@@ -46,6 +45,31 @@ namespace TestIt.Data.Repositories
             students.AddRange(absentStudents);
             
             return students;
+        }
+
+        public IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions(int id)
+        {
+            var questions = (from a in Context.Exams
+                             join b in Context.AnsweredQuestions on a.Id equals b.ExamId
+                             join c in Context.Questions on b.QuestionId equals c.Id
+                             where a.ClassTestsId == id && b.Corrected
+                             select new ClassTestQuestionsDTO()
+                             {
+                                 QuestionId = b.QuestionId,
+                                 QuestionOrder = c.Order,
+                                 ClassAverage = b.Grade
+                             });
+
+            var list = (from a in questions
+                        group a by a.QuestionId into g
+                        select new ClassTestQuestionsDTO()
+                        {
+                            QuestionId = g.FirstOrDefault().QuestionId,
+                            QuestionOrder = g.FirstOrDefault().QuestionOrder,
+                            ClassAverage = g.Average(x => x.ClassAverage)
+                        }).ToList();
+
+            return list;
         }
     }
 }
