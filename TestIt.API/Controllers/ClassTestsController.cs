@@ -39,9 +39,9 @@ namespace TestIt.API.Controllers
 
             if(classTest != null)
             {
-                var vm = Mapper.Map<CorrectedClassTestViewModel, CorrectedClassTestViewModel>(classTest);
+                //var vm = Mapper.Map<CorrectedClassTestViewModel, CorrectedClassTestViewModel>(classTest);
                 
-                return Ok(vm);
+                //return Ok(vm);
 
             }
 

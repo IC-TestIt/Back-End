@@ -1,9 +1,11 @@
-﻿using System;
-using TestIt.Model;
+﻿
+using System;
+using System.Collections.Generic;
+using TestIt.Model.Entities;
 
-namespace TestIt.API.ViewModels.Test
+namespace TestIt.Model.DTO
 {
-    public class TeacherTestsViewModel
+    public class TeacherTestsDTO
     {
         public int TestId { get; set; }
         public int ClassTestId { get; set; }

@@ -5,6 +5,7 @@ using TestIt.API.ViewModels.Class;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
@@ -28,7 +29,7 @@ namespace TestIt.API.Controllers
             var tests = _testService.GetTeacherTests(id);
 
             if (tests == null) return Ok(0);
-            var testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<TeacherTestsViewModel>>(tests);
+            var testsVm = Mapper.Map<IEnumerable<TeacherTestsDTO>, IEnumerable<TeacherTestsViewModel>>(tests);
             return new OkObjectResult(testsVm);
         }
 

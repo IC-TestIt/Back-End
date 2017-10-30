@@ -65,10 +65,11 @@ namespace TestIt.Business
         void AddQuestion(Question q);
         IEnumerable<Test> Get();
         Test GetSingle(int id);
-        IEnumerable<Test> GetTeacherTests(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
         string ExportTest(int testId);
         bool Update(ClassTests cts);
+        Test GetForCorrection(int id);
     }
 
     public interface IQuestionService
@@ -94,7 +95,9 @@ namespace TestIt.Business
         bool SaveExam(int id, List<AnsweredQuestion> l);
         ExamInformationsDto Get(int id);
         bool Correct(int id);
+        IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests);
         bool ExistsExam(Exam exam);
+        bool ExamsRealCorrection(IEnumerable<Exam> exams);
     }
 
     public interface IClassTestService

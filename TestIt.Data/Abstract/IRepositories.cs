@@ -18,7 +18,9 @@ namespace TestIt.Data.Abstract
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
     public interface ITestRepository : IEntityBaseRepository<Test>
     {
-        Test GetFull(int id);    
+        Test GetFull(int id);
+        Test GetForCorrection(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
     }
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}
     public interface IEssayQuestionRepository : IEntityBaseRepository<EssayQuestion> {}
@@ -36,6 +38,7 @@ namespace TestIt.Data.Abstract
     {
         IEnumerable<ExamDto> GetExams(int id);
         ExamInformationsDto GetFull(int id);
+        IEnumerable<ExamCorrectionDTO> GetForCorrection(int classTestId);
     }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion> {}
 }

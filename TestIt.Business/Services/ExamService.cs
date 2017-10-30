@@ -4,6 +4,7 @@ using TestIt.Data.Abstract;
 using TestIt.Model;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using System.Linq;
 
 namespace TestIt.Business.Services
 {
@@ -60,6 +61,33 @@ namespace TestIt.Business.Services
             return true;
         }
 
+        public bool ExamsRealCorrection(IEnumerable<Exam> exams)
+        {
+            try
+            {
+                foreach (Exam e in exams)
+                {
+                    var currentExam = _examRepository.GetSingle(x => x.Id == e.Id);
+                    var questions = new List<AnsweredQuestion>(e.AnsweredQuestions);
+
+                    var totalGrade = questions.Sum(x => x.Grade) + currentExam.TotalGrade;
+
+                    _answeredQuestionRepository.AddOrUpdateMultiple(questions);
+
+                    e.TotalGrade = totalGrade;
+                    e.Status = (int)EnumStatus.Corrected;
+                }
+
+                _examRepository.Commit();
+
+                return true;
+            } catch (Exception)
+            {
+                return false;
+            }
+            
+        }
+
         public ExamInformationsDto Get (int id)
         {
             var exam = _examRepository.GetFull(id);
@@ -94,5 +122,17 @@ namespace TestIt.Business.Services
             return true;
         }
 
+        public IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests)
+        {
+            var exams = new List<ExamCorrectionDTO>();
+
+            foreach (int ct in classtests)
+            {
+                exams.AddRange(_examRepository.GetForCorrection(ct));
+            }
+
+            return exams;
+
+        }
     }
 }

@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Test;
+using TestIt.API.ViewModels.Class;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
@@ -11,10 +14,12 @@ namespace TestIt.API.Controllers
     public class ExamController : Controller
     {
         private readonly IExamService _examService;
+        private readonly ITestService _testService;
 
-        public ExamController(IExamService examService)
-        {
+        public ExamController(IExamService examService, ITestService testService)
+        { 
             _examService = examService;
+            _testService = testService ;  
         }
 
         [HttpPost]
@@ -57,7 +62,7 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPut("save/{id}")]
+        [HttpPut("{id}/save")]
         public IActionResult SaveExam(int id, [FromBody]EndExamViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -89,10 +94,29 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPost("correct/{id}")]
+        [HttpPost("{id}/correct")]
         public IActionResult Post(int id)
         {
             var sucess = _examService.Correct(id);
+
+            if (sucess)
+                return Ok();
+
+            return Ok(0);
+        }
+
+
+        [HttpPut("correction")]
+        public IActionResult ExamsRealCorrection([FromBody]IEnumerable<ExamRealCorrectionViewModel> viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var exams = Mapper.Map<IEnumerable<Exam>>(viewModel);
+
+            var sucess = _examService.ExamsRealCorrection(exams);
 
             if (sucess)
                 return Ok();

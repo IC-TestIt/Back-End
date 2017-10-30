@@ -7,6 +7,14 @@
         Corrected = 3
     }
 
+    public enum EnumTestStatus
+    {
+        NotApplied = 1,
+        Applied = 2,
+        Uncorrected = 3,
+        Corrected = 4
+    }
+
     public enum EnumStudentStatus
     {
         Absent = 0,
