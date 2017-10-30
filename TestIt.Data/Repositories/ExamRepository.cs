@@ -83,7 +83,8 @@ namespace TestIt.Data.Repositories
                                                           Id = a.Id,
                                                           StudentAnswer = a.EssayAnswer,
                                                           PercentCorrect = a.PercentCorrect,
-                                                          QuestionId = a.QuestionId
+                                                          QuestionId = a.QuestionId,
+                                                          Corrected = a.Corrected
                                                       }).ToList());
                          
             return exams;
