@@ -18,12 +18,17 @@ namespace TestIt.Business.Services
         public CorrectedClassTestDTO GetCorrected(int id)
         {
             var students = GetClassStudents(id);
+            var bs = GetBaseClassTest(id);
 
             var classTest = new CorrectedClassTestDTO()
             {
                 ClassAverageGrade = GetClassGrade(students),
                 Questions = GetClassTestQuestions(id),
-                Students = students
+                Students = students,
+                BeginDate = bs.BeginDate,
+                Title = bs.Title,
+                EndDate = bs.EndDate,
+                ClassName = bs.ClassName
             };
 
             return classTest;
@@ -43,6 +48,11 @@ namespace TestIt.Business.Services
         {
             return _classTestRepository.GetClassTestQuestions(id);
         }
-        
+
+        private BaseClassTestDTO GetBaseClassTest(int id)
+        {
+            return _classTestRepository.GetBaseClassTest(id);
+        }
+
     }
 }

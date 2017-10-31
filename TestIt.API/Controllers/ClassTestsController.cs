@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.ClassTest;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.API.Controllers
@@ -39,9 +40,9 @@ namespace TestIt.API.Controllers
 
             if(classTest != null)
             {
-                //var vm = Mapper.Map<CorrectedClassTestViewModel, CorrectedClassTestViewModel>(classTest);
+                var vm = Mapper.Map<CorrectedClassTestDTO , CorrectedClassTestViewModel>(classTest);
                 
-                //return Ok(vm);
+                return Ok(vm);
 
             }
 
