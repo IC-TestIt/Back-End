@@ -71,5 +71,22 @@ namespace TestIt.Data.Repositories
 
             return list;
         }
+
+        public BaseClassTestDTO GetBaseClassTest(int id)
+        {
+            var baseClassTest = (from a in Context.ClassTests
+                                 join b in Context.Tests on a.TestId equals b.Id
+                                 join c in Context.Classes on a.ClassId equals c.Id
+                                 where a.Id == id
+                                 select new BaseClassTestDTO()
+                                 {
+                                     BeginDate = a.BeginDate,
+                                     EndDate = a.EndDate,
+                                     ClassName = c.Description,
+                                     Title = b.Title
+                                 });
+
+            return baseClassTest.FirstOrDefault();
+        }
     }
 }

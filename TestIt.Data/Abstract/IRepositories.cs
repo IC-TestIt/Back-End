@@ -30,6 +30,7 @@ namespace TestIt.Data.Abstract
     {
         IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions(int id);
         IEnumerable<ClassTestStudentDTO> GetStudents(int id);
+        BaseClassTestDTO GetBaseClassTest(int id);
     }
     public interface ILogRepository : IEntityBaseRepository<Log>
     {
