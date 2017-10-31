@@ -2,7 +2,7 @@
 
 namespace TestIt.Model.DTO
 {
-    public class CorrectedClassTestDTO
+    public class CorrectedClassTestDTO : BaseClassTestDTO
     {
         public CorrectedClassTestDTO()
         {
