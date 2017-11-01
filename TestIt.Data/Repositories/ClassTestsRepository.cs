@@ -24,6 +24,7 @@ namespace TestIt.Data.Repositories
                                 Grade = a.TotalGrade,
                                 StudentIdentifier = c.Identifier,
                                 StudentName = c.Name,
+                                StudentId = b.Id,
                                 Status = a.Status
                             }).ToList();
 
@@ -39,12 +40,13 @@ namespace TestIt.Data.Repositories
                                       Grade = 0,
                                       Status = (int)EnumStudentStatus.Absent,
                                       StudentIdentifier = c.Identifier,
+                                      StudentId = b.Id,
                                       StudentName = c.Name
                                   });
 
             students.AddRange(absentStudents);
             
-            return students;
+            return students.GroupBy(x => x.StudentId).Select(x => x.FirstOrDefault());
         }
 
         public IEnumerable<ClassTestQuestionsDTO> GetClassTestQuestions(int id)
