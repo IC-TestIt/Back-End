@@ -36,10 +36,10 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}/classes")]
         public IActionResult GetTeacherClasses(int id)
         {
-            var classes = _classService.GetTeacherClasses(id);
+            var teacherClasses = _classService.GetTeacherClasses(id);
 
-            if (classes == null) return Ok(0);
-            var classesVm = Mapper.Map<IEnumerable<Class>, IEnumerable<TeacherClassesViewModel>>(classes);
+            if (teacherClasses == null) return Ok(0);
+            var classesVm = Mapper.Map<TeacherClassesDTO, TeacherClassesViewModel>(teacherClasses);
             return new OkObjectResult(classesVm);
         }
 
