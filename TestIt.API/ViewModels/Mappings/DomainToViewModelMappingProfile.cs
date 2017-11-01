@@ -24,8 +24,8 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Alternative, AlternativeViewModel>();
             Mapper.CreateMap<AlternativeQuestion, AlternativeQuestionViewModel>();
             Mapper.CreateMap<Model.Entities.Log, ReturnLogViewModel>();
-            Mapper.CreateMap<Model.Entities.Class, TeacherClassesViewModel>()
-                .ForMember(x => x.Size, map => map.MapFrom(x => x.ClassStudents.Count));
+            Mapper.CreateMap<Model.DTO.TeacherClassDTO, TeacherClassViewModel>();
+            Mapper.CreateMap<Model.DTO.TeacherClassesDTO, TeacherClassesViewModel>();
             Mapper.CreateMap<ExamDto, StudentExamsViewModel>();
             Mapper.CreateMap<Model.Entities.Exam, StudentExamsViewModel>();
             Mapper.CreateMap<ExamInformationsDto, ReturnExamViewModel>();
