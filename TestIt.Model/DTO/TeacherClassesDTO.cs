@@ -10,11 +10,6 @@ namespace TestIt.Model.DTO
             Classes = new List<TeacherClassDTO>();
         }
 
-        public int TotalClasses { get; set; }
-
-        public TeacherClassDTO BestClass { get; set; }
-        public TeacherClassDTO WorseClass { get; set; }
-
         public IEnumerable<TeacherClassDTO> Classes { get; set; }
 
     }

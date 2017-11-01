@@ -46,12 +46,10 @@ namespace TestIt.Business.Services
 
             var Teacherclasses = new TeacherClassesDTO()
             {
-                
-            } 
-                
-                
-                _classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
-            return classes;
+                Classes = classes,
+            };
+
+            return Teacherclasses;
         }
         public void Delete(int id)
         {

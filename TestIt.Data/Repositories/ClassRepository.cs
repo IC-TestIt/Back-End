@@ -17,13 +17,16 @@ namespace TestIt.Data.Repositories
             var classes = (from a in Context.Classes
                            join b in Context.ClassTests on a.Id equals b.ClassId
                            join c in Context.Exams on b.Id equals c.ClassTestsId
+                           join d in Context.ClassStudents on a.Id equals d.ClassId
                            where a.TeacherId == id
-                           select new TeacherClassDTO()
+                           select new
                            {
-                               Description = a.Description,
                                Id = a.Id,
-                               Average = c.TotalGrade,
-                           }).ToList();
+                               Description = a.Description,
+                               TotalGrade = c.TotalGrade,
+                               StudentId = d.Id
+
+                           }).Distinct();
 
             var list = (from a in classes
                         group a by a.Id into g
@@ -31,18 +34,13 @@ namespace TestIt.Data.Repositories
                         {
                             Id = g.FirstOrDefault().Id,
                             Description = g.FirstOrDefault().Description,
-                            Average = g.Average(x => x.Average),
-                            Size = -1
+                            Average = g.Average(x => x.TotalGrade),
+                            Size = g.GroupBy(x => x.StudentId).Count()
                            
-                        }).ToList().Distinct();
+                        }).OrderByDescending(x => x.Average).ToList();
 
-            foreach (TeacherClassDTO l in list)
-            {
-                var Size =(from a in Context.Classes
-                           join b in Context.ClassStudents on )
-            }
 
-            return classes;
+            return list;
         }
     }
 }
