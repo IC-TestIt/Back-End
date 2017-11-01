@@ -43,7 +43,6 @@ namespace TestIt.API.Controllers
                 var vm = Mapper.Map<CorrectedClassTestDTO , CorrectedClassTestViewModel>(classTest);
                 
                 return Ok(vm);
-
             }
 
             return Ok(0);
@@ -52,6 +51,15 @@ namespace TestIt.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
+            var classTest = _classTestService.GetInProgress(id);
+
+            if (classTest != null)
+            {
+                var vm = Mapper.Map<InProgressClassTestDTO, InProgressClassTestViewModel>(classTest);
+
+                return Ok(vm);
+            }
+
             return Ok(0);
         }
     }

@@ -103,5 +103,6 @@ namespace TestIt.Business
     public interface IClassTestService
     {
         CorrectedClassTestDTO GetCorrected(int id);
+        InProgressClassTestDTO GetInProgress(int id);
     }
 }
