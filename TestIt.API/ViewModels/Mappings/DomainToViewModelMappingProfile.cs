@@ -49,6 +49,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<ClassTestBaseStudentDTO, ClassTestBaseStudentViewModel>();
             Mapper.CreateMap<ClassTestStudentDTO, ClassTestStudentViewModel>();
             Mapper.CreateMap<ClassTestQuestionsDTO, ClassTestQuestionsViewModel>();
+            Mapper.CreateMap<InProgressClassTestDTO, InProgressClassTestViewModel>();
         }
     }
 }
