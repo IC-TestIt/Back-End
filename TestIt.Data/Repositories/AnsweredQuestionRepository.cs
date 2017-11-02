@@ -1,4 +1,7 @@
-﻿using TestIt.Data.Abstract;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TestIt.Data.Abstract;
+using TestIt.Model;
 using TestIt.Model.Entities;
 
 namespace TestIt.Data.Repositories
@@ -8,5 +11,44 @@ namespace TestIt.Data.Repositories
         public AnsweredQuestionRepository(TestItContext context)
             : base(context)
         { }
+
+        public int CorrectQuestions(int id, IEnumerable<AnsweredQuestion> questions)
+        {
+            var obj = new List<AnsweredQuestion>();
+
+            foreach(var question in questions)
+            {
+                var entity = Context.AnsweredQuestions.FirstOrDefault(x => x.Id == question.Id);
+
+                entity.Grade = question.Grade;
+                entity.Corrected = question.Corrected;
+
+                obj.Add(entity);
+            }
+
+            var exam = Context.Exams.FirstOrDefault(x => x.Id == id);
+
+            exam.TotalGrade = Context.AnsweredQuestions.Where(x => x.ExamId == id).Sum(x => x.Grade);
+            exam.Status = (int)EnumStatus.Corrected;
+
+            return Context.SaveChanges();
+        }
+
+        public int AnswerQuestions(int examId, IEnumerable<AnsweredQuestion> questions)
+        {
+            var obj = new List<AnsweredQuestion>();
+
+            foreach(var question in questions)
+            {
+                var entity = Context.AnsweredQuestions.FirstOrDefault(x => x.ExamId == examId && x.QuestionId == question.QuestionId);
+
+                entity.AlternativeId = question.AlternativeId;
+                entity.EssayAnswer = question.EssayAnswer;
+
+                obj.Add(entity);
+            }
+
+            return Context.SaveChanges();
+        }
     }
 }
