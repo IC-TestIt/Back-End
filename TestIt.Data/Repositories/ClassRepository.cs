@@ -25,8 +25,19 @@ namespace TestIt.Data.Repositories
                                Description = a.Description,
                                TotalGrade = c.TotalGrade,
                                StudentId = d.Id
-
                            }).Distinct();
+
+            var classesWithoutTests = (from a in Context.Classes
+                                       join c in Context.ClassTests on a.Id equals c.ClassId into ps
+                                       from f in ps.DefaultIfEmpty()
+                                       where a.TeacherId == id && f == null
+                                       select new TeacherClassDTO
+                                       {
+                                           Average = 0,
+                                           Description = a.Description,
+                                           Id = a.Id,
+                                           Size = Context.ClassStudents.Count(x => x.ClassId == a.Id)
+                                       }).ToList();
 
             var list = (from a in classes
                         group a by a.Id into g
@@ -39,6 +50,7 @@ namespace TestIt.Data.Repositories
                            
                         }).OrderByDescending(x => x.Average).ToList();
 
+            list.AddRange(classesWithoutTests.Distinct());
 
             return list;
         }
