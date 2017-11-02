@@ -31,7 +31,7 @@ namespace TestIt.Business.Services
             return exams;
         }
 
-        public bool EndExam(int id, List<AnsweredQuestion> answerdQuestions)
+        public bool EndExam(int id, List<AnsweredQuestion> answeredQuestions)
         {
             var e = _examRepository.GetSingle(id);
 
@@ -40,21 +40,21 @@ namespace TestIt.Business.Services
             e.Status = (int)EnumStatus.Finished;
             e.EndDate = DateTime.Now;
 
-            _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
+            _answeredQuestionRepository.AnswerQuestions(id, answeredQuestions);
 
             _examRepository.Commit();
 
             return true;
         }
 
-        public bool SaveExam(int id, List<AnsweredQuestion> answerdQuestions)
+        public bool SaveExam(int id, List<AnsweredQuestion> answeredQuestions)
         {
             var e = _examRepository.GetSingle(id);
 
             if (e == null) return false;
             e.DateUpdated = DateTime.Now;
 
-            _answeredQuestionRepository.AddOrUpdateMultiple(answerdQuestions);
+            _answeredQuestionRepository.AddOrUpdateMultiple(answeredQuestions);
 
             _examRepository.Commit();
 
@@ -67,21 +67,11 @@ namespace TestIt.Business.Services
             {
                 foreach (Exam e in exams)
                 {
-                    var currentExam = _examRepository.GetSingle(x => x.Id == e.Id);
-                    var questions = new List<AnsweredQuestion>(e.AnsweredQuestions);
-
-                    var totalGrade = questions.Sum(x => x.Grade) + currentExam.TotalGrade;
-
-                    _answeredQuestionRepository.AddOrUpdateMultiple(questions);
-
-                    e.TotalGrade = totalGrade;
-                    e.Status = (int)EnumStatus.Corrected;
+                    _answeredQuestionRepository.CorrectQuestions(e.Id, e.AnsweredQuestions);
                 }
-
-                _examRepository.Commit();
-
+                
                 return true;
-            } catch (Exception)
+            } catch (Exception e)
             {
                 return false;
             }
@@ -133,5 +123,6 @@ namespace TestIt.Business.Services
             return exams;
 
         }
+        
     }
 }
