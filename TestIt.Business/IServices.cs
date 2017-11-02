@@ -33,7 +33,7 @@ namespace TestIt.Business
         IEnumerable<User> ClassUsers(int id);
         Class GetSingle(int id);
         IEnumerable<Class> Get();
-        IEnumerable<Class> GetTeacherClasses(int id);
+        TeacherClassesDTO GetTeacherClasses(int id);
         void Delete(int id);
         void DeleteClassTests(int id);
         void DeleteClassStudents(int id);

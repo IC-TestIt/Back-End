@@ -14,7 +14,10 @@ namespace TestIt.Data.Abstract
         IEnumerable<StudentTestDto> GetTests(int id);
     }
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
-    public interface IClassRepository : IEntityBaseRepository<Class> {}
+    public interface IClassRepository : IEntityBaseRepository<Class>
+    {
+        IEnumerable<TeacherClassDTO> GetTeacherClasses(int id);
+    }
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
     public interface ITestRepository : IEntityBaseRepository<Test>
     {

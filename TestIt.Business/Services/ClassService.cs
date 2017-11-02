@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
@@ -39,10 +40,16 @@ namespace TestIt.Business.Services
             return _classRepository.GetAll();
         }
 
-        public IEnumerable<Class> GetTeacherClasses(int id)
+        public TeacherClassesDTO GetTeacherClasses(int id)
         {
-            var classes = _classRepository.FindByIncluding(x => x.TeacherId == id, x=> x.ClassStudents);
-            return classes;
+            var classes = _classRepository.GetTeacherClasses(id);
+
+            var Teacherclasses = new TeacherClassesDTO()
+            {
+                Classes = classes,
+            };
+
+            return Teacherclasses;
         }
         public void Delete(int id)
         {
