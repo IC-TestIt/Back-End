@@ -62,7 +62,7 @@ namespace TestIt.API.Controllers
             return Ok(0);
         }
 
-        [HttpPut("{id}/save")]
+        [HttpPut("{id}/saved")]
         public IActionResult SaveExam(int id, [FromBody]EndExamViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -107,14 +107,14 @@ namespace TestIt.API.Controllers
 
 
         [HttpPut("correction")]
-        public IActionResult ExamsRealCorrection([FromBody]IEnumerable<ExamRealCorrectionViewModel> viewModel)
+        public IActionResult ExamsRealCorrection([FromBody]ExamsRealCorrectionViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var exams = Mapper.Map<IEnumerable<Exam>>(viewModel);
+            var exams = Mapper.Map<IEnumerable<Exam>>(viewModel.Corrections);
 
             var sucess = _examService.ExamsRealCorrection(exams);
 
