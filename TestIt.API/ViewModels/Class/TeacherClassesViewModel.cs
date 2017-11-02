@@ -1,9 +1,14 @@
-﻿namespace TestIt.API.ViewModels.Class
+﻿using System.Collections.Generic;
+
+namespace TestIt.API.ViewModels.Class
 {
     public class TeacherClassesViewModel
     {
-        public string Description { get; set; }
-        public int Size { get; set; }
-        public int Id { get; set; }
+        public TeacherClassesViewModel()
+        {
+            Classes = new List<TeacherClassViewModel>();
+        }
+
+        public IEnumerable<TeacherClassViewModel> Classes { get; set; }
     }
 }
