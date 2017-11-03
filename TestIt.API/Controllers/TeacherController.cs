@@ -6,6 +6,7 @@ using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using TestIt.API.ViewModels.Teacher;
 
 namespace TestIt.API.Controllers
 {
@@ -52,6 +53,17 @@ namespace TestIt.API.Controllers
             var classTestsVm = Mapper.Map<IEnumerable<ClassTests>,IEnumerable<ClassTestsViewModel>>(classTests);
 
             return Ok(classTestsVm);
+        }
+
+        [HttpGet("{id}/dashboard")]
+        public IActionResult GetTeacherDashboardData(int id)
+        {
+            var data = _teacherService.GetDashboard(id);
+
+            if (data == null) return Ok(0);
+            var vm = Mapper.Map<DashboardDTO, DashboardViewModel>(data);
+
+            return Ok(vm);
         }
     }
 }

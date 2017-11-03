@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
@@ -8,11 +10,16 @@ namespace TestIt.Business.Services
     {
         private readonly ITeacherRepository _teacherRepository;
         private readonly IClassTestsRepository _classTestRepository;
+        private readonly IClassRepository _classRepository;
+        private readonly ITestRepository _testRepository;
 
-        public TeacherService(ITeacherRepository teacherRepository, IClassTestsRepository classTestRepository)
+        public TeacherService(ITeacherRepository teacherRepository, IClassTestsRepository classTestRepository, 
+                              IClassRepository classRepository, ITestRepository testRepository)
         {
             _teacherRepository = teacherRepository;
             _classTestRepository = classTestRepository;
+            _classRepository = classRepository;
+            _testRepository = testRepository;
         }
 
         public IEnumerable<Teacher> Get() 
@@ -58,6 +65,18 @@ namespace TestIt.Business.Services
             var classTests = _classTestRepository.FindByIncluding(x => x.Test.TeacherId == id, x => x.Test, x => x.Class);
 
             return classTests;
+        }
+
+        public DashboardDTO GetDashboard(int id)
+        {
+            var classes = _classRepository.GetTeacherClasses(id);
+            var recentTests = _testRepository.GetTeacherTests(id, Model.EnumTestStatus.Uncorrected);
+
+            return new DashboardDTO()
+            {
+                Classes = classes,
+                RecentTests = recentTests
+            };
         }
     }
 }
