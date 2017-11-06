@@ -101,6 +101,7 @@ namespace TestIt.API
             services.AddScoped<IQuestionService, QuestionService>();
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IExamService, ExamService>();
+            services.AddScoped<IClassTestService, ClassTestService>();
             AutoMapperConfiguration.Configure();
 
             services.AddCors();

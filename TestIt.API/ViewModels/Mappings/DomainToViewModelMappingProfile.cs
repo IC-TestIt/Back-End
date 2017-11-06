@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.ClassTest;
 using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Log;
 using TestIt.API.ViewModels.Question;
@@ -44,6 +45,12 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Question, EssayQuestionViewModel>()
                 .ForMember(x => x.Answer, map => map.MapFrom(x => x.EssayQuestion.Answer));
             Mapper.CreateMap<AnsweredQuestionDTO, CorrectAnsweredQuestionViewModel>();
+            Mapper.CreateMap<CorrectedClassTestDTO, CorrectedClassTestViewModel>();
+            Mapper.CreateMap<BaseClassTestDTO, BaseClassTestViewModel>();
+            Mapper.CreateMap<ClassTestBaseStudentDTO, ClassTestBaseStudentViewModel>();
+            Mapper.CreateMap<ClassTestStudentDTO, ClassTestStudentViewModel>();
+            Mapper.CreateMap<ClassTestQuestionsDTO, ClassTestQuestionsViewModel>();
+            Mapper.CreateMap<InProgressClassTestDTO, InProgressClassTestViewModel>();
             Mapper.CreateMap<DashboardDTO, DashboardViewModel>();
         }
     }

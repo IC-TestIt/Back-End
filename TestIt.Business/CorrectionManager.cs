@@ -36,6 +36,7 @@ namespace TestIt.Business
                 if (string.IsNullOrEmpty(answer.EssayAnswer))
                 {
                     answer.Grade = CorrectAlternative(answer, rightAnswer);
+                    answer.Corrected = true;
                 }
                 else
                 {

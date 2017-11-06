@@ -29,6 +29,12 @@ namespace TestIt.Data.Repositories
         {
             return Context.Set<T>().Count();
         }
+
+        public virtual int Count(Expression<Func<T, bool>> predicate)
+        {
+            return Context.Set<T>().Count(predicate);
+        }
+
         public virtual IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = Context.Set<T>();

@@ -11,6 +11,7 @@ namespace TestIt.Data.Abstract
         T SingleIncluding(int id, params Expression<Func<T, object>>[] includeProperties);
         IEnumerable<T> GetAll();
         int Count();
+        int Count(Expression<Func<T, bool>> predicate);
         T GetSingle(int id);
         T GetSingle(Expression<Func<T, bool>> predicate);
         T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);

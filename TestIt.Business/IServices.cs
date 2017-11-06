@@ -100,4 +100,10 @@ namespace TestIt.Business
         bool ExistsExam(Exam exam);
         bool ExamsRealCorrection(IEnumerable<Exam> exams);
     }
+
+    public interface IClassTestService
+    {
+        CorrectedClassTestDTO GetCorrected(int id);
+        InProgressClassTestDTO GetInProgress(int id);
+    }
 }

@@ -9,9 +9,17 @@
 
     public enum EnumTestStatus
     {
-        Corrected = 4,
-        Uncorrected = 3,
+        NotApplied = 1,
         Applied = 2,
-        NotApplied = 1
+        Uncorrected = 3,
+        Corrected = 4
+    }
+
+    public enum EnumStudentStatus
+    {
+        Absent = 0,
+        InProgress = 1,
+        NotCorrected = 2,
+        Corrected = 3
     }
 }
