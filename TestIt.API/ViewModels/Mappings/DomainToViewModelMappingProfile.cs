@@ -4,6 +4,7 @@ using TestIt.API.ViewModels.ClassTest;
 using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Log;
 using TestIt.API.ViewModels.Question;
+using TestIt.API.ViewModels.Teacher;
 using TestIt.API.ViewModels.Test;
 using TestIt.API.ViewModels.User;
 using TestIt.Model.DTO;
@@ -50,6 +51,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<ClassTestStudentDTO, ClassTestStudentViewModel>();
             Mapper.CreateMap<ClassTestQuestionsDTO, ClassTestQuestionsViewModel>();
             Mapper.CreateMap<InProgressClassTestDTO, InProgressClassTestViewModel>();
+            Mapper.CreateMap<DashboardDTO, DashboardViewModel>();
         }
     }
 }

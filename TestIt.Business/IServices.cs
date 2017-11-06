@@ -25,6 +25,7 @@ namespace TestIt.Business
         void Update(int id, Teacher teacher);
         Teacher GetByUser(int id);
         IEnumerable<ClassTests> GetClassTests(int id);
+        DashboardDTO GetDashboard(int id);
     }
 
     public interface IClassService

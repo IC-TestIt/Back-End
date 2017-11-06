@@ -1,7 +1,4 @@
-﻿
-using System;
-using System.Collections.Generic;
-using TestIt.Model.Entities;
+﻿using System;
 
 namespace TestIt.Model.DTO
 {
