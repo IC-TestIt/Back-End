@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TestIt.Model;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
@@ -24,6 +25,7 @@ namespace TestIt.Data.Abstract
         Test GetFull(int id);
         Test GetForCorrection(int id);
         IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id, EnumTestStatus status, int n = 0);
     }
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}
     public interface IEssayQuestionRepository : IEntityBaseRepository<EssayQuestion> {}

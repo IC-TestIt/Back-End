@@ -132,5 +132,52 @@ namespace TestIt.Data.Repositories
 
             return returnTests;
         }
+
+        public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id, EnumTestStatus status, int n = 0)
+        {
+            if (status == EnumTestStatus.Uncorrected)
+            {
+                var tests = (from a in Context.Tests
+                             where a.TeacherId == id
+                             select a).ToList();
+
+                var classes = (from a in Context.Classes
+                               where a.TeacherId == id
+                               select a);
+
+                var classTestsQuery = (from a in Context.ClassTests
+                                  join b in tests on a.TestId equals b.Id
+                                  select a).OrderByDescending(x => x.EndDate).AsQueryable();
+
+                if (n > 0)
+                    classTestsQuery = classTestsQuery.Take(n);
+
+                var classTests = classTestsQuery.ToList();
+
+                var exams = (from a in classTests
+                             join b in Context.Exams on a.Id equals b.ClassTestsId
+                             select b).ToList();
+
+                var notCorrectedTests = (from a in tests
+                                         join b in classTests on a.Id equals b.TestId
+                                         join c in classes on b.ClassId equals c.Id
+                                         where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
+                                                                                 .Any(x => x.Status == (int)EnumStatus.Finished)
+                                         select new TeacherTestsDTO
+                                         {
+                                             TestId = a.Id,
+                                             ClassName = c.Description,
+                                             ClassTestId = b.Id,
+                                             TestTitle = a.Title,
+                                             BeginDate = b.BeginDate,
+                                             EndDate = b.EndDate,
+                                             Status = EnumTestStatus.Uncorrected
+                                         }).ToList();
+
+                return notCorrectedTests;
+            }
+
+            return null;
+        }
     }       
 }

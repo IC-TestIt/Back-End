@@ -3,6 +3,7 @@ using TestIt.API.ViewModels.Class;
 using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Log;
 using TestIt.API.ViewModels.Question;
+using TestIt.API.ViewModels.Teacher;
 using TestIt.API.ViewModels.Test;
 using TestIt.API.ViewModels.User;
 using TestIt.Model.DTO;
@@ -43,6 +44,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Question, EssayQuestionViewModel>()
                 .ForMember(x => x.Answer, map => map.MapFrom(x => x.EssayQuestion.Answer));
             Mapper.CreateMap<AnsweredQuestionDTO, CorrectAnsweredQuestionViewModel>();
+            Mapper.CreateMap<DashboardDTO, DashboardViewModel>();
         }
     }
 }
