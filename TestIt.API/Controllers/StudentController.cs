@@ -5,6 +5,7 @@ using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.DTO;
+using TestIt.API.ViewModels.Class;
 
 namespace TestIt.API.Controllers
 {
@@ -14,12 +15,15 @@ namespace TestIt.API.Controllers
         private readonly IStudentService _studentService;
         private readonly IUserService _userService;
         private readonly IExamService _examService;
+        private readonly IClassStudentsService _classStudentsService;
 
-        public StudentController(IStudentService studentService, IUserService userService, IExamService examService)
+        public StudentController(IStudentService studentService, IUserService userService, IExamService examService, 
+                                                                                            IClassStudentsService classStudentsService)
         {
             _studentService = studentService;
             _userService = userService;
             _examService = examService;
+            _classStudentsService = classStudentsService;
         }
 
         [HttpGet("exists/{email}")]
@@ -56,5 +60,17 @@ namespace TestIt.API.Controllers
 
             return new OkObjectResult(examVm);
         }
+
+        [HttpGet("{id}/classes")]
+        public IActionResult GetStudentClasses(int id)
+        {
+            var classes = _classStudentsService.GetClasses(id);
+
+            if (classes == null) return Ok(0);
+            var examVm = Mapper.Map<IEnumerable<StudentClassDTO>, IEnumerable<StudentClassViewModel>>(classes);
+
+            return new OkObjectResult(examVm);
+        }
+
     }
 }
