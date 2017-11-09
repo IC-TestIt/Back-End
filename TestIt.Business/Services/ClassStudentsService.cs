@@ -1,4 +1,6 @@
-﻿using TestIt.Data.Abstract;
+﻿using System.Collections.Generic;
+using TestIt.Data.Abstract;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
@@ -22,6 +24,12 @@ namespace TestIt.Business.Services
         {
             _classStudentsRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
             _classStudentsRepository.Commit();
+        }
+
+        public IEnumerable<StudentClassDTO> GetClasses(int id)
+        {
+            return _classStudentsRepository.GetClasses(id);
+
         }
 
 
