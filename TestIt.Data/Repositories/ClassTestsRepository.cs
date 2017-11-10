@@ -85,7 +85,8 @@ namespace TestIt.Data.Repositories
                                      BeginDate = a.BeginDate,
                                      EndDate = a.EndDate,
                                      ClassName = c.Description,
-                                     Title = b.Title
+                                     Title = b.Title,
+                                     ClassTestId = a.Id
                                  });
 
             return baseClassTest.FirstOrDefault();
