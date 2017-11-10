@@ -8,5 +8,6 @@ namespace TestIt.Model.DTO
         public string ClassName { get; set; }
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
+        public int ClassTestId { get; set; }
     }
 }
