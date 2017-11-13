@@ -19,8 +19,9 @@ namespace TestIt.Data.Repositories
             foreach(var question in questions)
             {
                 var entity = Context.AnsweredQuestions.FirstOrDefault(x => x.Id == question.Id);
+                var questionValue = Context.Questions.Where(x => x.Id == entity.QuestionId).Select(x => x.Value).FirstOrDefault();
 
-                entity.Grade = question.Grade;
+                entity.Grade = question.Grade * questionValue;
                 entity.Corrected = question.Corrected;
 
                 obj.Add(entity);
@@ -28,7 +29,7 @@ namespace TestIt.Data.Repositories
 
             var exam = Context.Exams.FirstOrDefault(x => x.Id == id);
 
-            exam.TotalGrade = Context.AnsweredQuestions.Where(x => x.ExamId == id).Sum(x => x.Grade);
+            exam.TotalGrade = obj.Sum(x => x.Grade);
             exam.Status = (int)EnumStatus.Corrected;
 
             return Context.SaveChanges();
