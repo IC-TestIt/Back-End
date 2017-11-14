@@ -6,6 +6,7 @@ using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.DTO;
 using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.ClassStudents;
 
 namespace TestIt.API.Controllers
 {
