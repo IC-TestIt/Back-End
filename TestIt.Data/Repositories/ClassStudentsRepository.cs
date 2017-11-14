@@ -31,7 +31,7 @@ namespace TestIt.Data.Repositories
                 s.CorrectedStudentTests = (from a in Context.Exams
                                            join b in Context.ClassTests on a.ClassTestsId equals b.Id
                                            join c in Context.Tests on b.TestId equals c.Id
-                                           where b.ClassId == s.ClassId && a.StudentId == id
+                                           where b.ClassId == s.ClassId && a.StudentId == id && a.Status == 3
                                            select new CorrectedStudentTestsDTO
                                            {
                                                TestId = c.Id,
