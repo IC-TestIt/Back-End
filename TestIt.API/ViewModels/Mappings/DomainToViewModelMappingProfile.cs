@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.ClassStudents;
 using TestIt.API.ViewModels.ClassTest;
 using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Log;
@@ -52,6 +53,8 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<ClassTestQuestionsDTO, ClassTestQuestionsViewModel>();
             Mapper.CreateMap<InProgressClassTestDTO, InProgressClassTestViewModel>();
             Mapper.CreateMap<DashboardDTO, DashboardViewModel>();
+            Mapper.CreateMap<StudentClassDTO, StudentClassViewModel>();
+            Mapper.CreateMap<CorrectedStudentTestsDTO, CorrectedStudentTestsViewModel>();
         }
     }
 }

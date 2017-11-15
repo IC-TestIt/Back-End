@@ -19,7 +19,10 @@ namespace TestIt.Data.Abstract
     {
         IEnumerable<TeacherClassDTO> GetTeacherClasses(int id);
     }
-    public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents> {}
+    public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents>
+    {
+        IEnumerable<StudentClassDTO> GetClasses(int id);
+    }
     public interface ITestRepository : IEntityBaseRepository<Test>
     {
         Test GetFull(int id);
