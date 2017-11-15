@@ -16,10 +16,10 @@ namespace TestIt.Model.Entities
         public int Id { get; set; }
         public DateTime DateCreated { get; set; }
         public DateTime DateUpdated { get; set; }
-
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
 
+        public bool IsPublished { get; set; }
 
         public int  ClassId { get; set; }
         public Class Class { get; set; }
