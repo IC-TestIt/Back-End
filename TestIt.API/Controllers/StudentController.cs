@@ -1,69 +1,77 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
 using TestIt.Model.DTO;
-using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.ClassStudents;
 
 namespace TestIt.API.Controllers
 {
     [Route("api/[controller]")]
     public class StudentController : Controller
     {
-        private IStudentService studentService;
-        private IUserService userService;
-        private IExamService examService;
+        private readonly IStudentService _studentService;
+        private readonly IUserService _userService;
+        private readonly IExamService _examService;
+        private readonly IClassStudentsService _classStudentsService;
 
-        public StudentController(IStudentService studentService, IUserService userService, IExamService examService)
+        public StudentController(IStudentService studentService, IUserService userService, IExamService examService, 
+                                                                                            IClassStudentsService classStudentsService)
         {
-            this.studentService = studentService;
-            this.userService = userService;
-            this.examService = examService;
+            _studentService = studentService;
+            _userService = userService;
+            _examService = examService;
+            _classStudentsService = classStudentsService;
         }
 
         [HttpGet("exists/{email}")]
         public IActionResult StudentExists(string email)
         {
-            var userId = userService.Exists(email);
+            var userId = _userService.Exists(email);
 
             if (userId == 0)
             {
                 return new OkObjectResult(-1);
             }
 
-            var result = new OkObjectResult(studentService.GetByUser(userId).Id);
+            var result = new OkObjectResult(_studentService.GetByUser(userId).Id);
             return result;
         }
 
         [HttpGet("{id}/exams")]
         public IActionResult GetStudentExams(int id)
         {
-            var exams = examService.GetStudentExams(id);
+            var exams = _examService.GetStudentExams(id);
 
-            if (exams != null)
-            {
-                IEnumerable<StudentExamsViewModel> examsVm = Mapper.Map<IEnumerable<ExamDTO>, IEnumerable<StudentExamsViewModel>>(exams);
-                return new OkObjectResult(examsVm);
-            }
-
-            return NotFound();
+            if (exams == null) return Ok(0);
+            var examsVm = Mapper.Map<IEnumerable<ExamDto>, IEnumerable<StudentExamsViewModel>>(exams);
+            return new OkObjectResult(examsVm);
         }
 
         [HttpGet("{id}/tests")]
         public IActionResult GetStudentTest(int id)
         {
-            var exams = studentService.Tests(id);
+            var exams = _studentService.Tests(id);
 
-            if (exams != null)
-            {
-                IEnumerable<StudentTestViewModel> examVm = Mapper.Map<IEnumerable<StudentTestDTO>, IEnumerable<StudentTestViewModel>>(exams);
+            if (exams == null) return Ok(0);
+            var examVm = Mapper.Map<IEnumerable<StudentTestDto>, IEnumerable<StudentTestViewModel>>(exams);
 
-                return new OkObjectResult(examVm);
-            }
-
-            return NotFound();
+            return new OkObjectResult(examVm);
         }
+
+        [HttpGet("{id}/classes")]
+        public IActionResult GetStudentClasses(int id)
+        {
+            var classes = _classStudentsService.GetClasses(id);
+
+            if (classes == null) return Ok(0);
+            var examVm = Mapper.Map<IEnumerable<StudentClassDTO>, IEnumerable<StudentClassViewModel>>(classes);
+
+            return new OkObjectResult(examVm);
+        }
+
     }
 }

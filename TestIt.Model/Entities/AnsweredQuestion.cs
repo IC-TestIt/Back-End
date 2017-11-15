@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TestIt.Model.Entities
 {
@@ -20,6 +18,8 @@ namespace TestIt.Model.Entities
         public string EssayAnswer { get; set; }
         public Alternative Alternative { get; set; }
         public int? AlternativeId { get; set; }
+        public double PercentCorrect { get; set; }
+        public bool Corrected { get; set; }
 
         public Question Question { get; set; }
         public int QuestionId { get; set; }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
@@ -10,79 +8,75 @@ namespace TestIt.Business.Services
 {
     public class StudentService : IStudentService
     {
-        private IStudentRepository studentRepository;
-        private IEmailService emailService;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IEmailService _emailService;
 
         public StudentService(IStudentRepository studentRepository, IEmailService emailService)
         {
-            this.studentRepository = studentRepository;
-            this.emailService = emailService;
+            _studentRepository = studentRepository;
+            _emailService = emailService;
         }
 
         public IEnumerable<Student> Get()
         {
-            return studentRepository.GetAll();
+            return _studentRepository.GetAll();
         }
 
         public Student GetSingle(int id)
         {
-            return studentRepository.GetSingle(id);
+            return _studentRepository.GetSingle(id);
         }
 
         public Student GetByUser(int id)
         {
-            return studentRepository.GetSingle(s => s.UserId == id);
+            return _studentRepository.GetSingle(s => s.UserId == id);
         }
 
         public void Save(Student s)
         {
-            studentRepository.Add(s);
-            studentRepository.Commit();
+            _studentRepository.Add(s);
+            _studentRepository.Commit();
         }
 
         public void Delete(int id)
         {
-            Student s = studentRepository.GetSingle(id);
+            var s = _studentRepository.GetSingle(id);
 
-            if (s != null)
-            {
-                studentRepository.DeleteWhere(x => x.Id == s.Id);
-                studentRepository.Commit();
-            }
+            if (s == null) return;
+            _studentRepository.DeleteWhere(x => x.Id == s.Id);
+            _studentRepository.Commit();
         }
 
         public void Update(int id, Student student)
         {
-            Student s = studentRepository.GetSingle(id);
-            if (s != null && student.Id == s.Id)
-            {
-                studentRepository.Update(student);
-                studentRepository.Commit();
-            }
+            var s = _studentRepository.GetSingle(id);
+            if (s == null || student.Id != s.Id) return;
+            _studentRepository.Update(student);
+            _studentRepository.Commit();
         }
 
         public void SendInvite(User user, Class studentClass)
         {
-            var subject = "TestIt - Adicionado a Turma";
+            const string subject = "TestIt - Adicionado a Turma";
             var bodyContent = "Você foi adicionado a turma " + studentClass.Description;
             var email = BuildEmail(user, subject, bodyContent);
-            emailService.Send(email);
+            _emailService.Send(email);
         }
 
         public void SendSignUp(User user, int studentId)
         {
-            var subject = "TestIt - Finalize o seu cadastro";
+            const string subject = "TestIt - Finalize o seu cadastro";
             var bodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId;
             var email = BuildEmail(user, subject, bodyContent);
-            emailService.Send(email);
+            _emailService.Send(email);
         }
 
-        public IEnumerable<StudentTestDTO> Tests(int id)
+        public IEnumerable<StudentTestDto> Tests(int id)
         {
-            return studentRepository.GetTests(id);
+            return _studentRepository.GetTests(id);
         }
 
-        private Email BuildEmail(User user, string subject, string bodyContent)
+        private static Email BuildEmail(User user, string subject, string bodyContent)
         {
             var email = new Email
             {

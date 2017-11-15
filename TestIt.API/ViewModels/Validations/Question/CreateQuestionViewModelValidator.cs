@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using TestIt.API.ViewModels.Question;
 
-
 namespace TestIt.API.ViewModels.Validations.Question
 {
     public class CreateQuestionViewModelValidator : AbstractValidator<BaseQuestionViewModel>

@@ -4,9 +4,9 @@ using TestIt.Model.Entities;
 
 namespace TestIt.Model.DTO
 {
-    public class ExamInformationsDTO
+    public class ExamInformationsDto
     {
-        public ExamInformationsDTO()
+        public ExamInformationsDto()
         {
             Questions = new List<Question>();
             AnsweredQuestions = new List<AnsweredQuestion>();
@@ -17,6 +17,8 @@ namespace TestIt.Model.DTO
         public DateTime EndDate { get; set; }
         public string Title { get; set; }
         public int TestId { get; set; }
+        public int Status { get; set; }
+        public string Description { get; set; }
 
         public IEnumerable<Question> Questions { get; set; }
         public IEnumerable<AnsweredQuestion> AnsweredQuestions { get; set; }

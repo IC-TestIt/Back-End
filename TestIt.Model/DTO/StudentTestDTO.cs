@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TestIt.Model.DTO
 {
-    public class StudentTestDTO
+    public class StudentTestDto
     {
         public string Name { get; set; }
         public string ClassName { get; set; }

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TestIt.CorrectionAlgorithms\TestIt.CorrectionAlgorithms.csproj" />
     <ProjectReference Include="..\TestIt.Data\TestIt.Data.csproj" />
     <ProjectReference Include="..\TestIt.Utils\TestIt.Utils.csproj" />
   </ItemGroup>

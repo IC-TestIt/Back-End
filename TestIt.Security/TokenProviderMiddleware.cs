@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Threading.Tasks;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.IdentityModel.Tokens.Jwt;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -14,11 +14,11 @@ namespace TestIt.Security
     {
         private readonly RequestDelegate _next;
         private readonly TokenProviderOptions _options;
-        private IUserService userService;
+        private readonly IUserService _userService;
 
         public TokenProviderMiddleware(RequestDelegate next, IOptions<TokenProviderOptions> options, IUserService userService)
         {
-            this.userService = userService;
+            _userService = userService;
 
             _next = next;
             _options = options.Value;
@@ -60,7 +60,7 @@ namespace TestIt.Security
 
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub (subject/user) claims.
             // You can add other claims here, if you want:
-            var claims = new Claim[]
+            var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Sub, email),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
@@ -77,7 +77,7 @@ namespace TestIt.Security
                 signingCredentials: _options.SigningCredentials);
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            var loggedUser = userService.GetByEmail(email);
+            var loggedUser = _userService.GetByEmail(email);
            
             var response = new
             {
@@ -99,7 +99,7 @@ namespace TestIt.Security
         // that can you can check the credentials against. An account system hooked to a persisted database and OAuth are good options here.
         private Task<ClaimsIdentity> GetIdentity(string email, string password)
         {
-            if (userService.ValidLogin(email, password))
+            if (_userService.ValidLogin(email, password))
             {
                 return Task.FromResult(new ClaimsIdentity(new GenericIdentity(email, "Token"), new Claim[] { }));
             }

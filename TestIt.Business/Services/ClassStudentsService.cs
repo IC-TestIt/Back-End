@@ -1,25 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using TestIt.Data.Abstract;
-using TestIt.Data.Repositories;
+using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 
 namespace TestIt.Business.Services
 {
     public class ClassStudentsService : IClassStudentsService
     {
-        private IClassStudentsRepository classStudentsRepository;
+        private readonly IClassStudentsRepository _classStudentsRepository;
 
         public ClassStudentsService(IClassStudentsRepository classStudentsRepository)
         {
-            this.classStudentsRepository = classStudentsRepository;
+            _classStudentsRepository = classStudentsRepository;
         }
 
         public void Save(ClassStudents cs)
         {
-            classStudentsRepository.Add(cs);
-            classStudentsRepository.Commit();
+            _classStudentsRepository.Add(cs);
+            _classStudentsRepository.Commit();
         }
+
+        public void DeleteStudent(int id, int studentId)
+        {
+            _classStudentsRepository.DeleteWhere(x => x.ClassId == id && x.StudentId == studentId);
+            _classStudentsRepository.Commit();
+        }
+
+        public IEnumerable<StudentClassDTO> GetClasses(int id)
+        {
+            return _classStudentsRepository.GetClasses(id);
+
+        }
+
+
     }
 }

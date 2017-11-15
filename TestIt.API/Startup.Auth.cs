@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using TestIt.Security;
-using Microsoft.Extensions.Options;
 
 namespace TestIt.API
 {
@@ -48,7 +48,7 @@ namespace TestIt.API
             {
                 Audience = Configuration["Authentication:Audience"],
                 Issuer = Configuration["Authentication:Issuer"],
-                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
             };
 
             app.UseMiddleware<TokenProviderMiddleware>(Options.Create(options));

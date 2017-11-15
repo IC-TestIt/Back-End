@@ -1,35 +1,46 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using TestIt.API.ViewModels.Exam;
 using TestIt.Business;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Test;
+using TestIt.API.ViewModels.Class;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
     [Route("api/[controller]")]
     public class ExamController : Controller
     {
-        private IExamService examService;
+        private readonly IExamService _examService;
+        private readonly ITestService _testService;
 
-        public ExamController(IExamService examService)
-        {
-            this.examService = examService;
+        public ExamController(IExamService examService, ITestService testService)
+        { 
+            _examService = examService;
+            _testService = testService ;  
         }
 
         [HttpPost]
         public IActionResult Post([FromBody]CreateExamViewModel viewModel)
         {
+            OkObjectResult result;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Exam exam = Mapper.Map<Exam>(viewModel);
+            var exam = Mapper.Map<Exam>(viewModel);
 
-            examService.Save(exam);
-
-            OkObjectResult result = Ok(new { examId = exam.Id });
+            if (!_examService.ExistsExam(exam))
+            {
+                _examService.Save(exam);
+                result = Ok(new { examId = exam.Id });
+            }
+            else
+                result = Ok("Esse aluno já esta realizando essa prova");
 
             return result;
         }
@@ -44,15 +55,14 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.EndExam(id, answerdQuestions);
+            var sucess = _examService.EndExam(id, answerdQuestions);
 
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return Ok(0);
         }
 
-        [HttpPut("save/{id}")]
+        [HttpPut("{id}/saved")]
         public IActionResult SaveExam(int id, [FromBody]EndExamViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -62,18 +72,17 @@ namespace TestIt.API.Controllers
 
             var answerdQuestions = Mapper.Map<List<AnsweredQuestion>>(viewModel.AnsweredQuestions);
 
-            var sucess = examService.SaveExam(id, answerdQuestions);
-
+            var sucess = _examService.SaveExam(id, answerdQuestions);
+            
             if (sucess)
                 return Ok();
-            else
-                return NotFound();
+            return Ok(0);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get (int id)
         {
-            var exam = examService.Get(id);
+            var exam = _examService.Get(id);
 
             if (exam != null)
             {
@@ -82,7 +91,37 @@ namespace TestIt.API.Controllers
                 return Ok(vm);
             }
 
-            return NotFound();
+            return Ok(0);
+        }
+
+        [HttpPost("{id}/correct")]
+        public IActionResult Post(int id)
+        {
+            var sucess = _examService.Correct(id);
+
+            if (sucess)
+                return Ok();
+
+            return Ok(0);
+        }
+
+
+        [HttpPut("correction")]
+        public IActionResult ExamsRealCorrection([FromBody]ExamsRealCorrectionViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var exams = Mapper.Map<IEnumerable<Exam>>(viewModel.Corrections);
+
+            var sucess = _examService.ExamsRealCorrection(exams);
+
+            if (sucess)
+                return Ok();
+
+            return Ok(0);
         }
     }
 }

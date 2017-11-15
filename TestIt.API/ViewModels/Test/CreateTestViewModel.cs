@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using TestIt.API.ViewModels.Validations.Test;
@@ -12,7 +11,7 @@ namespace TestIt.API.ViewModels.Test
         public string Description { get; set; }
         public int TeacherId { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validator = new CreateTestViewModelValidator();
             var result = validator.Validate(this);

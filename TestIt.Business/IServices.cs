@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using TestIt.Model.Entities;
 using TestIt.Model.DTO;
+using TestIt.Model.Entities;
 
 namespace TestIt.Business
 {
@@ -24,6 +24,8 @@ namespace TestIt.Business
         void Delete(int id);
         void Update(int id, Teacher teacher);
         Teacher GetByUser(int id);
+        IEnumerable<ClassTests> GetClassTests(int id);
+        DashboardDTO GetDashboard(int id);
     }
 
     public interface IClassService
@@ -32,9 +34,13 @@ namespace TestIt.Business
         IEnumerable<User> ClassUsers(int id);
         Class GetSingle(int id);
         IEnumerable<Class> Get();
-        IEnumerable<Class> GetTeacherClasses(int id);
+        TeacherClassesDTO GetTeacherClasses(int id);
+        void Delete(int id);
+        void DeleteClassTests(int id);
+        void DeleteClassStudents(int id);
+        void DeleteStudent(int id, int studentId);
     }
-
+    
     public interface IStudentService
     {
         IEnumerable<Student> Get();
@@ -45,12 +51,14 @@ namespace TestIt.Business
         Student GetByUser(int id);
         void SendSignUp(User user, int studentId);
         void SendInvite(User user, Class studentClass);
-        IEnumerable<StudentTestDTO> Tests(int id);
+        IEnumerable<StudentTestDto> Tests(int id);
     }
 
     public interface IClassStudentsService
     {
         void Save(ClassStudents cs);
+        void DeleteStudent(int id, int studentId);
+        IEnumerable<StudentClassDTO> GetClasses(int id);
     }
 
     public interface ITestService
@@ -59,16 +67,20 @@ namespace TestIt.Business
         void AddQuestion(Question q);
         IEnumerable<Test> Get();
         Test GetSingle(int id);
-        IEnumerable<Test> GetTeacherTests(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
         bool Save(List<ClassTests> cts);
         string ExportTest(int testId);
+        bool Update(ClassTests cts);
+        Test GetForCorrection(int id);
     }
 
     public interface IQuestionService
     {
         void Save(Question q);
-        void Save(EssayQuestion q);
-        void Save(AlternativeQuestion q);
+        void Save(List<EssayQuestion> q);
+        void Save(List<AlternativeQuestion> q);
+        void Remove(IEnumerable<int> questionsId);
+        void Update(List<AlternativeQuestion> q);
     }
 
     public interface ILogService
@@ -80,9 +92,19 @@ namespace TestIt.Business
     public interface IExamService
     {
         void Save(Exam exam);
-        IEnumerable<ExamDTO> GetStudentExams(int id);
+        IEnumerable<ExamDto> GetStudentExams(int id);
         bool EndExam(int id, List<AnsweredQuestion> l);
         bool SaveExam(int id, List<AnsweredQuestion> l);
-        ExamInformationsDTO Get(int id);
+        ExamInformationsDto Get(int id);
+        bool Correct(int id);
+        IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests);
+        bool ExistsExam(Exam exam);
+        bool ExamsRealCorrection(IEnumerable<Exam> exams);
+    }
+
+    public interface IClassTestService
+    {
+        CorrectedClassTestDTO GetCorrected(int id);
+        InProgressClassTestDTO GetInProgress(int id);
     }
 }

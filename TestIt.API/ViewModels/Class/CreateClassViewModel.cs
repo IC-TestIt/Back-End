@@ -10,7 +10,7 @@ namespace TestIt.API.ViewModels.Class
         public string Description { get; set; }
         public int TeacherId { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(System.ComponentModel.DataAnnotations.ValidationContext validationContext)
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var validator = new CreateClassViewModelValidator();
             var result = validator.Validate(this);

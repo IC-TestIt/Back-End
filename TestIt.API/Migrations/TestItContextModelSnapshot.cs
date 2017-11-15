@@ -64,6 +64,8 @@ namespace TestIt.API.Migrations
 
                     b.Property<int?>("AlternativeId");
 
+                    b.Property<bool>("Corrected");
+
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
@@ -73,6 +75,8 @@ namespace TestIt.API.Migrations
                     b.Property<int>("ExamId");
 
                     b.Property<double>("Grade");
+
+                    b.Property<double>("PercentCorrect");
 
                     b.Property<int>("QuestionId");
 
@@ -167,6 +171,8 @@ namespace TestIt.API.Migrations
                     b.Property<DateTime>("DateCreated");
 
                     b.Property<DateTime>("DateUpdated");
+
+                    b.Property<string>("KeyWords");
 
                     b.Property<int>("QuestionId");
 
@@ -264,6 +270,8 @@ namespace TestIt.API.Migrations
                     b.Property<DateTime>("DateUpdated");
 
                     b.Property<string>("Description");
+
+                    b.Property<int>("Order");
 
                     b.Property<int>("TestId");
 

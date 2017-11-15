@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TestIt.Model.Entities;
+﻿using System.Collections.Generic;
 
 namespace TestIt.API.ViewModels.Question
 {
@@ -13,6 +9,8 @@ namespace TestIt.API.ViewModels.Question
         public double Value { get; set; }
         public int TestId { get; set; }
         public bool IsAlternative { get; set; }
+        public int Order { get; set; }
+        public string Answer { get; set; }
         public virtual List<AlternativeViewModel> Alternatives { get; set; }
     }
 }

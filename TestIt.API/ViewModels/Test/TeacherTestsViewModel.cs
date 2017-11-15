@@ -1,14 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using TestIt.Model;
 
 namespace TestIt.API.ViewModels.Test
 {
     public class TeacherTestsViewModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public int TestId { get; set; }
+        public int ClassTestId { get; set; }
+        public string TestTitle { get; set; }
+        public string ClassName { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public EnumTestStatus Status { get; set; }
     }
 }

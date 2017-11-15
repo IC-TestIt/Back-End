@@ -1,25 +1,26 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.NodeServices;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using TestIt.API.ViewModels.Test;
 using TestIt.Business;
-using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using TestIt.API.ViewModels.Class;
+using TestIt.API.ViewModels.Exam;
+using TestIt.Model.DTO;
 
 namespace TestIt.API.Controllers
 {
     [Route("api/[controller]")]
     public class TestController : Controller
     {
-        private Business.ITestService testService;
+        private readonly ITestService _testService;
+        private readonly IExamService _examService;
 
-        public TestController(ITestService testService)
+        public TestController(ITestService testService, IExamService examService)
         {
-            this.testService = testService;
+            _testService = testService;
+            _examService = examService;
         }
 
         [HttpPost]
@@ -30,11 +31,11 @@ namespace TestIt.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            Test test = Mapper.Map<Test>(viewModel);
+            var test = Mapper.Map<Test>(viewModel);
 
-            testService.Save(test);
+            _testService.Save(test);
 
-            OkObjectResult result = Ok(new { testId = test.Id });
+            var result = Ok(new { testId = test.Id });
 
             return result;
         }
@@ -42,7 +43,7 @@ namespace TestIt.API.Controllers
         [HttpGet("export/{id}")]
         public IActionResult Index(int id)
         {
-            var htmlContent = testService.ExportTest(id);
+            var htmlContent = _testService.ExportTest(id);
 
             return new OkObjectResult(htmlContent);
         }
@@ -51,30 +52,22 @@ namespace TestIt.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            var tests = testService.Get();
+            var tests = _testService.Get();
 
-            if (tests != null)
-            {
-                IEnumerable<ReturnTestViewModel> testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<ReturnTestViewModel>>(tests);
-                return new OkObjectResult(testsVm);
-            }
-
-            return NotFound();
-
+            if (tests == null) return Ok(0);
+            var testsVm = Mapper.Map<IEnumerable<Test>, IEnumerable<ReturnTestViewModel>>(tests);
+            return new OkObjectResult(testsVm);
         }
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var test = testService.GetSingle(id);
+            var test = _testService.GetSingle(id);
 
-            if (test != null)
-            {
-                var testVm = Mapper.Map<Test, ReturnTestViewModel>(test);
-                return new OkObjectResult(testVm);
-            }
-            else
-                return NotFound();
+            if (test == null) return Ok(0);
+            var testVm = Mapper.Map<Test, ReturnTestViewModel>(test);
+            return new OkObjectResult(testVm);
         }
+
         [HttpPost("{id}/classes")]
         public IActionResult Post(int id, [FromBody] CreateClassTestsViewModel viewModel)
         {
@@ -82,7 +75,7 @@ namespace TestIt.API.Controllers
 
             viewModel.ClassIds.ToList().ForEach(cs =>
             {
-                var classTest = new ClassTests()
+                var classTest = new ClassTests
                 {
                     BeginDate = viewModel.BeginDate,
                     EndDate = viewModel.EndDate,
@@ -93,14 +86,29 @@ namespace TestIt.API.Controllers
                 classTests.Add(classTest);
             });
 
-            if (testService.Save(classTests))
-            {
-               OkResult result = Ok();
-               return result;
-            }
-            else
-                return Forbid();
+            if (!_testService.Save(classTests)) return Forbid();
+            var result = Ok();
+            return result;
         }
 
+        [HttpPost("{id}/correction")]
+        public IActionResult GetClassTestsEstimatedCorrection(int id, [FromBody]ClassTestsToCorrectViewModel classtests)
+        {
+            var exams = _examService.GetExamsEstimatedCorrection(classtests.Ids);
+            var test = _testService.GetForCorrection(id);
+
+            if (exams != null)
+            {
+                var vm = new ClassTestsEstimatedCorrectionViewModel()
+                {
+                    Test = Mapper.Map<Test, CorrectionTestViewModel>(test),
+                    CorrectedExams = Mapper.Map<IEnumerable<ExamCorrectionDTO>, IEnumerable<ExamEstimatedCorrectionViewModel>>(exams)
+                };
+
+                return Ok(vm);
+            }
+
+            return Ok(0);
+        }
     }
 }
