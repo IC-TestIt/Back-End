@@ -124,6 +124,13 @@ namespace TestIt.Business.Services
             return exams;
 
         }
+
+        public StudentExamCorrectionDTO GetStudentCorrection (int id)
+        {
+            var exam = _examRepository.GetStudentCorrection(id);
+
+            return exam;
+        }
         
     }
 }

@@ -104,8 +104,7 @@ namespace TestIt.API.Controllers
 
             return Ok(0);
         }
-
-
+        
         [HttpPut("correction")]
         public IActionResult ExamsRealCorrection([FromBody]ExamsRealCorrectionViewModel viewModel)
         {
@@ -120,6 +119,24 @@ namespace TestIt.API.Controllers
 
             if (sucess)
                 return Ok();
+
+            return Ok(0);
+        }
+
+        [HttpGet("{id}/correction")]
+        public IActionResult GetExamCorrection(int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var exam = _examService.GetStudentCorrection(id);
+
+            var vm = Mapper.Map<StudentExamCorrectionViewModel>(exam);
+
+            if (vm != null)
+                return Ok(vm);
 
             return Ok(0);
         }

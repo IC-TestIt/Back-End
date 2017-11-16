@@ -49,6 +49,7 @@ namespace TestIt.Data.Abstract
         IEnumerable<ExamDto> GetExams(int id);
         ExamInformationsDto GetFull(int id);
         IEnumerable<ExamCorrectionDTO> GetForCorrection(int classTestId);
+        StudentExamCorrectionDTO GetStudentCorrection(int id);
     }
     public interface IAnsweredQuestionRepository : IEntityBaseRepository<AnsweredQuestion>
     {

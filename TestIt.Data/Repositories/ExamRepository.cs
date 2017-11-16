@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -88,6 +89,47 @@ namespace TestIt.Data.Repositories
                                                       }).ToList());
                          
             return exams;
+        }
+
+        public StudentExamCorrectionDTO GetStudentCorrection(int id)
+        {
+            var exam = (from a in Context.Exams
+                        join b in Context.ClassTests on a.ClassTestsId equals b.Id
+                        join c in Context.Tests on b.TestId equals c.Id
+                        join d in Context.Classes on b.ClassId equals d.Id
+                        where a.Id == id
+                        select new StudentExamCorrectionDTO
+                        {
+                            StudentId = id,
+                            ClassTestId = a.ClassTestsId,
+                            Description = c.Description,
+                            ClassName = d.Description
+                        }).FirstOrDefault();
+
+            exam.Answers = (from a in Context.Questions
+                            join b in Context.AnsweredQuestions on a.Id equals b.Id
+                            where b.ExamId == id
+                            select a).Include(x => x.EssayQuestion)
+                                     .Include(x => x.AlternativeQuestion.Alternatives)
+                                     .OrderBy(x => x.Order)
+                                     .Select(x => new StudentAnsweredQuestionCorrectionDTO
+                                     {
+                                         Alternatives = x.AlternativeQuestion.Alternatives,
+                                         Order = x.Order,
+                                         Description = x.Description,
+                                         CorrectEssayAnswer = x.EssayQuestion.Answer,
+                                         StudentAnswer = x.EssayQuestion != null ?
+                                                            x.AnsweredQuestions.FirstOrDefault(y => y.ExamId == id && x.Id == y.QuestionId).EssayAnswer
+                                                            :
+                                                            string.Empty,
+                                         StudentAlternative = x.AlternativeQuestion != null ?
+                                                              x.AnsweredQuestions.FirstOrDefault(y => y.ExamId == id && x.Id == y.QuestionId).AlternativeId
+                                                              :
+                                                              0
+                                     })
+                                     .ToList();
+
+            return exam;
         }
     }
 }

@@ -100,6 +100,7 @@ namespace TestIt.Business
         IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests);
         bool ExistsExam(Exam exam);
         bool ExamsRealCorrection(IEnumerable<Exam> exams);
+        StudentExamCorrectionDTO GetStudentCorrection(int id);
     }
 
     public interface IClassTestService
