@@ -55,6 +55,8 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<DashboardDTO, DashboardViewModel>();
             Mapper.CreateMap<StudentClassDTO, StudentClassViewModel>();
             Mapper.CreateMap<CorrectedStudentTestsDTO, CorrectedStudentTestsViewModel>();
+            Mapper.CreateMap<StudentAnsweredQuestionCorrectionDTO, StudentAnsweredQuestionCorrectionViewModel>();
+            Mapper.CreateMap<StudentExamCorrectionDTO, StudentExamCorrectionViewModel>();
         }
     }
 }
