@@ -103,7 +103,9 @@ namespace TestIt.Business.Services
 
             var exam = _examRepository.GetSingle(id);
             exam.TotalGrade = correction.TotalGrade;
-            exam.Status = (int)EnumStatus.Corrected;
+
+            if (!_answeredQuestionRepository.Any(x => x.ExamId == id && x.AlternativeId == null))
+                exam.Status = (int)EnumStatus.Corrected;
             
             _answeredQuestionRepository.AddOrUpdateMultiple(correction.AnsweredQuestions);
 
