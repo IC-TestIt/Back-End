@@ -7,6 +7,7 @@ using TestIt.Business;
 using TestIt.Model.DTO;
 using TestIt.API.ViewModels.Class;
 using TestIt.API.ViewModels.ClassStudents;
+using TestIt.API.ViewModels.Student;
 
 namespace TestIt.API.Controllers
 {
@@ -50,28 +51,27 @@ namespace TestIt.API.Controllers
             var examsVm = Mapper.Map<IEnumerable<ExamDto>, IEnumerable<StudentExamsViewModel>>(exams);
             return new OkObjectResult(examsVm);
         }
-
-        [HttpGet("{id}/tests")]
-        public IActionResult GetStudentTest(int id)
+        
+        [HttpGet("{id}/dashboard")]
+        public IActionResult GetStudentDashboard(int id)
         {
             var exams = _studentService.Tests(id);
-
-            if (exams == null) return Ok(0);
-            var examVm = Mapper.Map<IEnumerable<StudentTestDto>, IEnumerable<StudentTestViewModel>>(exams);
-
-            return new OkObjectResult(examVm);
-        }
-
-        [HttpGet("{id}/classes")]
-        public IActionResult GetStudentClasses(int id)
-        {
+            
             var classes = _classStudentsService.GetClasses(id);
 
-            if (classes == null) return Ok(0);
-            var examVm = Mapper.Map<IEnumerable<StudentClassDTO>, IEnumerable<StudentClassViewModel>>(classes);
+            if (classes == null && exams == null)
+                return Ok(0);
 
-            return new OkObjectResult(examVm);
+            var examVm = Mapper.Map<IEnumerable<StudentTestDto>, IEnumerable<StudentTestViewModel>>(exams);
+            var classVm = Mapper.Map<IEnumerable<StudentClassDTO>, IEnumerable<StudentClassViewModel>>(classes);
+
+            var dashboardVm = new DashboardViewModel()
+            {
+                Classes = classVm,
+                Tests = examVm
+            };
+
+            return Ok(dashboardVm);
         }
-
     }
 }
