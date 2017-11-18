@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
+using TestIt.Model;
 using System.Linq;
+using System;
 
 namespace TestIt.Data.Repositories
 {
@@ -64,6 +66,52 @@ namespace TestIt.Data.Repositories
             list.AddRange(classesWithoutTests.Distinct());
 
             return list;
+        }
+
+        public ClassDTO GetDetails(int id)
+        {
+            var details = new ClassDTO();
+
+            var classObj = (from a in Context.Classes
+                            where a.Id == id
+                            select new
+                            {
+                                Name = a.Description,
+                                TeacherId = a.TeacherId
+                            }).FirstOrDefault();
+
+            details.Name = classObj.Name;
+            details.TeacherId = classObj.TeacherId;
+            
+            var grades = (from a in Context.ClassTests
+                          join b in Context.Exams on a.Id equals b.ClassTestsId
+                          where a.ClassId == id
+                          select new
+                          {
+                              TotalGrade = b.TotalGrade,
+                              StudentId = b.StudentId
+                          }).ToList();
+            
+            details.Students = (from a in Context.ClassStudents
+                                join b in Context.Students on a.StudentId equals b.Id
+                                join c in Context.Users on b.UserId equals c.Id
+                                where a.ClassId == id
+                                select new ClassTestStudentDTO
+                                {
+                                    StudentId = b.Id,
+                                    StudentIdentifier = c.Identifier,
+                                    StudentName = c.Name,
+                                }).Distinct().ToList();
+
+            foreach(var student in details.Students)
+            {
+                var studentGrades = (from d in grades
+                                     where d.StudentId == student.StudentId
+                                     select d.TotalGrade).ToList();
+                student.Grade = studentGrades.Any() ? studentGrades.Average() : 0;
+            }
+
+            return details;
         }
     }
 }
