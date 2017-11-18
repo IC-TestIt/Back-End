@@ -14,10 +14,15 @@ namespace TestIt.Business.Services
             _classStudentsRepository = classStudentsRepository;
         }
 
-        public void Save(ClassStudents cs)
+        public bool Save(ClassStudents cs)
         {
+            if (_classStudentsRepository.Any(x => x.ClassId == cs.ClassId && x.StudentId == cs.StudentId))
+                return false;
+
             _classStudentsRepository.Add(cs);
             _classStudentsRepository.Commit();
+
+            return true;
         }
 
         public void DeleteStudent(int id, int studentId)
