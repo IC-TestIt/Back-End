@@ -3,6 +3,7 @@ using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
 using TestIt.Model.Entities;
 using TestIt.Utils.Email;
+using TestIt.Utils;
 
 namespace TestIt.Business.Services
 {
@@ -66,7 +67,7 @@ namespace TestIt.Business.Services
         public void SendSignUp(User user, int studentId)
         {
             const string subject = "TestIt - Finalize o seu cadastro";
-            var bodyContent = "http://testitapp.herokuapp.com/#/signup/" + studentId;
+            var bodyContent = Consts.ClientUrl + "signup/" + studentId;
             var email = BuildEmail(user, subject, bodyContent);
             _emailService.Send(email);
         }
