@@ -62,5 +62,16 @@ namespace TestIt.API.Controllers
 
             return Ok(0);
         }
+
+        [HttpPost("{id}/publish")]
+        public IActionResult Publish(int id)
+        {
+            var published = _classTestService.PublishGrade(id);
+
+            if (!published)
+                return Ok(0);
+
+            return Ok(1);
+        }
     }
 }

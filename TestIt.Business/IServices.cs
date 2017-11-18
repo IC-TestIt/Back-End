@@ -107,5 +107,6 @@ namespace TestIt.Business
     {
         CorrectedClassTestDTO GetCorrected(int id);
         InProgressClassTestDTO GetInProgress(int id);
+        bool PublishGrade(int id);
     }
 }
