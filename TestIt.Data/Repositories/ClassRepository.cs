@@ -12,6 +12,17 @@ namespace TestIt.Data.Repositories
             : base(context)
         { }
 
+        public IEnumerable<string> GetStudentsEmails(int classId)
+        {
+            var emails = (from a in Context.ClassStudents
+                          join b in Context.Students on a.StudentId equals b.Id
+                          join c in Context.Users on b.UserId equals c.Id
+                          where a.ClassId == classId
+                          select c.Email).ToList();
+
+            return emails;
+        }
+
         public IEnumerable<TeacherClassDTO> GetTeacherClasses(int id)
         {
             var classes = (from a in Context.Classes

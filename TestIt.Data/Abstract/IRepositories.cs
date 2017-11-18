@@ -18,6 +18,7 @@ namespace TestIt.Data.Abstract
     public interface IClassRepository : IEntityBaseRepository<Class>
     {
         IEnumerable<TeacherClassDTO> GetTeacherClasses(int id);
+        IEnumerable<string> GetStudentsEmails(int classId);
     }
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents>
     {
