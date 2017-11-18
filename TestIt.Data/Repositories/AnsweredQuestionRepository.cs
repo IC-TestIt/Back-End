@@ -30,7 +30,7 @@ namespace TestIt.Data.Repositories
             var exam = Context.Exams.FirstOrDefault(x => x.Id == id);
 
             exam.TotalGrade = obj.Sum(x => x.Grade);
-            exam.Status = (int)EnumStatus.Corrected;
+            exam.Status = (int)EnumExamStatus.Corrected;
 
             return Context.SaveChanges();
         }

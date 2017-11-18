@@ -10,7 +10,7 @@ namespace TestIt.Model.Entities
             DateCreated = DateTime.Now;
             DateUpdated = DateTime.Now;
 
-            Status = (int)EnumStatus.Started;
+            Status = (int)EnumExamStatus.Started;
             BeginDate = DateTime.Now;
 
             AnsweredQuestions = new List<AnsweredQuestion>();

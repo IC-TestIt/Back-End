@@ -37,7 +37,7 @@ namespace TestIt.Business.Services
 
             if (e == null) return false;
             e.DateUpdated = DateTime.Now;
-            e.Status = (int)EnumStatus.Finished;
+            e.Status = (int)EnumExamStatus.Finished;
             e.EndDate = DateTime.Now;
 
             _answeredQuestionRepository.AnswerQuestions(id, answeredQuestions);
@@ -105,7 +105,7 @@ namespace TestIt.Business.Services
             exam.TotalGrade = correction.TotalGrade;
 
             if (!_answeredQuestionRepository.Any(x => x.ExamId == id && x.AlternativeId == null))
-                exam.Status = (int)EnumStatus.Corrected;
+                exam.Status = (int)EnumExamStatus.Corrected;
             
             _answeredQuestionRepository.AddOrUpdateMultiple(correction.AnsweredQuestions);
 

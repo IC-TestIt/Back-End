@@ -100,7 +100,7 @@ namespace TestIt.Data.Repositories
                                      join b in classTests on a.Id equals b.TestId
                                      join c in classes on b.ClassId equals c.Id
                                      where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
-                                                                             .Any(x => x.Status == (int)EnumStatus.Finished)
+                                                                             .Any(x => x.Status == (int)EnumExamStatus.Finished)
                                      select new TeacherTestsDTO
                                      {
                                          TestId = a.Id,
@@ -116,7 +116,7 @@ namespace TestIt.Data.Repositories
                                   join b in classTests on a.Id equals b.TestId
                                   join c in classes on b.ClassId equals c.Id
                                   where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
-                                                                             .All(x => x.Status == (int)EnumStatus.Corrected)
+                                                                             .All(x => x.Status == (int)EnumExamStatus.Corrected)
                                   select new TeacherTestsDTO
                                   {
                                       TestId = a.Id,
@@ -168,7 +168,7 @@ namespace TestIt.Data.Repositories
                                          join b in classTests on a.Id equals b.TestId
                                          join c in classes on b.ClassId equals c.Id
                                          where b.EndDate <= DateTime.Now && exams.Where(x => x.ClassTestsId == b.Id)
-                                                                                 .Any(x => x.Status == (int)EnumStatus.Finished)
+                                                                                 .Any(x => x.Status == (int)EnumExamStatus.Finished)
                                          select new TeacherTestsDTO
                                          {
                                              TestId = a.Id,

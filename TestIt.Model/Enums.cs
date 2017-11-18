@@ -1,6 +1,6 @@
 ﻿namespace TestIt.Model
 {
-    public enum EnumStatus
+    public enum EnumExamStatus
     {
         Started = 1,
         Finished = 2,
