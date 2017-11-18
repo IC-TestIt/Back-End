@@ -11,13 +11,17 @@ namespace TestIt.Business.Services
         private readonly IUserRepository _userRepository;
         private readonly IClassStudentsRepository _classStudentRepository;
         private readonly IClassTestsRepository _classTestsRepository;
+        private readonly ITestRepository _testRepository;
 
-        public ClassService (IClassRepository classRepository, IUserRepository userRepository, IClassStudentsRepository classStudentRepository, IClassTestsRepository classTestsRepository)
+        public ClassService (IClassRepository classRepository, IUserRepository userRepository, 
+                             IClassStudentsRepository classStudentRepository, IClassTestsRepository classTestsRepository,
+                             ITestRepository testRepository)
         {
             _classRepository = classRepository;
             _userRepository = userRepository;
             _classStudentRepository = classStudentRepository;
             _classTestsRepository = classTestsRepository;
+            _testRepository = testRepository;
         }
         public void Save(Class c)
         {
@@ -33,6 +37,14 @@ namespace TestIt.Business.Services
         public Class GetSingle(int id)
         {
             return _classRepository.GetSingle(id);
+        }
+
+        public ClassDTO GetDetails(int id)
+        {
+            var details = _classRepository.GetDetails(id);
+            details.Tests = _testRepository.GetTeacherTests(details.TeacherId, id);
+
+            return details;
         }
 
         public IEnumerable<Class> Get()

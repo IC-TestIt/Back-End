@@ -12,13 +12,14 @@ namespace TestIt.Data.Abstract
     public interface ITeacherRepository : IEntityBaseRepository<Teacher> {}
     public interface IStudentRepository : IEntityBaseRepository<Student>
     {
-        IEnumerable<StudentTestDto> GetTests(int id);
+        IEnumerable<StudentTestDTO> GetTests(int id);
     }
     public interface IOrganizationRepository : IEntityBaseRepository<Organization> {}
     public interface IClassRepository : IEntityBaseRepository<Class>
     {
         IEnumerable<TeacherClassDTO> GetTeacherClasses(int id);
         IEnumerable<string> GetStudentsEmails(int classId);
+        ClassDTO GetDetails(int id);
     }
     public interface IClassStudentsRepository : IEntityBaseRepository<ClassStudents>
     {
@@ -28,7 +29,7 @@ namespace TestIt.Data.Abstract
     {
         Test GetFull(int id);
         Test GetForCorrection(int id);
-        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id);
+        IEnumerable<TeacherTestsDTO> GetTeacherTests(int id, int classId = 0);
         IEnumerable<TeacherTestsDTO> GetTeacherTests(int id, EnumTestStatus status, int n = 0);
     }
     public interface IQuestionRepository : IEntityBaseRepository<Question> {}

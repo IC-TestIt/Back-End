@@ -62,7 +62,7 @@ namespace TestIt.API.Controllers
             if (classes == null && exams == null)
                 return Ok(0);
 
-            var examVm = Mapper.Map<IEnumerable<StudentTestDto>, IEnumerable<StudentTestViewModel>>(exams);
+            var examVm = Mapper.Map<IEnumerable<StudentTestDTO>, IEnumerable<StudentTestViewModel>>(exams);
             var classVm = Mapper.Map<IEnumerable<StudentClassDTO>, IEnumerable<StudentClassViewModel>>(classes);
 
             var dashboardVm = new DashboardViewModel()

@@ -39,7 +39,7 @@ namespace TestIt.Data.Repositories
             return null;
         }
 
-        public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id)
+        public IEnumerable<TeacherTestsDTO> GetTeacherTests(int id, int classId = 0)
         {
             var tests = (from a in Context.Tests
                          where a.TeacherId == id
@@ -51,8 +51,14 @@ namespace TestIt.Data.Repositories
 
             var classes = (from a in Context.Classes
                            where a.TeacherId == id
-                           select a);
+                           select a).AsQueryable();
 
+            if (classId > 0)
+            {
+                classes = classes.Where(x => x.Id == classId);
+                classTests = classTests.Where(x => x.ClassId == classId).ToList();
+            }
+            
             var exams = (from a in classTests
                          join b in Context.Exams on a.Id equals b.ClassTestsId
                          select b).ToList();

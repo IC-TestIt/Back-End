@@ -71,7 +71,7 @@ namespace TestIt.Business.Services
             _emailService.Send(email);
         }
 
-        public IEnumerable<StudentTestDto> Tests(int id)
+        public IEnumerable<StudentTestDTO> Tests(int id)
         {
             return _studentRepository.GetTests(id);
         }
