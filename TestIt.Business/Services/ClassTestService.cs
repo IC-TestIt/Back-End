@@ -4,6 +4,7 @@ using TestIt.Data.Abstract;
 using TestIt.Model;
 using TestIt.Model.DTO;
 using TestIt.Utils.Email;
+using TestIt.Utils;
 
 namespace TestIt.Business.Services
 {
@@ -90,7 +91,7 @@ namespace TestIt.Business.Services
             var email = new Email()
             {
                 BodyContent = "A nota da prova: " + testName + 
-                              " já está disponível em: http://testitapp.herokuapp.com/#/",
+                              " já está disponível em: " + Consts.ClientUrl,
                 Subject = "TestIt - Nota Disponível"
             };
 
