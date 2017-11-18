@@ -33,7 +33,7 @@ namespace TestIt.API.ViewModels.Mappings
             Mapper.CreateMap<Model.Entities.Exam, StudentExamsViewModel>();
             Mapper.CreateMap<ExamInformationsDto, ReturnExamViewModel>();
             Mapper.CreateMap<AnsweredQuestion, AnsweredQuestionViewModel>();
-            Mapper.CreateMap<StudentTestDto, StudentTestViewModel>();
+            Mapper.CreateMap<StudentTestDTO, StudentTestViewModel>();
             Mapper.CreateMap<ClassTests, ClassTestsViewModel>()
                 .ForMember(x => x.ClassName, map => map.MapFrom(x => x.Class.Description))
                 .ForMember(x => x.TestTitle, map => map.MapFrom(x => x.Test.Title));

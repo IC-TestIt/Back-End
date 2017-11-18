@@ -33,6 +33,7 @@ namespace TestIt.Business
         void Save(Class c);
         IEnumerable<User> ClassUsers(int id);
         Class GetSingle(int id);
+        ClassDTO GetDetails(int id);
         IEnumerable<Class> Get();
         TeacherClassesDTO GetTeacherClasses(int id);
         void Delete(int id);
@@ -51,7 +52,7 @@ namespace TestIt.Business
         Student GetByUser(int id);
         void SendSignUp(User user, int studentId);
         void SendInvite(User user, Class studentClass);
-        IEnumerable<StudentTestDto> Tests(int id);
+        IEnumerable<StudentTestDTO> Tests(int id);
     }
 
     public interface IClassStudentsService

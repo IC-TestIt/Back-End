@@ -14,7 +14,7 @@ namespace TestIt.Data.Repositories
 
         }
 
-        public IEnumerable<StudentTestDto> GetTests(int id)
+        public IEnumerable<StudentTestDTO> GetTests(int id)
         {
             var unavailableClassTests = (from a in Context.Exams
                                          where a.StudentId == id
@@ -27,7 +27,7 @@ namespace TestIt.Data.Repositories
                          join e in Context.Teachers on a.TeacherId equals e.Id
                          join f in Context.Users on e.UserId equals f.Id
                          where b.StudentId == id && !unavailableClassTests.Contains(c.Id)
-                         select new StudentTestDto
+                         select new StudentTestDTO
                          {
                              ClassName = a.Description,
                              ClassTestId = c.Id,
