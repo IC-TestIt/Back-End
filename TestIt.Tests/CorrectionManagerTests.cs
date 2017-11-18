@@ -98,7 +98,7 @@ namespace TestIt.Tests
                 Title = "Prova Teste",
                 BeginDate = DateTime.Now.AddDays(-1),
                 EndDate = DateTime.Now,
-                Status = (int)EnumStatus.Finished,
+                Status = (int)EnumExamStatus.Finished,
                 TestId = 1,
                 Questions = questions,
                 AnsweredQuestions = answeredQuestions
