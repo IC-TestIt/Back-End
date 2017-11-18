@@ -43,11 +43,14 @@ namespace TestIt.API.Controllers
         [HttpPost("{id}/student/{studentId}")]
         public IActionResult Post(int id, int studentId)
         {
-            _classStudentService.Save(new ClassStudents
+            var success = _classStudentService.Save(new ClassStudents
             {
                 ClassId = id,
                 StudentId = studentId
             });
+
+            if (!success)
+                return Ok(0);
 
             var result = Ok(new {classId = id, studentId});
 

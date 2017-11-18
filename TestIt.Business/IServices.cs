@@ -57,7 +57,7 @@ namespace TestIt.Business
 
     public interface IClassStudentsService
     {
-        void Save(ClassStudents cs);
+        bool Save(ClassStudents cs);
         void DeleteStudent(int id, int studentId);
         IEnumerable<StudentClassDTO> GetClasses(int id);
     }
