@@ -3,6 +3,7 @@ using System.Linq;
 using TestIt.Data.Abstract;
 using TestIt.Model;
 using TestIt.Model.DTO;
+using TestIt.Utils.Email;
 
 namespace TestIt.Business.Services
 {
@@ -10,11 +11,16 @@ namespace TestIt.Business.Services
     {
         private IClassTestsRepository _classTestRepository;
         private IExamRepository _examRepository;
+        private IEmailService _emailService;
+        private IClassRepository _classRepository;
 
-        public ClassTestService(IClassTestsRepository classTestRepository, IExamRepository examRepository)
+        public ClassTestService(IClassTestsRepository classTestRepository, IExamRepository examRepository, 
+                                IEmailService emailService, IClassRepository classRepository)
         {
             _classTestRepository = classTestRepository;
             _examRepository = examRepository;
+            _emailService = emailService;
+            _classRepository = classRepository;
         }
 
         public CorrectedClassTestDTO GetCorrected(int id)
@@ -51,6 +57,44 @@ namespace TestIt.Business.Services
             };
 
             return classTest;
+        }
+
+        public bool PublishGrade(int id)
+        {
+            var classTest = _classTestRepository.SingleIncluding(id, x => x.Class, y => y.Test);
+
+            if (classTest == null)
+                return false;
+
+            classTest.IsPublished = true;
+            _classTestRepository.Commit();
+            
+            var emailList = GetClassEmails(id);
+            var testName = classTest.Test.Title + " - " + classTest.Class.Description;
+            var email = PublishClassTestEmailBuilder(testName);
+
+            _emailService.Send(email, emailList);
+
+            return true;
+        }
+
+        private IEnumerable<string> GetClassEmails(int classId)
+        {
+            var emails = _classRepository.GetStudentsEmails(classId);
+
+            return emails;
+        }
+
+        private Email PublishClassTestEmailBuilder(string testName)
+        {
+            var email = new Email()
+            {
+                BodyContent = "A nota da prova: " + testName + 
+                              " já está disponível em: http://testitapp.herokuapp.com/#/",
+                Subject = "TestIt - Nota Disponível"
+            };
+
+            return email;
         }
 
         private int GetUncorrectedExams(int id)
