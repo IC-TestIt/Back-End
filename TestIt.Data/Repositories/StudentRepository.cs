@@ -35,6 +35,7 @@ namespace TestIt.Data.Repositories
                          {
                              ClassName = a.Description,
                              ClassTestId = c.Id,
+                             BeginDate = c.BeginDate,
                              EndDate = c.EndDate,
                              Name = d.Description,
                              TeacherName = f.Name
