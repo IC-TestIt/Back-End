@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TestIt.Data.Abstract;
 using TestIt.Model.DTO;
@@ -54,7 +55,7 @@ namespace TestIt.Business.Services
 
         public bool Save(List<ClassTests> cts)
         {
-            if (cts.Any(x => Exists(x.ClassId, x.TestId))) return false;
+            if (cts.Any(x => Exists(x.ClassId, x.TestId) || x.BeginDate == DateTime.MinValue || x.EndDate == DateTime.MinValue)) return false;
             _classTestsRepository.AddMultiple(cts);
             _classTestsRepository.Commit();
             return true;
