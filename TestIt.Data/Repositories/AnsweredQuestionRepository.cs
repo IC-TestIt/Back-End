@@ -28,8 +28,9 @@ namespace TestIt.Data.Repositories
             }
 
             var exam = Context.Exams.FirstOrDefault(x => x.Id == id);
+            var currentGrade = Context.AnsweredQuestions.Where(x => x.ExamId == id).Sum(x => x.Grade);
 
-            exam.TotalGrade = obj.Sum(x => x.Grade);
+            exam.TotalGrade = obj.Sum(x => x.Grade) + currentGrade;
             exam.Status = (int)EnumExamStatus.Corrected;
 
             return Context.SaveChanges();
