@@ -39,7 +39,7 @@ namespace TestIt.Data.Repositories
                              EndDate = c.EndDate,
                              Name = d.Description,
                              TeacherName = f.Name
-                         }).ToList();
+                         }).GroupBy(x => x.ClassTestId).Select(x => x.FirstOrDefault()).ToList();
             
             return tests;
         }
