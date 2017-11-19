@@ -68,7 +68,8 @@ namespace TestIt.Business.Services
                 return false;
 
             classTest.IsPublished = true;
-            _classTestRepository.Commit();
+            if (_classTestRepository.Commit() == 0)
+                return false;
             
             var emailList = GetClassEmails(id);
             var testName = classTest.Test.Title + " - " + classTest.Class.Description;

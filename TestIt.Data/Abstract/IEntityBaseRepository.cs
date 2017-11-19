@@ -23,7 +23,7 @@ namespace TestIt.Data.Abstract
         void Delete(T entity);
         void DeleteWhere(Expression<Func<T, bool>> predicate);
         IEnumerable<T> FindByIncluding(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
-        void Commit();
+        int Commit();
         void AddOrUpdate(T entity);
         void AddOrUpdateMultiple(List<T> list);
     }
