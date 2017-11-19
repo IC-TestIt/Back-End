@@ -30,7 +30,7 @@ namespace TestIt.Data.Repositories
                          join e in Context.Teachers on a.TeacherId equals e.Id
                          join f in Context.Users on e.UserId equals f.Id
                          where b.StudentId == id && !unavailableClassTests.Contains(c.Id)
-                               && c.BeginDate <= DateTime.Now
+                               && c.EndDate >= DateTime.Now
                          select new StudentTestDTO
                          {
                              ClassName = a.Description,
