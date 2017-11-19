@@ -46,7 +46,7 @@ namespace TestIt.Data.Repositories
         {
             IQueryable<T> query = Context.Set<T>();
             query = includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
-            return query.FirstOrDefault();
+            return query.FirstOrDefault(x => x.Id == id);
         }
 
         public T GetSingle(int id)
@@ -109,9 +109,9 @@ namespace TestIt.Data.Repositories
             return Context.Set<T>().Any(predicate);
         }
 
-        public virtual void Commit()
+        public virtual int Commit()
         {
-            Context.SaveChanges();
+            return Context.SaveChanges();
         }
 
         public virtual IEnumerable<T> FindByIncluding(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
