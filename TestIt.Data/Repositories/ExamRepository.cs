@@ -103,7 +103,8 @@ namespace TestIt.Data.Repositories
                             StudentId = id,
                             ClassTestId = a.ClassTestsId,
                             Description = c.Description,
-                            ClassName = d.Description
+                            ClassName = d.Description,
+                            TotalGrade = a.TotalGrade
                         }).FirstOrDefault();
 
             exam.Answers = (from a in Context.Questions
@@ -114,6 +115,7 @@ namespace TestIt.Data.Repositories
                                      .OrderBy(x => x.Order)
                                      .Select(x => new StudentAnsweredQuestionCorrectionDTO
                                      {
+                                         Grade = x.AnsweredQuestions.FirstOrDefault(y => y.ExamId == id && x.Id == y.QuestionId).Grade,
                                          Alternatives = x.AlternativeQuestion.Alternatives,
                                          Order = x.Order,
                                          Description = x.Description,
