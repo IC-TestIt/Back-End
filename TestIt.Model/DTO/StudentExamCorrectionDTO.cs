@@ -13,6 +13,7 @@ namespace TestIt.Model.DTO
         public string ClassName { get; set; }
         public int StudentId { get; set; }
         public int ClassTestId { get; set; }
+        public double TotalGrade { get; set; }
         public IEnumerable<StudentAnsweredQuestionCorrectionDTO> Answers { get; set; }
     }
 }
