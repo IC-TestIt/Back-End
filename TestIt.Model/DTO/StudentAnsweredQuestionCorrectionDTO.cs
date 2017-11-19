@@ -11,5 +11,6 @@ namespace TestIt.Model.DTO
         public string Description { get; set; }
         public IEnumerable<Alternative> Alternatives { get; set; }
         public int Order { get; set; }
+        public double Grade { get; set; }
     }
 }

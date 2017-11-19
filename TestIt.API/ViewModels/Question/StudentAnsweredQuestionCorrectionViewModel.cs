@@ -10,5 +10,6 @@ namespace TestIt.API.ViewModels.Question
         public string Description { get; set; }
         public IEnumerable<AlternativeViewModel> Alternatives { get; set; }
         public int Order { get; set; }
+        public double Grade { get; set; }
     }
 }
