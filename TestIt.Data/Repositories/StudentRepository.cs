@@ -30,7 +30,7 @@ namespace TestIt.Data.Repositories
                          join e in Context.Teachers on a.TeacherId equals e.Id
                          join f in Context.Users on e.UserId equals f.Id
                          where b.StudentId == id && !unavailableClassTests.Contains(c.Id)
-                               && c.BeginDate <= DateTime.Now
+                               && c.EndDate >= DateTime.Now
                          select new StudentTestDTO
                          {
                              ClassName = a.Description,
@@ -39,7 +39,7 @@ namespace TestIt.Data.Repositories
                              EndDate = c.EndDate,
                              Name = d.Description,
                              TeacherName = f.Name
-                         }).ToList();
+                         }).GroupBy(x => x.ClassTestId).Select(x => x.FirstOrDefault()).ToList();
             
             return tests;
         }
