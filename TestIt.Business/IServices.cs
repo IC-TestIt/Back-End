@@ -99,7 +99,7 @@ namespace TestIt.Business
         ExamInformationsDto Get(int id);
         bool Correct(int id);
         IEnumerable<ExamCorrectionDTO> GetExamsEstimatedCorrection(IEnumerable<int> classtests);
-        bool ExistsExam(Exam exam);
+        int ExistsExam(Exam exam);
         bool ExamsRealCorrection(IEnumerable<Exam> exams);
         StudentExamCorrectionDTO GetStudentCorrection(int id);
     }

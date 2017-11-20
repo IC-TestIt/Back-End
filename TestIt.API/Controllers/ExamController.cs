@@ -33,14 +33,15 @@ namespace TestIt.API.Controllers
             }
 
             var exam = Mapper.Map<Exam>(viewModel);
+            var currentExam = _examService.ExistsExam(exam);
 
-            if (!_examService.ExistsExam(exam))
+            if (currentExam == 0)
             {
                 _examService.Save(exam);
                 result = Ok(new { examId = exam.Id });
             }
             else
-                result = Ok("Esse aluno já esta realizando essa prova");
+                result = Ok(new { examId = currentExam });
 
             return result;
         }
