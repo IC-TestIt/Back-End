@@ -54,7 +54,8 @@ namespace TestIt.Business.Services
                 EndDate = bs.EndDate,
                 Title = bs.Title,
                 Students = GetClassStudents(id),
-                UncorrectedExams = GetUncorrectedExams(id)
+                UncorrectedExams = GetUncorrectedExams(id),
+                ClassTestId = id
             };
 
             return classTest;
@@ -101,7 +102,7 @@ namespace TestIt.Business.Services
 
         private int GetUncorrectedExams(int id)
         {
-            return _examRepository.Count(x => x.ClassTestsId == id && x.Status == (int)EnumTestStatus.Uncorrected);
+            return _examRepository.Count(x => x.ClassTestsId == id && x.Status == (int)EnumExamStatus.Finished);
         }
 
         private double GetClassGrade(IEnumerable<ClassTestStudentDTO> students)
