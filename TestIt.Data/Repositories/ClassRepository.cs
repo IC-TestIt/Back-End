@@ -49,7 +49,8 @@ namespace TestIt.Data.Repositories
                                            Average = 0,
                                            Description = a.Description,
                                            Id = a.Id,
-                                           Size = Context.ClassStudents.Count(x => x.ClassId == a.Id)
+                                           Size = Context.ClassStudents.Count(x => x.ClassId == a.Id),
+                                           HasTests= false
                                        }).ToList();
 
             var list = (from a in classes
@@ -59,8 +60,8 @@ namespace TestIt.Data.Repositories
                             Id = g.FirstOrDefault().Id,
                             Description = g.FirstOrDefault().Description,
                             Average = g.Average(x => x.TotalGrade),
-                            Size = g.GroupBy(x => x.StudentId).Count()
-                           
+                            Size = g.GroupBy(x => x.StudentId).Count(),
+                            HasTests = true
                         }).OrderByDescending(x => x.Average).ToList();
 
             list.AddRange(classesWithoutTests.Distinct());

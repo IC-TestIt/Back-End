@@ -6,5 +6,6 @@
         public int Size { get; set; }
         public int Id { get; set; }
         public double Average { get; set; }
+        public bool HasTests { get; set; }
     }
 }
