@@ -51,6 +51,9 @@ namespace TestIt.Data.Repositories
                             Description = d.Description
                         }).FirstOrDefault();
 
+            if (exam == null)
+                return null;
+
             exam.Questions = (from a in Context.Questions
                               where a.TestId == exam.TestId
                               select a).Include(x => x.EssayQuestion).Include(x => x.AlternativeQuestion.Alternatives).OrderBy(x => x.Order).ToList();

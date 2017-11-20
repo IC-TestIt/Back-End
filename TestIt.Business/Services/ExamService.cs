@@ -85,9 +85,11 @@ namespace TestIt.Business.Services
             return exam;
         }
 
-        public bool ExistsExam(Exam exam)
+        public int ExistsExam(Exam exam)
         {
-            return _examRepository.Any(x => x.ClassTestsId == exam.ClassTestsId && x.StudentId == exam.StudentId);
+            var currentExam = _examRepository.GetSingle(x => x.ClassTestsId == exam.ClassTestsId && x.StudentId == exam.StudentId);
+
+            return currentExam == null ? 0 : currentExam.Id;
         }
         
         public bool Correct(int id)

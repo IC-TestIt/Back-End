@@ -44,10 +44,18 @@ namespace TestIt.Data.Repositories
             {
                 var entity = Context.AnsweredQuestions.FirstOrDefault(x => x.ExamId == examId && x.QuestionId == question.QuestionId);
 
-                entity.AlternativeId = question.AlternativeId;
-                entity.EssayAnswer = question.EssayAnswer;
+                if (entity != null)
+                {
+                    entity.AlternativeId = question.AlternativeId;
 
-                obj.Add(entity);
+                    entity.EssayAnswer = question.EssayAnswer;
+
+                    obj.Add(entity);
+                }
+                else
+                {
+                    Context.AnsweredQuestions.Add(question);
+                }
             }
 
             return Context.SaveChanges();
