@@ -54,7 +54,8 @@ namespace TestIt.Business.Services
                 EndDate = bs.EndDate,
                 Title = bs.Title,
                 Students = GetClassStudents(id),
-                UncorrectedExams = GetUncorrectedExams(id)
+                UncorrectedExams = GetUncorrectedExams(id),
+                ClassTestId = id
             };
 
             return classTest;
